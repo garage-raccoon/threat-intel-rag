@@ -98,6 +98,9 @@ def score_claude(questions: list[dict], rows: list[dict], retriever: Retriever) 
             continue
         r.update(claude=res["status"], coverage=res.get("coverage"), answer=res.get("answer"),
                  cited_ids=sorted({c["doc_id"] for c in res.get("citations", [])}),
+                 # kept for the faithfulness judge (scripts/eval_faithfulness.py): what Claude saw and quoted
+                 sent_passages=[x["passage_id"] for x in res["retrieved"] + res["retrieved_kev"]],
+                 citations=res.get("citations", []),
                  refusal_category=res.get("refusal_category"),
                  input_tokens=res["usage"]["input_tokens"], output_tokens=res["usage"]["output_tokens"])
         print(f"  [{n}/{len(todo)}] {r['id']}: {r['claude']} / coverage {r['coverage']}")

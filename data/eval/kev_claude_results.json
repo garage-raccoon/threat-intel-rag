@@ -1,0 +1,2051 @@
+{
+  "run_at": "2026-11-18T06:13:24+00:00",
+  "test_set": "kev_test_set.json",
+  "attack_version": "20.1",
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "top_k": 5,
+  "summary": {
+    "top5_retrieval_accuracy": "18/20",
+    "rank1_accuracy": "18/20",
+    "answerable_wrongly_gated": "0/20",
+    "answerable_hit_and_not_gated": "18/20",
+    "unanswerable_gated": "3/6",
+    "gated_by_reason": {
+      "below_threshold": 1,
+      "out_of_scope": 0,
+      "unknown_id": 2
+    },
+    "threshold_in_use": 0.555,
+    "marker_margin_in_use": 0.02,
+    "threshold_analysis": {
+      "threshold": 0.63,
+      "correct": 16,
+      "of": 17,
+      "gap": 0.0035
+    },
+    "claude_model": "claude-haiku-5-5",
+    "claude_calls": 23,
+    "unanswerable_declined": "6/6",
+    "unanswerable_declined_strict": "3/6",
+    "unanswerable_answered_as_covered": "0/6",
+    "answerable_correct": "18/20",
+    "answerable_said_not_covered": "2/20",
+    "coverage_tag_missing": 0,
+    "refusals": 0,
+    "errors": 0,
+    "tokens_in_out": "100548 / 22450",
+    "est_cost_usd": 0.0213
+  },
+  "rows": [
+    {
+      "id": "K01",
+      "question": "Our SonicWall SMA 100 SSL VPN appliance was hit by an unauthenticated SQL injection that exposed credentials. Is this a known exploited bug?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2021-20016"
+      ],
+      "retrieved": [
+        [
+          "T1190",
+          0.719
+        ],
+        [
+          "T1187",
+          0.71
+        ],
+        [
+          "T1606",
+          0.704
+        ],
+        [
+          "T1190",
+          0.703
+        ],
+        [
+          "T1557.001",
+          0.702
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-20016",
+          0.874
+        ],
+        [
+          "CVE-2019-7481",
+          0.853
+        ],
+        [
+          "CVE-2021-20028",
+          0.836
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7188,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1185",
+      "marker_tactics": [
+        "Collection"
+      ],
+      "marker_score": 0.6894,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "Yes, the passages list SonicWall SMA100 SQL injection flaws as Known Exploited Vulnerabilities. Your description matches **CVE-2021-20016** most closely. SonicWall SSLVPN SMA100 contains a SQL injection vulnerability that allows remote exploitation for credential access by an unauthenticated attacker. [1] It was added to CISA KEV 2021-11-03 [1]. Its entry also notes Known ransomware campaign use: Known [1] and Weaknesses: CWE-89 [1].\n\n**CVE-2019-7481** is a related SMA100 SQL injection that is also in KEV. SonicWall SMA100 contains a SQL injection vulnerability allowing an unauthenticated user to gain read-only access to unauthorized resources. [2] Its entry describes read-only access to unauthorized resources, not credential exposure specifically, so CVE-2021-20016 is the closer match for your incident. Without your firmware version and logs, I can't confirm which CVE your appliance was hit through.\n\n**Remediation (per the KEV entries):**\n- CVE-2021-20016: Apply updates per vendor instructions. (due 2021-11-17) [1]\n- CVE-2019-7481: Apply updates per vendor instructions. (due 2022-05-03) [2]\n\n**ATT&CK mapping:** This activity fits **T1190 Exploit Public-Facing Application (Initial Access)**. The technique description notes that adversaries may also exploit edge network infrastructure and related appliances, specifically targeting devices that do not support robust host-based defenses. [3] Because your appliance is an edge device, host-based monitoring may not be available, so rely on network and vendor logs.\n\n**Detection:** The passages' detection guidance for T1190 covers Windows, Linux, macOS, and container hosts, not VPN appliances. For Linux-hosted public services, they suggest looking for suspicious requests in access logs \u2192 spike of 5xx or WAF blocks \u2192 web server or interpreter spawns /bin/sh, curl, wget, socat, or writes webshell \u2192 outbound callback. [4] You can adapt the request-pattern part of that chain to your appliance's logs, but the passages do not provide appliance-specific indicators.\n\n**Related, not your product:** CVE-2021-20028 affects SonicWall Secure Remote Access (SRA), not SMA 100. Its KEV entry states that the impacted product is end-of-life and should be disconnected if still in use. [5] Check whether your environment also includes an SRA product.",
+      "cited_ids": [
+        "CVE-2019-7481",
+        "CVE-2021-20016",
+        "CVE-2021-20028",
+        "T1190"
+      ],
+      "sent_passages": [
+        "T1190#description",
+        "T1187#detection",
+        "T1606#detection-1",
+        "T1190#detection-1",
+        "T1557.001#detection",
+        "CVE-2021-20016#vulnerability",
+        "CVE-2019-7481#vulnerability",
+        "CVE-2021-20028#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2021-20016#vulnerability",
+          "doc_id": "CVE-2021-20016",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-20016",
+          "cited_text": "CVE-2021-20016 SonicWall SSLVPN SMA100: SonicWall SSLVPN SMA100 SQL Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-03)\nSonicWall SSLVPN SMA100 contains a SQL injection vulnerability that allows remote exploitation for credential access by an unauthenticated attacker.\n"
+        },
+        {
+          "passage_id": "CVE-2019-7481#vulnerability",
+          "doc_id": "CVE-2019-7481",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-7481",
+          "cited_text": "CVE-2019-7481 SonicWall SMA100: SonicWall SMA100 SQL Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-03)\nSonicWall SMA100 contains a SQL injection vulnerability allowing an unauthenticated user to gain read-only access to unauthorized resources.\n"
+        },
+        {
+          "passage_id": "T1190#description",
+          "doc_id": "T1190",
+          "url": "https://attack.mitre.org/techniques/T1190",
+          "cited_text": "Adversaries may also exploit edge network infrastructure and related appliances, specifically targeting devices that do not support robust host-based defenses.\n"
+        },
+        {
+          "passage_id": "T1190#detection-1",
+          "doc_id": "T1190",
+          "url": "https://attack.mitre.org/techniques/T1190",
+          "cited_text": "Chain: (1) suspicious requests in access logs \u2192 (2) spike of 5xx or WAF blocks \u2192 (3) web server or interpreter (apache2/nginx/php-fpm/node/python) spawns /bin/sh, curl, wget, socat, or writes webshell \u2192 (4) outbound callback.\n"
+        },
+        {
+          "passage_id": "CVE-2021-20028#vulnerability",
+          "doc_id": "CVE-2021-20028",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-20028",
+          "cited_text": "Required action: The impacted product is end-of-life and should be disconnected if still in use. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5365,
+      "output_tokens": 1687
+    },
+    {
+      "id": "K02",
+      "question": "TeamViewer installs share one encryption key across customers, letting attackers bypass remote-login controls. Which KEV entry is that?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2019-18988"
+      ],
+      "retrieved": [
+        [
+          "T1111",
+          0.689
+        ],
+        [
+          "T1212",
+          0.687
+        ],
+        [
+          "T1528",
+          0.687
+        ],
+        [
+          "T1558",
+          0.672
+        ],
+        [
+          "T1558.005",
+          0.669
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-18988",
+          0.853
+        ],
+        [
+          "CVE-2023-42793",
+          0.717
+        ],
+        [
+          "CVE-2024-27198",
+          0.715
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6893,
+      "top_doc_id": "T1111",
+      "unknown_ids": [],
+      "marker_id": "T1219.001",
+      "marker_tactics": [
+        "Command and Control"
+      ],
+      "marker_score": 0.6666,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "This is **CVE-2019-18988**, the TeamViewer Desktop Bypass Remote Login Vulnerability. It was added to CISA KEV 2021-11-03. TeamViewer Desktop allows for bypass of remote-login access control because the same AES key is used for different customers' installations. [1]\n\nThe impact is that if an attacker were to know this key, they could decrypt protected information stored in registry or configuration files or decryption of the Unattended Access password to the system (which allows for remote login to the system). [1]\n\nFor mitigation, the required action is to apply updates per vendor instructions. [1] The due date was 2022-05-03 [1]. The entry lists the known ransomware campaign use as \"Unknown\" and the weakness as CWE-521.",
+      "cited_ids": [
+        "CVE-2019-18988"
+      ],
+      "sent_passages": [
+        "T1111#detection",
+        "T1212#detection",
+        "T1528#detection",
+        "T1558#description",
+        "T1558.005#description",
+        "CVE-2019-18988#vulnerability",
+        "CVE-2023-42793#vulnerability",
+        "CVE-2024-27198#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2019-18988#vulnerability",
+          "doc_id": "CVE-2019-18988",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-18988",
+          "cited_text": "CVE-2019-18988 TeamViewer Desktop: TeamViewer Desktop Bypass Remote Login Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-03)\nTeamViewer Desktop allows for bypass of remote-login access control because the same AES key is used for different customers' installations. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5269,
+      "output_tokens": 486
+    },
+    {
+      "id": "K03",
+      "question": "A regular domain user was able to make themselves a domain admin through a flaw in the Kerberos KDC. What vulnerability is this?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2014-6324"
+      ],
+      "retrieved": [
+        [
+          "T1558",
+          0.745
+        ],
+        [
+          "T1556.001",
+          0.727
+        ],
+        [
+          "T1078.002",
+          0.722
+        ],
+        [
+          "T1558.004",
+          0.72
+        ],
+        [
+          "T1212",
+          0.718
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2014-6324",
+          0.822
+        ],
+        [
+          "CVE-2026-56155",
+          0.732
+        ],
+        [
+          "CVE-2023-0386",
+          0.725
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.745,
+      "top_doc_id": "T1558",
+      "unknown_ids": [],
+      "marker_id": "T1207",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.7174,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "The vulnerability is **CVE-2014-6324**, the Microsoft Kerberos Key Distribution Center (KDC) Privilege Escalation Vulnerability. The Kerberos Key Distribution Center (KDC) in Microsoft allows remote authenticated domain users to obtain domain administrator privileges. [1] It is listed as a Known Exploited Vulnerability, added to CISA KEV 2022-03-25 [1].\n\n**Remediation:** Apply updates per vendor instructions. (due 2022-04-15) [1] The entry lists the weakness as CWE-264 [1].\n\n**Related ATT&CK guidance:** The passages do not map CVE-2014-6324 to an ATT&CK technique. However, the T1212 passage describes a closely related Kerberos attack. One example of this is `MS14-068`, which targets Kerberos and can be used to forge Kerberos tickets using domain user permissions. [2] This falls under T1212 (Exploitation for Credential Access), which notes that exploitation for credential access may also result in Privilege Escalation depending on the process targeted or credentials obtained. [2] The passages do not explicitly state that MS14-068 is the same issue as CVE-2014-6324, so I can't confirm that link from these documents alone.",
+      "cited_ids": [
+        "CVE-2014-6324",
+        "T1212"
+      ],
+      "sent_passages": [
+        "T1558#description",
+        "T1556.001#description",
+        "T1078.002#description",
+        "T1558.004#description",
+        "T1212#description",
+        "CVE-2014-6324#vulnerability",
+        "CVE-2026-56155#vulnerability",
+        "CVE-2023-0386#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2014-6324#vulnerability",
+          "doc_id": "CVE-2014-6324",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2014-6324",
+          "cited_text": "CVE-2014-6324 Microsoft Kerberos Key Distribution Center (KDC): Microsoft Kerberos Key Distribution Center (KDC) Privilege Escalation Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2022-03-25)\nThe Kerberos Key Distribution Center (KDC) in Microsoft allows remote authenticated domain users to obtain domain administrator privileges.\n"
+        },
+        {
+          "passage_id": "T1212#description",
+          "doc_id": "T1212",
+          "url": "https://attack.mitre.org/techniques/T1212",
+          "cited_text": "One example of this is `MS14-068`, which targets Kerberos and can be used to forge Kerberos tickets using domain user permissions. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5253,
+      "output_tokens": 901
+    },
+    {
+      "id": "K04",
+      "question": "Attackers pointed our FortiGate's LDAP settings at their own server to steal the LDAP bind credentials. Known exploited?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2018-13374"
+      ],
+      "retrieved": [
+        [
+          "T1212",
+          0.681
+        ],
+        [
+          "T1190",
+          0.674
+        ],
+        [
+          "T1552",
+          0.671
+        ],
+        [
+          "T1212",
+          0.667
+        ],
+        [
+          "T1528",
+          0.661
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2018-13374",
+          0.784
+        ],
+        [
+          "CVE-2019-5591",
+          0.754
+        ],
+        [
+          "CVE-2018-13382",
+          0.72
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.681,
+      "top_doc_id": "T1212",
+      "unknown_ids": [],
+      "marker_id": "T1584.002",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.6905,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "Yes. The behavior you describe matches CVE-2018-13374, a Fortinet FortiOS and FortiADC improper access control vulnerability that allows attackers to obtain the LDAP server login credentials configured in FortiGate by pointing a LDAP server connectivity test request to a rogue LDAP server. [1] It is a Known Exploited Vulnerability, added to CISA KEV 2022-09-08 [1].\n\nThe CISA entry lists the following:\n- **Required action:** Apply updates per vendor instructions. [1] The due date was 2022-09-29 [1].\n- **Ransomware use:** Known ransomware campaign use: Known [1]\n- **Weakness:** CWE-732 [1]\n\nThe passages do not include detection guidance for this CVE, and they do not map it to an ATT&CK technique ID, so I can't name one from the documents. For detection, you would need to check the vendor advisory or other sources outside these passages.\n\nRelated, but not the same issue: CVE-2019-5591 is also a FortiOS LDAP-related KEV. It may allow an unauthenticated attacker on the same subnet to intercept sensitive information by impersonating the Lightweight Directory Access Protocol (LDAP) server. [2] It was added to CISA KEV 2021-11-03 [2]. Since your incident involved LDAP settings, check whether that device is also affected.",
+      "cited_ids": [
+        "CVE-2018-13374",
+        "CVE-2019-5591"
+      ],
+      "sent_passages": [
+        "T1212#description",
+        "T1190#description",
+        "T1552#mitigations",
+        "T1212#mitigations",
+        "T1528#detection",
+        "CVE-2018-13374#vulnerability",
+        "CVE-2019-5591#vulnerability",
+        "CVE-2018-13382#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2018-13374#vulnerability",
+          "doc_id": "CVE-2018-13374",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-13374",
+          "cited_text": "CVE-2018-13374 Fortinet FortiOS and FortiADC: Fortinet FortiOS and FortiADC Improper Access Control Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2022-09-08)\nFortinet FortiOS and FortiADC contain an improper access control vulnerability that allows attackers to obtain the LDAP server login credentials configured in FortiGate by pointing a LDAP server connectivity test request to a rogue LDAP server.\n"
+        },
+        {
+          "passage_id": "CVE-2019-5591#vulnerability",
+          "doc_id": "CVE-2019-5591",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-5591",
+          "cited_text": "CVE-2019-5591 Fortinet FortiOS: Fortinet FortiOS Default Configuration Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-03)\nFortinet FortiOS contains a default configuration vulnerability that may allow an unauthenticated attacker on the same subnet to intercept sensitive information by impersonating the Lightweight Directory Access Protocol (LDAP) server.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5776,
+      "output_tokens": 1185
+    },
+    {
+      "id": "K05",
+      "question": "Users opened attachments without the Outlook security warning appearing, because of a bypass bug. Which CVE?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2023-35311"
+      ],
+      "retrieved": [
+        [
+          "T1606",
+          0.686
+        ],
+        [
+          "T1566.001",
+          0.673
+        ],
+        [
+          "T1556.001",
+          0.67
+        ],
+        [
+          "T1552.008",
+          0.667
+        ],
+        [
+          "T1078",
+          0.651
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-35311",
+          0.828
+        ],
+        [
+          "CVE-2017-11774",
+          0.818
+        ],
+        [
+          "CVE-2024-21413",
+          0.799
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6865,
+      "top_doc_id": "T1606",
+      "unknown_ids": [],
+      "marker_id": "T1564.012",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.6708,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "The closest match is **CVE-2023-35311**. Microsoft Outlook contains a security feature bypass vulnerability that allows an attacker to bypass the Microsoft Outlook Security Notice prompt. [1] That fits the scenario of users opening files without seeing the Outlook security warning. The passage does not explicitly mention attachments, so it doesn't confirm that specific mechanism.\n\nThe entry was added to CISA KEV 2023-07-11 [1]. The required action is to apply updates per vendor instructions or discontinue use of the product if updates are unavailable. [1] The due date was 2023-08-01 [1].\n\nThe other Outlook CVEs in the passages don't match this symptom. CVE-2017-11774 is a security feature bypass that allows an attacker to execute commands. [2] CVE-2024-21413 involves bypass[ing] the Office Protected View and open[ing] in editing mode rather than protected mode. [3]\n\nSince the activity involves attachments, the spearphishing attachment mitigations may also help. These include block[ing] unknown or unused attachments by default that should not be transmitted over email as a best practice to prevent some vectors, such as .scr, .exe, .pif, .cpl, etc. [4] The passages also recommend enabl[ing] auditing and monitoring for email attachments and file transfers to detect and investigate suspicious activity. [4] These are related guidance under T1566.001, not a fix for the CVE itself.",
+      "cited_ids": [
+        "CVE-2017-11774",
+        "CVE-2023-35311",
+        "CVE-2024-21413",
+        "T1566.001"
+      ],
+      "sent_passages": [
+        "T1606#detection-2",
+        "T1566.001#mitigations",
+        "T1556.001#mitigations",
+        "T1552.008#detection",
+        "T1078#description",
+        "CVE-2023-35311#vulnerability",
+        "CVE-2017-11774#vulnerability",
+        "CVE-2024-21413#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2023-35311#vulnerability",
+          "doc_id": "CVE-2023-35311",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-35311",
+          "cited_text": "CVE-2023-35311 Microsoft Outlook: Microsoft Outlook Security Feature Bypass Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2023-07-11)\nMicrosoft Outlook contains a security feature bypass vulnerability that allows an attacker to bypass the Microsoft Outlook Security Notice prompt.\n"
+        },
+        {
+          "passage_id": "CVE-2017-11774#vulnerability",
+          "doc_id": "CVE-2017-11774",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2017-11774",
+          "cited_text": "Successful exploitation allows an attacker to execute commands.\n"
+        },
+        {
+          "passage_id": "CVE-2024-21413#vulnerability",
+          "doc_id": "CVE-2024-21413",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21413",
+          "cited_text": "Successful exploitation of this vulnerability would allow an attacker to bypass the Office Protected View and open in editing mode rather than protected mode.\n"
+        },
+        {
+          "passage_id": "T1566.001#mitigations",
+          "doc_id": "T1566.001",
+          "url": "https://attack.mitre.org/techniques/T1566/001",
+          "cited_text": "- M1021 Restrict Web-Based Content: Block unknown or unused attachments by default that should not be transmitted over email as a best practice to prevent some vectors, such as .scr, .exe, .pif, .cpl, etc. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5123,
+      "output_tokens": 1015
+    },
+    {
+      "id": "K06",
+      "question": "Shell metacharacters sent to a Sunhillo SureLine device let attackers run commands on it.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2021-36380"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.698
+        ],
+        [
+          "T1195.002",
+          0.677
+        ],
+        [
+          "T1566.001",
+          0.672
+        ],
+        [
+          "T1566.004",
+          0.67
+        ],
+        [
+          "T1557.001",
+          0.665
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-36380",
+          0.792
+        ],
+        [
+          "CVE-2024-50603",
+          0.708
+        ],
+        [
+          "CVE-2024-55956",
+          0.708
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6978,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1059.004",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.6969,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "This matches CVE-2021-36380. Sunhillo SureLine contains an OS command injection vulnerability that allows an attacker to cause a denial-of-service or utilize the device for persistence on the network via shell metacharacters in ipAddr or dnsAddr in /cgi/networkDiag.cgi. [1] The passage describes the impact as denial-of-service or persistence, so it doesn't spell out command execution, though the vulnerability is classified as OS command injection. The weakness is CWE-78 [1].\n\nThe vulnerability was added to CISA KEV 2024-03-05 [1]. The required action is: Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable. [1] The due date was 2024-03-26 [1], and the entry lists Known ransomware campaign use: Unknown [1].\n\nThe passages don't include ATT&CK detection or mitigation guidance for this specific CVE.",
+      "cited_ids": [
+        "CVE-2021-36380"
+      ],
+      "sent_passages": [
+        "T1189#detection-1",
+        "T1195.002#detection",
+        "T1566.001#detection",
+        "T1566.004#detection",
+        "T1557.001#description-2",
+        "CVE-2021-36380#vulnerability",
+        "CVE-2024-50603#vulnerability",
+        "CVE-2024-55956#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2021-36380#vulnerability",
+          "doc_id": "CVE-2021-36380",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-36380",
+          "cited_text": "CVE-2021-36380 Sunhillo SureLine: Sunhillo SureLine OS Command Injection Vulnerablity (Known Exploited Vulnerability, added to CISA KEV 2024-03-05)\nSunhillo SureLine contains an OS command injection vulnerability that allows an attacker to cause a denial-of-service or utilize the device for persistence on the network via shell metacharacters in ipAddr or dnsAddr in /cgi/networkDiag.cgi.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5441,
+      "output_tokens": 962
+    },
+    {
+      "id": "K07",
+      "question": "Someone hijacked an admin session on our D-Link DIR-600 router with a forged request and changed its settings.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2014-100005"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.679
+        ],
+        [
+          "T1566.002",
+          0.667
+        ],
+        [
+          "T1566.002",
+          0.662
+        ],
+        [
+          "T1556.006",
+          0.659
+        ],
+        [
+          "T1110.004",
+          0.653
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2014-100005",
+          0.792
+        ],
+        [
+          "CVE-2021-40655",
+          0.764
+        ],
+        [
+          "CVE-2024-0769",
+          0.745
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6791,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1584.001",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.7234,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "This matches **CVE-2024-0769**? No. It matches **CVE-2014-100005**, the D-Link DIR-600 CSRF vulnerability. D-Link DIR-600 routers contain a cross-site request forgery (CSRF) vulnerability that allows an attacker to change router configurations by hijacking an existing administrator session. [1] It is listed as a Known Exploited Vulnerability, added to CISA KEV 2024-05-16 [1], and its weakness is classified as CWE-352 [1].\n\n**Required action:** This vulnerability affects legacy D-Link products. All associated hardware revisions have reached their end-of-life (EOL) or end-of-service (EOS) life cycle and should be retired and replaced per vendor instructions. [1] The CISA due date for this action was 2024-06-06 [1]. Because the DIR-600 is end-of-life, patching is not the expected fix. The guidance is to replace the device.\n\n**Gaps in the provided passages:**\n- They do not describe how to detect this activity, such as checking router logs or configuration changes.\n- They do not map this attack to a MITRE ATT&CK technique ID.\n- They do not say whether the vulnerability has been used in ransomware campaigns, only that the use is Unknown [1].\n\nYour device was changed, so treat the router as compromised. Replacing it is the documented remediation, but the passages do not cover incident response steps such as reviewing or restoring settings. Consult other sources for those steps.",
+      "cited_ids": [
+        "CVE-2014-100005"
+      ],
+      "sent_passages": [
+        "T1189#description",
+        "T1566.002#description-1",
+        "T1566.002#mitigations",
+        "T1556.006#description",
+        "T1110.004#description",
+        "CVE-2014-100005#vulnerability",
+        "CVE-2021-40655#vulnerability",
+        "CVE-2024-0769#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2014-100005#vulnerability",
+          "doc_id": "CVE-2014-100005",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2014-100005",
+          "cited_text": "CVE-2014-100005 D-Link DIR-600 Router: D-Link DIR-600 Router Cross-Site Request Forgery (CSRF) Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-05-16)\nD-Link DIR-600 routers contain a cross-site request forgery (CSRF) vulnerability that allows an attacker to change router configurations by hijacking an existing administrator session.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 6666,
+      "output_tokens": 1183
+    },
+    {
+      "id": "K08",
+      "question": "A crafted ping parameter on a D-Link DIR-820 router gave a remote attacker root.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2023-25280"
+      ],
+      "retrieved": [
+        [
+          "T1190",
+          0.721
+        ],
+        [
+          "T1190",
+          0.709
+        ],
+        [
+          "T1189",
+          0.699
+        ],
+        [
+          "T1557.001",
+          0.697
+        ],
+        [
+          "T1557.001",
+          0.695
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-25280",
+          0.852
+        ],
+        [
+          "CVE-2015-2051",
+          0.822
+        ],
+        [
+          "CVE-2022-26258",
+          0.813
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7214,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1210",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.731,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "Your statement matches the advisory. CVE-2023-25280 D-Link DIR-820 Router: D-Link DIR-820 Router OS Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-09-30) [1]. The flaw is in the ping parameter, though the exact name is ping_addr: D-Link DIR-820 routers contain an OS command injection vulnerability that allows a remote, unauthenticated attacker to escalate privileges to root via a crafted payload with the ping_addr parameter to ping.ccp. [1]\n\nThe weakness is classified as CWE-78 [1]. CISA's required action is that the impacted product is end-of-life (EoL) and/or end-of-service (EoS). Users should discontinue utilization of the product. [1] The due date was 2024-10-21, and the known ransomware campaign use is listed as unknown.\n\nThe passages don't include detection or mitigation guidance specific to this CVE. As related guidance, the ATT&CK description of Exploit Public-Facing Application (T1190) notes that adversaries may also exploit edge network infrastructure and related appliances, specifically targeting devices that do not support robust host-based defenses. [2] The passages don't explicitly map CVE-2023-25280 to T1190, so treat that link as context rather than confirmed attribution.",
+      "cited_ids": [
+        "CVE-2023-25280",
+        "T1190"
+      ],
+      "sent_passages": [
+        "T1190#detection-1",
+        "T1190#description",
+        "T1189#description",
+        "T1557.001#detection",
+        "T1557.001#description-2",
+        "CVE-2023-25280#vulnerability",
+        "CVE-2015-2051#vulnerability",
+        "CVE-2022-26258#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2023-25280#vulnerability",
+          "doc_id": "CVE-2023-25280",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-25280",
+          "cited_text": "CVE-2023-25280 D-Link DIR-820 Router: D-Link DIR-820 Router OS Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-09-30)\nD-Link DIR-820 routers contain an OS command injection vulnerability that allows a remote, unauthenticated attacker to escalate privileges to root via a crafted payload with the ping_addr parameter to ping.ccp.\n"
+        },
+        {
+          "passage_id": "T1190#description",
+          "doc_id": "T1190",
+          "url": "https://attack.mitre.org/techniques/T1190",
+          "cited_text": "Adversaries may also exploit edge network infrastructure and related appliances, specifically targeting devices that do not support robust host-based defenses.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5496,
+      "output_tokens": 964
+    },
+    {
+      "id": "K09",
+      "question": "The management interface of our Kemp LoadMaster load balancer was abused for unauthenticated command injection.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2024-1212"
+      ],
+      "retrieved": [
+        [
+          "T1078.002",
+          0.632
+        ],
+        [
+          "T1199",
+          0.628
+        ],
+        [
+          "T1212",
+          0.628
+        ],
+        [
+          "T1566.003",
+          0.628
+        ],
+        [
+          "T1189",
+          0.627
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-1212",
+          0.815
+        ],
+        [
+          "CVE-2026-8037",
+          0.77
+        ],
+        [
+          "CVE-2020-4006",
+          0.708
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6325,
+      "top_doc_id": "T1078.002",
+      "unknown_ids": [],
+      "marker_id": "T1574.014",
+      "marker_tactics": [
+        "Execution",
+        "Stealth"
+      ],
+      "marker_score": 0.6428,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "The passages match this to CVE-2024-1212 Progress Kemp LoadMaster: Progress Kemp LoadMaster OS Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-11-18) [1]. According to the entry, Progress Kemp LoadMaster contains an OS command injection vulnerability that allows an unauthenticated, remote attacker to access the system through the LoadMaster management interface, enabling arbitrary system command execution. [1] That fits the abuse you describe.\n\n**Required action:** Apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable. [1] The remediation due date is 2024-12-09 [1]. The weakness is classified as CWE-78. The entry lists the ransomware campaign use as unknown.\n\n**Detection:** The passages don't include detection guidance specific to CVE-2024-1212, so I can't give you indicators to hunt for in your logs.\n\n**Related:** The passages also describe a different LoadMaster flaw, CVE-2026-8037 Progress LoadMaster: Progress LoadMaster Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-08-07) [2]. It allows an un-authenticated attacker to execute arbitrary commands on the LoadMaster appliance by exploiting unsanitized input in multiple command endpoints. [2] Its required action includes evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines. [2] Because your appliance is affected by a command injection issue, you should check whether it is also exposed to this newer CVE.",
+      "cited_ids": [
+        "CVE-2024-1212",
+        "CVE-2026-8037"
+      ],
+      "sent_passages": [
+        "T1078.002#detection",
+        "T1199#detection-1",
+        "T1212#mitigations",
+        "T1566.003#mitigations",
+        "T1189#mitigations",
+        "CVE-2024-1212#vulnerability",
+        "CVE-2026-8037#vulnerability",
+        "CVE-2020-4006#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2024-1212#vulnerability",
+          "doc_id": "CVE-2024-1212",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-1212",
+          "cited_text": "CVE-2024-1212 Progress Kemp LoadMaster: Progress Kemp LoadMaster OS Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-11-18)\nProgress Kemp LoadMaster contains an OS command injection vulnerability that allows an unauthenticated, remote attacker to access the system through the LoadMaster management interface, enabling arbitrary system command execution.\n"
+        },
+        {
+          "passage_id": "CVE-2026-8037#vulnerability",
+          "doc_id": "CVE-2026-8037",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-8037",
+          "cited_text": "CVE-2026-8037 Progress LoadMaster: Progress LoadMaster Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-08-07)\nProgress LoadMaster contains a command injection vulnerability that allows an un-authenticated attacker to execute arbitrary commands on the LoadMaster appliance by exploiting unsanitized input in multiple command endpoints.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5947,
+      "output_tokens": 1327
+    },
+    {
+      "id": "K10",
+      "question": "An Edimax IC-7100 IP camera was taken over with crafted requests that ran OS commands.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2025-1316"
+      ],
+      "retrieved": [
+        [
+          "T1111",
+          0.645
+        ],
+        [
+          "T1200",
+          0.631
+        ],
+        [
+          "T1056",
+          0.631
+        ],
+        [
+          "T1056.001",
+          0.631
+        ],
+        [
+          "T1056.002",
+          0.63
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-1316",
+          0.809
+        ],
+        [
+          "CVE-2019-11001",
+          0.698
+        ],
+        [
+          "CVE-2021-40407",
+          0.682
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6451,
+      "top_doc_id": "T1111",
+      "unknown_ids": [],
+      "marker_id": "T1125",
+      "marker_tactics": [
+        "Collection"
+      ],
+      "marker_score": 0.6559,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "The passages describe this vulnerability as CVE-2025-1316. Edimax IC-7100 IP camera contains an OS command injection vulnerability due to improper input sanitization that allows an attacker to achieve remote code execution via specially crafted requests. [1] It is listed as a Known Exploited Vulnerability, added to CISA KEV 2025-03-19 [1], and its weakness is CWE-78 [1].\n\nThe passages don't describe the specific incident you mention, so I can't confirm details such as how the attacker got in or what commands ran.\n\n**Mitigation guidance from the passages:**\n- The impacted product could be end-of-life (EoL) and/or end-of-service (EoS). Users should discontinue product utilization. [1]\n- Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable. [1]\n- The required action is due 2025-04-09 [1].\n\n**Detection:** The passages contain no detection guidance specific to CVE-2025-1316, and they don't map this vulnerability to an ATT&CK technique ID. I can't give you a reliable ATT&CK ID for it from these sources.",
+      "cited_ids": [
+        "CVE-2025-1316"
+      ],
+      "sent_passages": [
+        "T1111#detection",
+        "T1200#detection",
+        "T1056#detection",
+        "T1056.001#detection",
+        "T1056.002#description",
+        "CVE-2025-1316#vulnerability",
+        "CVE-2019-11001#vulnerability",
+        "CVE-2021-40407#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2025-1316#vulnerability",
+          "doc_id": "CVE-2025-1316",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-1316",
+          "cited_text": "CVE-2025-1316 Edimax IC-7100 IP Camera: Edimax IC-7100 IP Camera OS Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2025-03-19)\nEdimax IC-7100 IP camera contains an OS command injection vulnerability due to improper input sanitization that allows an attacker to achieve remote code execution via specially crafted requests. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5129,
+      "output_tokens": 939
+    },
+    {
+      "id": "K11",
+      "question": "Attackers uploaded and ran PHP on our Joomla site by creating new editor profiles in JCE.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-48907"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.632
+        ],
+        [
+          "T1189",
+          0.622
+        ],
+        [
+          "T1056.003",
+          0.598
+        ],
+        [
+          "T1659",
+          0.592
+        ],
+        [
+          "T1606",
+          0.587
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-48908",
+          0.772
+        ],
+        [
+          "CVE-2023-23752",
+          0.751
+        ],
+        [
+          "CVE-2026-56290",
+          0.748
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6317,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1574.006",
+      "marker_tactics": [
+        "Execution",
+        "Stealth"
+      ],
+      "marker_score": 0.6541,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "partial",
+      "answer": "The passages don't address JCE (Joomla Content Editor), editor profiles, or this attack pattern, so I can't tell you how this intrusion happened or map it to a specific ATT&CK technique. The closest related guidance is about other Joomla-family vulnerabilities in the KEV catalog. These are related, not confirmed causes of your incident.\n\n**Related: CVE-2026-48908 (JoomShaper SP Page Builder)**\nJoomShaper SP Page Builder contains an unrestricted upload of file with dangerous type vulnerability that allows unauthenticated users to upload arbitrary files, ultimately resulting in the upload and execution of PHP code. [1] This is the same end result you describe (uploaded PHP that executes), but the passages don't say it applies to JCE. The required action is to apply mitigations in accordance with vendor instructions, ensuring compliance with CISA's BOD 26-04 Prioritizing Security Updates Based on Risk [1], along with CISA's \"Forensics Triage Requirements.\"\n\n**Related: CVE-2026-56290 (Joomlack Page Builder)**\nJoomlack Page Builder contains an improper access control vulnerability that could allow for remote code execution via unauthenticated arbitrary file upload. [2]\n\n**Related: CVE-2023-23752 (Joomla!)**\nContains an improper access control vulnerability that allows unauthorized access to webservice endpoints. [3] The required action is to apply mitigations per vendor instructions or discontinue use of the product if mitigations are unavailable. [3]\n\n**Related detection guidance (ATT&CK T1056.003)**\nThe passages describe detecting unauthorized modifications to login-facing web server files (e.g., index.php, login.js) typically tied to VPN, SSO, or intranet portals [4]. This targets credential-harvesting pages, not uploaded PHP, so it's only loosely applicable. It may still be useful for spotting unexpected web-root changes.\n\n**Next steps**\n- Check whether your Joomla site runs any of the affected products above, and confirm the vendor's current fix for each.\n- Review JCE editor profile changes and uploaded files directly, since the passages don't cover that vector. Consult JCE's vendor or other sources for JCE-specific guidance.",
+      "cited_ids": [
+        "CVE-2023-23752",
+        "CVE-2026-48908",
+        "CVE-2026-56290",
+        "T1056.003"
+      ],
+      "sent_passages": [
+        "T1189#description",
+        "T1189#mitigations",
+        "T1056.003#detection",
+        "T1659#detection",
+        "T1606#detection-1",
+        "CVE-2026-48908#vulnerability",
+        "CVE-2023-23752#vulnerability",
+        "CVE-2026-56290#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2026-48908#vulnerability",
+          "doc_id": "CVE-2026-48908",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48908",
+          "cited_text": "CVE-2026-48908 JoomShaper SP Page Builder: JoomShaper SP Page Builder Unrestricted Upload of File with Dangerous Type Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-07-07)\nJoomShaper SP Page Builder contains an unrestricted upload of file with dangerous type vulnerability that allows unauthenticated users to upload arbitrary files, ultimately resulting in the upload and execution of PHP code.\n"
+        },
+        {
+          "passage_id": "CVE-2026-56290#vulnerability",
+          "doc_id": "CVE-2026-56290",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-56290",
+          "cited_text": "CVE-2026-56290 Joomlack Page Builder: Joomlack Page Builder Improper Access Control Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-07-07)\nJoomlack Page Builder contains an improper access control vulnerability that could allow for remote code execution via unauthenticated arbitrary file upload.\n"
+        },
+        {
+          "passage_id": "CVE-2023-23752#vulnerability",
+          "doc_id": "CVE-2023-23752",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-23752",
+          "cited_text": "contains an improper access control vulnerability that allows unauthorized access to webservice endpoints.\n"
+        },
+        {
+          "passage_id": "T1056.003#detection",
+          "doc_id": "T1056.003",
+          "url": "https://attack.mitre.org/techniques/T1056/003",
+          "cited_text": "T1056.003 Input Capture: Web Portal Capture (Collection, Credential Access): Detection\n- Detection of Credential Harvesting via Web Portal Modification [Linux]: Detects unauthorized modifications to login-facing web server files (e.g., index.php, login.js) typically tied to VPN, SSO, or intranet portals. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 6416,
+      "output_tokens": 1582
+    },
+    {
+      "id": "K12",
+      "question": "Attackers used ProFTPD's site copy commands to read and write files they shouldn't reach.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2015-3306"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.666
+        ],
+        [
+          "T1003.007",
+          0.651
+        ],
+        [
+          "T1003.003",
+          0.647
+        ],
+        [
+          "T1566.001",
+          0.646
+        ],
+        [
+          "T1659",
+          0.637
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2015-3306",
+          0.752
+        ],
+        [
+          "CVE-2020-7247",
+          0.67
+        ],
+        [
+          "CVE-2014-0130",
+          0.663
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6656,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1204.004",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.6996,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "Your statement matches CVE-2015-3306. ProFTPD contains an improper access control vulnerability that could allow remote attackers to read and write to arbitrary files via the site cpfr and site cpto commands. [1] It is listed in CISA KEV: Known Exploited Vulnerability, added to CISA KEV 2026-10-08 [1]. The weakness is CWE-284 [1].\n\nThe passages do not say which campaigns used it, and they note Known ransomware campaign use: Unknown [1].\n\n**Required action:** Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA's BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA's \"Forensics Triage Requirements\" (see URL in Notes) guidance. [1] Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. [1] Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines. [1] The due date is 2026-10-11 [1].\n\n**Detection:** The passages do not include detection guidance for this CVE, and they do not map it to an ATT&CK technique ID. Check the CISA Forensics Triage Requirements referenced in the required action, which the passages mention but do not reproduce.",
+      "cited_ids": [
+        "CVE-2015-3306"
+      ],
+      "sent_passages": [
+        "T1189#description",
+        "T1003.007#description",
+        "T1003.003#description",
+        "T1566.001#detection",
+        "T1659#mitigations",
+        "CVE-2015-3306#vulnerability",
+        "CVE-2020-7247#vulnerability",
+        "CVE-2014-0130#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2015-3306#vulnerability",
+          "doc_id": "CVE-2015-3306",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2015-3306",
+          "cited_text": "CVE-2015-3306 ProFTPD ProFTPD: ProFTPD Improper Access Control Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-10-08)\nProFTPD contains an improper access control vulnerability that could allow remote attackers to read and write to arbitrary files via the site cpfr and site cpto commands.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5268,
+      "output_tokens": 1160
+    },
+    {
+      "id": "K13",
+      "question": "Puppet Enterprise report processing was abused through untrusted deserialization. Is this on the KEV list?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-115731"
+      ],
+      "retrieved": [
+        [
+          "T1552.007",
+          0.69
+        ],
+        [
+          "T1558.004",
+          0.659
+        ],
+        [
+          "T1558",
+          0.658
+        ],
+        [
+          "T1558.004",
+          0.655
+        ],
+        [
+          "T1078",
+          0.652
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-115731",
+          0.825
+        ],
+        [
+          "CVE-2018-4939",
+          0.762
+        ],
+        [
+          "CVE-2023-26359",
+          0.758
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6902,
+      "top_doc_id": "T1552.007",
+      "unknown_ids": [],
+      "marker_id": "T1684.002",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.6793,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "Yes. The matching entry is CVE-2026-115731 Perforce Puppet Enterprise: Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-11-17) [1].\n\nThe vulnerability is in Puppet's report-processing code that allows a client with any CA-signed agent certificate to execute arbitrary code on the Puppet Server as the service user by submitting a report containing a crafted rich-data type through a PUT request. [1] The passages also note that if the certificate authority automatically signs requests without strong verification, an unauthenticated network attacker can obtain a valid certificate and exploit the vulnerability. [1]\n\nFor mitigation, the required action is to apply mitigations in accordance with vendor instructions, ensuring compliance with CISA's BOD 26-04 Prioritizing Security Updates Based on Risk [1] guidance and CISA's \"Forensics Triage Requirements.\" Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. [1] The due date is 2026-12-01, and the listing's known ransomware campaign use is \"Unknown.\" The listed weaknesses are CWE-502 and CWE-94.\n\nThe passages don't map this CVE to a MITRE ATT&CK technique, so I can't give an ATT&CK ID for this exploitation path.",
+      "cited_ids": [
+        "CVE-2026-115731"
+      ],
+      "sent_passages": [
+        "T1552.007#detection",
+        "T1558.004#description",
+        "T1558#description",
+        "T1558.004#detection",
+        "T1078#detection",
+        "CVE-2026-115731#vulnerability",
+        "CVE-2018-4939#vulnerability",
+        "CVE-2023-26359#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2026-115731#vulnerability",
+          "doc_id": "CVE-2026-115731",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-115731",
+          "cited_text": "CVE-2026-115731 Perforce Puppet Enterprise: Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-11-17)\nPerforce Puppet Enterprise contains a deserialization of untrusted data vulnerability in Puppet\u2019s report-processing code that allows a client with any CA-signed agent certificate to execute arbitrary code on the Puppet Server as the service user by submitting a report containing a crafted rich-data type through a PUT request. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5004,
+      "output_tokens": 782
+    },
+    {
+      "id": "K14",
+      "question": "Our Check Point security gateways and management server were hit by a recently added exploited vulnerability. Which one?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-123039"
+      ],
+      "retrieved": [
+        [
+          "T1190",
+          0.717
+        ],
+        [
+          "T1190",
+          0.692
+        ],
+        [
+          "T1190",
+          0.687
+        ],
+        [
+          "T1212",
+          0.675
+        ],
+        [
+          "T1190",
+          0.66
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-50751",
+          0.792
+        ],
+        [
+          "CVE-2024-24919",
+          0.761
+        ],
+        [
+          "CVE-2026-93616",
+          0.739
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7169,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1210",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.6888,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "partial",
+      "answer": "The passages don't say which of these vulnerabilities hit your systems, so I can't confirm the match. They do describe three Check Point KEVs that cover your product types, and you'd need to check your asset inventory and the vendor advisories to see which one applies.\n\n**Candidates from the passages:**\n\n- **CVE-2026-93616** (most recently added, 2026-09-22) affects management infrastructure. Check Point Security Management Server, Multi-Domain Security Management Server, Log Server, Multi-Domain Log Server, and SmartEvent contain a path traversal vulnerability that allows an unauthenticated attacker to upload and execute arbitrary scripts. [1] Weaknesses: CWE-22 [1]\n- **CVE-2026-50751** (added 2026-06-08) affects gateways. Check Point Security Gateway contains an improper authentication vulnerability in IKEv1 key exchange that could allow an unauthenticated remote attacker to bypass user authentication and establish a remote access VPN connection without a valid user password. [2]\n- **CVE-2024-24919** (added 2024-05-30, so older) affects gateways. The vulnerability potentially allows an attacker to access information on Gateways connected to the internet, with IPSec VPN, Remote Access VPN or Mobile Access enabled. [3]\n\nSince you were hit on both gateways and the management server, the CVE-2026-93616 and CVE-2026-50751 pair fits your description best. Confirm against your version and configuration.\n\n**Required action:** For CVE-2026-93616, apply mitigations in accordance with vendor instructions, ensuring compliance with CISA's BOD 26-04 Prioritizing Security Updates Based on Risk [1] guidance. For CVE-2026-50751, apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable. [2]\n\n**Related guidance (ATT&CK T1190, Exploit Public-Facing Application):** These KEVs are internet-facing exploits, so the T1190 guidance applies:\n\n- *Detection:* For network devices, the passages describe the chain anomalous HTTP/SNMP/SmartInstall inputs \u2192 device syslog errors/restarts \u2192 config changes/CLI spawn \u2192 egress to attacker C2. [4] Look for these signals in your gateway and management server logs.\n- *Mitigation:* Ensure that all publicly exposed services are actually intended to be so, and restrict access to any that should only be available internally. [5] Management interfaces are a common candidate for this. Also restrict outbound network traffic from public-facing servers to prevent unauthorized connections from initiating communications with attacker-controlled infrastructure. [5]",
+      "cited_ids": [
+        "CVE-2024-24919",
+        "CVE-2026-50751",
+        "CVE-2026-93616",
+        "T1190"
+      ],
+      "sent_passages": [
+        "T1190#description",
+        "T1190#detection-2",
+        "T1190#detection-1",
+        "T1212#description",
+        "T1190#mitigations",
+        "CVE-2026-50751#vulnerability",
+        "CVE-2024-24919#vulnerability",
+        "CVE-2026-93616#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2026-93616#vulnerability",
+          "doc_id": "CVE-2026-93616",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-93616",
+          "cited_text": "CVE-2026-93616 Check Point Multiple Products: Check Point Multiple Products Path Traversal Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-09-22)\nCheck Point Security Management Server, Multi-Domain Security Management Server, Log Server, Multi-Domain Log Server, and SmartEvent contain a path traversal vulnerability that allows an unauthenticated attacker to upload and execute arbitrary scripts.\n"
+        },
+        {
+          "passage_id": "CVE-2026-50751#vulnerability",
+          "doc_id": "CVE-2026-50751",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-50751",
+          "cited_text": "CVE-2026-50751 Check Point Security Gateway: Check Point Security Gateway Improper Authentication Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-06-08)\nCheck Point Security Gateway contains an improper authentication vulnerability in IKEv1 key exchange that could allow an unauthenticated remote attacker to bypass user authentication and establish a remote access VPN connection without a valid user password.\n"
+        },
+        {
+          "passage_id": "CVE-2024-24919#vulnerability",
+          "doc_id": "CVE-2024-24919",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-24919",
+          "cited_text": "The vulnerability potentially allows an attacker to access information on Gateways connected to the internet, with IPSec VPN, Remote Access VPN or Mobile Access enabled. "
+        },
+        {
+          "passage_id": "T1190#detection-2",
+          "doc_id": "T1190",
+          "url": "https://attack.mitre.org/techniques/T1190",
+          "cited_text": "Chain: anomalous HTTP/SNMP/SmartInstall inputs \u2192 device syslog errors/restarts \u2192 config changes/CLI spawn \u2192 egress to attacker C2."
+        },
+        {
+          "passage_id": "T1190#mitigations",
+          "doc_id": "T1190",
+          "url": "https://attack.mitre.org/techniques/T1190",
+          "cited_text": "- M1035 Limit Access to Resource Over Network: Ensure that all publicly exposed services are actually intended to be so, and restrict access to any that should only be available internally.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 6005,
+      "output_tokens": 1982
+    },
+    {
+      "id": "K15",
+      "question": "What is CVE-2024-3400?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2024-3400"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2024-3400",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2024-3400",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "CVE-2024-3400 is a Palo Alto Networks PAN-OS vulnerability. Palo Alto Networks PAN-OS GlobalProtect feature contains a command injection vulnerability that allows an unauthenticated attacker to execute commands with root privileges on the firewall. [1] It was added to CISA KEV 2024-04-12 [1], meaning it is a Known Exploited Vulnerability.\n\nThe passage lists these weaknesses: CWE-20, CWE-77 [1]. It also notes a Known ransomware campaign use [1].\n\nFor mitigation, the passage says to apply mitigations per vendor instructions as they become available. [1] Otherwise, users with vulnerable versions of affected devices should enable Threat Prevention IDs available from the vendor. [1] See the vendor bulletin for more details and a patch release schedule. [1] The stated due date for action is 2024-04-19.\n\nThe passages do not describe detection methods or indicators of compromise for this vulnerability, so consult the vendor bulletin for those details.",
+      "cited_ids": [
+        "CVE-2024-3400"
+      ],
+      "sent_passages": [
+        "CVE-2024-3400#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2024-3400#vulnerability",
+          "doc_id": "CVE-2024-3400",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3400",
+          "cited_text": "CVE-2024-3400 Palo Alto Networks PAN-OS: Palo Alto Networks PAN-OS Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-04-12)\nPalo Alto Networks PAN-OS GlobalProtect feature contains a command injection vulnerability that allows an unauthenticated attacker to execute commands with root privileges on the firewall.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 1521,
+      "output_tokens": 587
+    },
+    {
+      "id": "K16",
+      "question": "Tell me about CVE-2021-44228.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2021-44228"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2021-44228",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2021-44228",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "CVE-2021-44228 is an Apache Log4j2 remote code execution vulnerability. Apache Log4j2 contains a vulnerability where JNDI features do not protect against attacker-controlled JNDI-related endpoints, allowing for remote code execution. [1] It is a Known Exploited Vulnerability, added to CISA KEV 2021-12-10 [1].\n\n**Known exploitation:** The entry notes a known ransomware campaign use [1].\n\n**Weaknesses:** The listed CWEs are CWE-20, CWE-400, CWE-502 [1].\n\n**Required remediation:** For all affected software assets for which updates exist, the only acceptable remediation actions are: 1) Apply updates; OR 2) remove affected assets from agency networks. [1] The remediation due date was 2021-12-24 [1].\n\n**Temporary mitigations:** Temporary mitigations using one of the measures provided at https://www.cisa.gov/uscert/ed-22-02-apache-log4j-recommended-mitigation-measures are only acceptable until updates are available. [1]\n\nThe passages do not include detection guidance or a related ATT&CK technique ID for this vulnerability, so I can't cover those aspects from this source.",
+      "cited_ids": [
+        "CVE-2021-44228"
+      ],
+      "sent_passages": [
+        "CVE-2021-44228#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2021-44228#vulnerability",
+          "doc_id": "CVE-2021-44228",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-44228",
+          "cited_text": "CVE-2021-44228 Apache Log4j2: Apache Log4j2 Remote Code Execution Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-12-10)\nApache Log4j2 contains a vulnerability where JNDI features do not protect against attacker-controlled JNDI-related endpoints, allowing for remote code execution.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 1528,
+      "output_tokens": 648
+    },
+    {
+      "id": "K17",
+      "question": "What does CISA say to do about CVE-2026-20320?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-20320"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2026-20320",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2026-20320",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "CISA's required action for CVE-2026-20320 (Cisco BroadWorks Improper Restriction of XML External Entity Reference Vulnerability) is as follows:\n\n- **Apply vendor mitigations:** Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA's BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA's \"Forensics Triage Requirements\" (see URL in Notes). [1]\n- **Cloud services or unavailable mitigations:** Follow applicable BOD 26-04 guidance for cloud services or discontinue use of the product if mitigations are unavailable. [1]\n- **Asset owners' responsibilities:** Stakeholders are responsible for evaluating each asset's internet exposure and ensuring adherence to BOD 26-04 patching guidelines. [1]\n- **Deadline:** The due date is 2026-11-24 [1].\n\nThe passage describes the vulnerability as one that could allow an unauthenticated, remote attacker to read sensitive configuration information on an affected system. [1] The entry lists its weakness as CWE-611. The passage does not give specific vendor patch versions, detection steps, or forensic procedures. Those details would be in the linked CISA guidance and the vendor's instructions, which the passage only references.",
+      "cited_ids": [
+        "CVE-2026-20320"
+      ],
+      "sent_passages": [
+        "CVE-2026-20320#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2026-20320#vulnerability",
+          "doc_id": "CVE-2026-20320",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-20320",
+          "cited_text": "Required action: Apply mitigations in accordance with vendor instructions, ensuring compliance with CISA\u2019s BOD 26-04 Prioritizing Security Updates Based on Risk (see URL in Notes) guidance and CISA\u2019s \u201cForensics Triage Requirements\u201d (see URL in Notes). "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 1635,
+      "output_tokens": 684
+    },
+    {
+      "id": "K18",
+      "question": "is cve-2016-0151 used by ransomware?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2016-0151"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2016-0151",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2016-0151",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "Yes. CISA's KEV entry for CVE-2016-0151 lists Known ransomware campaign use: Known [1].\n\nThe passage describes the vulnerability as one where the Client-Server Run-time Subsystem (CSRSS) in Microsoft mismanages process tokens, which allows local users to gain privileges via a crafted application. [1] The entry also states the required action: Apply updates per vendor instructions. (due 2022-04-18) [1]",
+      "cited_ids": [
+        "CVE-2016-0151"
+      ],
+      "sent_passages": [
+        "CVE-2016-0151#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2016-0151#vulnerability",
+          "doc_id": "CVE-2016-0151",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2016-0151",
+          "cited_text": "(due 2022-04-18)\nKnown ransomware campaign use: Known\nWeaknesses: CWE-264"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 1436,
+      "output_tokens": 365
+    },
+    {
+      "id": "K19",
+      "question": "Explain CVE-2013-3993.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2013-3993"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2013-3993",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2013-3993",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "CVE-2013-3993 is an IBM InfoSphere BigInsights vulnerability, listed as a Known Exploited Vulnerability and added to CISA KEV on 2022-05-25. Certain APIs within BigInsights can take invalid input that might allow attackers unauthorized access to read, write, modify, or delete data. [1]\n\nThe weakness is classified as CWE-264 [1].\n\n**Required action:** The impacted product is end-of-life and should be disconnected if still in use. [1] The remediation due date is 2022-06-15 [1].\n\n**Ransomware use:** The entry is marked as Known [1] for known ransomware campaign use.\n\nThe passage does not describe detection methods or ATT&CK techniques associated with this CVE, so I can't provide those from this source.",
+      "cited_ids": [
+        "CVE-2013-3993"
+      ],
+      "sent_passages": [
+        "CVE-2013-3993#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2013-3993#vulnerability",
+          "doc_id": "CVE-2013-3993",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2013-3993",
+          "cited_text": "CVE-2013-3993 IBM InfoSphere BigInsights: IBM InfoSphere BigInsights Invalid Input Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2022-05-25)\nCertain APIs within BigInsights can take invalid input that might allow attackers unauthorized access to read, write, modify, or delete data.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 1405,
+      "output_tokens": 477
+    },
+    {
+      "id": "K20",
+      "question": "Compare CVE-2023-25280 and CVE-2014-100005.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2023-25280",
+        "CVE-2014-100005"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2023-25280",
+          1.0
+        ],
+        [
+          "CVE-2014-100005",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2023-25280",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "covered",
+      "answer": "CVE-2023-25280 and CVE-2014-100005 both affect D-Link routers and are listed in CISA KEV, but they describe different weaknesses and call for the same response: retire the device.\n\n**Vulnerability type and weakness**\n- CVE-2023-25280 is an OS command injection vulnerability [1], classified as CWE-78 [1].\n- CVE-2014-100005 is a cross-site request forgery (CSRF) vulnerability [2], classified as CWE-352 [2].\n\n**Attack and impact**\n- CVE-2023-25280 allows a remote, unauthenticated attacker to escalate privileges to root via a crafted payload with the ping_addr parameter to ping.ccp. [1]\n- CVE-2014-100005 allows an attacker to change router configurations by hijacking an existing administrator session. [2] The passage does not say whether this attack is remote or unauthenticated, so I can't compare those details.\n\n**Affected product status**\n- CVE-2023-25280: The impacted product is end-of-life (EoL) and/or end-of-service (EoS). [1]\n- CVE-2014-100005: This vulnerability affects legacy D-Link products. [2] All associated hardware revisions have reached their end-of-life (EOL) or end-of-service (EOS) life cycle and should be retired and replaced per vendor instructions. [2]\n\n**Required action and deadlines**\n- CVE-2023-25280: Users should discontinue utilization of the product. [1] Due 2024-10-21. It was added to CISA KEV 2024-09-30 [1].\n- CVE-2014-100005: Retire and replace the hardware per vendor instructions. Due 2024-06-06. It was added to CISA KEV 2024-05-16 [2].\n\n**Ransomware use**\nBoth entries list Known ransomware campaign use: Unknown [1] and Known ransomware campaign use: Unknown [2].\n\n**Summary**\nThe main difference is the attack path. CVE-2023-25280 is a command injection flaw that can give a remote attacker root privileges. CVE-2014-100005 is a CSRF flaw that lets an attacker change settings by riding an existing admin session. Both products are end-of-life, so the mitigation in each case is to stop using the device and replace it, not to patch it. The passages don't include detection guidance or ATT&CK technique mappings for either vulnerability.",
+      "cited_ids": [
+        "CVE-2014-100005",
+        "CVE-2023-25280"
+      ],
+      "sent_passages": [
+        "CVE-2023-25280#vulnerability",
+        "CVE-2014-100005#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2023-25280#vulnerability",
+          "doc_id": "CVE-2023-25280",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-25280",
+          "cited_text": "CVE-2023-25280 D-Link DIR-820 Router: D-Link DIR-820 Router OS Command Injection Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-09-30)\nD-Link DIR-820 routers contain an OS command injection vulnerability that allows a remote, unauthenticated attacker to escalate privileges to root via a crafted payload with the ping_addr parameter to ping.ccp.\n"
+        },
+        {
+          "passage_id": "CVE-2014-100005#vulnerability",
+          "doc_id": "CVE-2014-100005",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2014-100005",
+          "cited_text": "CVE-2014-100005 D-Link DIR-600 Router: D-Link DIR-600 Router Cross-Site Request Forgery (CSRF) Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2024-05-16)\nD-Link DIR-600 routers contain a cross-site request forgery (CSRF) vulnerability that allows an attacker to change router configurations by hijacking an existing administrator session.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 1924,
+      "output_tokens": 1243
+    },
+    {
+      "id": "KU1",
+      "question": "What is CVE-2099-12345?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.65
+        ],
+        [
+          "T1190",
+          0.614
+        ],
+        [
+          "T1195.002",
+          0.614
+        ],
+        [
+          "T1189",
+          0.611
+        ],
+        [
+          "T1557.001",
+          0.608
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-17621",
+          0.742
+        ],
+        [
+          "CVE-2025-12480",
+          0.732
+        ],
+        [
+          "CVE-2023-22527",
+          0.725
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6495,
+      "top_doc_id": "T1190",
+      "unknown_ids": [
+        "CVE-2099-12345"
+      ],
+      "marker_id": "T1218.010",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.6327,
+      "gated": true,
+      "gate_reason": "unknown_id",
+      "claude": "skipped (gated)"
+    },
+    {
+      "id": "KU2",
+      "question": "Is CVE-2017-5754 (Meltdown) being actively exploited according to CISA?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.714
+        ],
+        [
+          "T1190",
+          0.704
+        ],
+        [
+          "T1190",
+          0.688
+        ],
+        [
+          "T1212",
+          0.663
+        ],
+        [
+          "T1212",
+          0.66
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-20333",
+          0.783
+        ],
+        [
+          "CVE-2026-76418",
+          0.779
+        ],
+        [
+          "CVE-2021-42321",
+          0.778
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7136,
+      "top_doc_id": "T1190",
+      "unknown_ids": [
+        "CVE-2017-5754"
+      ],
+      "marker_id": "T1210",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.676,
+      "gated": true,
+      "gate_reason": "unknown_id",
+      "claude": "skipped (gated)"
+    },
+    {
+      "id": "KU3",
+      "question": "What CVSS score does CVE-2021-44228 have?",
+      "kind": "partial_expected",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2021-44228",
+          1.0
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2021-44228",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "partial",
+      "answer": "The passages do not state a CVSS score for CVE-2021-44228. Related information from the passages is below.\n\nThe entry describes the vulnerability: Apache Log4j2 contains a vulnerability where JNDI features do not protect against attacker-controlled JNDI-related endpoints, allowing for remote code execution. [1] It was added to CISA KEV 2021-12-10 [1].\n\nFor remediation, the entry says for all affected software assets for which updates exist, the only acceptable remediation actions are: 1) Apply updates; OR 2) remove affected assets from agency networks. [1] Temporary mitigations are only acceptable until updates are available. [1]\n\nThe entry also notes a Known ransomware campaign use [1] and lists these weaknesses: CWE-20, CWE-400, CWE-502 [1].\n\nFor the CVSS score, check the NVD record for CVE-2021-44228 or the CISA KEV catalog entry.",
+      "cited_ids": [
+        "CVE-2021-44228"
+      ],
+      "sent_passages": [
+        "CVE-2021-44228#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2021-44228#vulnerability",
+          "doc_id": "CVE-2021-44228",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-44228",
+          "cited_text": "CVE-2021-44228 Apache Log4j2: Apache Log4j2 Remote Code Execution Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-12-10)\nApache Log4j2 contains a vulnerability where JNDI features do not protect against attacker-controlled JNDI-related endpoints, allowing for remote code execution.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 1532,
+      "output_tokens": 590
+    },
+    {
+      "id": "KU4",
+      "question": "Which vendor has the most entries in the KEV catalog?",
+      "kind": "aggregate",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1558.001",
+          0.546
+        ],
+        [
+          "T1558.002",
+          0.532
+        ],
+        [
+          "T1558",
+          0.529
+        ],
+        [
+          "T1558.004",
+          0.527
+        ],
+        [
+          "T1558.003",
+          0.521
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-21589",
+          0.567
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5459,
+      "top_doc_id": "T1558.001",
+      "unknown_ids": [],
+      "marker_id": "T1597.001",
+      "marker_tactics": [
+        "Reconnaissance"
+      ],
+      "marker_score": 0.5483,
+      "gated": true,
+      "gate_reason": "below_threshold",
+      "claude": "skipped (gated)"
+    },
+    {
+      "id": "KU5",
+      "question": "How many vulnerabilities did CISA add to KEV last month?",
+      "kind": "aggregate",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.628
+        ],
+        [
+          "T1190",
+          0.626
+        ],
+        [
+          "T1212",
+          0.616
+        ],
+        [
+          "T1621",
+          0.612
+        ],
+        [
+          "T1212",
+          0.611
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-32648",
+          0.764
+        ],
+        [
+          "CVE-2021-40449",
+          0.757
+        ],
+        [
+          "CVE-2026-81963",
+          0.754
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6282,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1068",
+      "marker_tactics": [
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.6194,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "partial",
+      "answer": "The passages don't say how many vulnerabilities CISA added to KEV last month. They contain only three KEV entries, and they don't give a monthly total or tell me today's date, so I can't determine that count.\n\nThe closest related information is the addition dates for the three KEV entries provided:\n\n- CVE-2021-32648 October CMS: October CMS Improper Authentication (Known Exploited Vulnerability, added to CISA KEV 2022-01-18) [1]\n- CVE-2021-40449 Microsoft Windows: Microsoft Windows Win32k Privilege Escalation Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-17) [2]\n- CVE-2026-81963 Microsoft Windows: Microsoft Windows Link Following Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-09-08) [3]\n\nFor a monthly count, check CISA's official KEV catalog directly, where you can filter by the date added.",
+      "cited_ids": [
+        "CVE-2021-32648",
+        "CVE-2021-40449",
+        "CVE-2026-81963"
+      ],
+      "sent_passages": [
+        "T1190#detection-2",
+        "T1190#detection-1",
+        "T1212#description",
+        "T1621#detection",
+        "T1212#mitigations",
+        "CVE-2021-32648#vulnerability",
+        "CVE-2021-40449#vulnerability",
+        "CVE-2026-81963#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2021-32648#vulnerability",
+          "doc_id": "CVE-2021-32648",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-32648",
+          "cited_text": "CVE-2021-32648 October CMS October CMS: October CMS Improper Authentication (Known Exploited Vulnerability, added to CISA KEV 2022-01-18)\nIn affected versions of the october/system package an attacker can request an account password reset and then gain access to the account using a specially crafted request.\n"
+        },
+        {
+          "passage_id": "CVE-2021-40449#vulnerability",
+          "doc_id": "CVE-2021-40449",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-40449",
+          "cited_text": "CVE-2021-40449 Microsoft Windows: Microsoft Windows Win32k Privilege Escalation Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-17)\nUnspecified vulnerability allows for an authenticated user to escalate privileges.\n"
+        },
+        {
+          "passage_id": "CVE-2026-81963#vulnerability",
+          "doc_id": "CVE-2026-81963",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-81963",
+          "cited_text": "CVE-2026-81963 Microsoft Windows: Microsoft Windows Link Following Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2026-09-08)\nMicrosoft Windows Update Stack contains a link following vulnerability that allows a local attacker to escalate privileges locally up to SYSTEM.\n"
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5709,
+      "output_tokens": 765
+    },
+    {
+      "id": "KU6",
+      "question": "What's the newest vulnerability added to KEV?",
+      "kind": "aggregate",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1212",
+          0.662
+        ],
+        [
+          "T1195.002",
+          0.653
+        ],
+        [
+          "T1190",
+          0.652
+        ],
+        [
+          "T1190",
+          0.649
+        ],
+        [
+          "T1212",
+          0.646
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-40449",
+          0.774
+        ],
+        [
+          "CVE-2019-0859",
+          0.774
+        ],
+        [
+          "CVE-2019-0803",
+          0.773
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6619,
+      "top_doc_id": "T1212",
+      "unknown_ids": [],
+      "marker_id": "T1068",
+      "marker_tactics": [
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.6716,
+      "gated": false,
+      "gate_reason": null,
+      "claude": "answered",
+      "coverage": "partial",
+      "answer": "The passages don't establish which vulnerability is the newest in the full KEV catalog, because they cover only three CVEs. Among those three, the most recently added is **CVE-2021-40449**. It is a Microsoft Windows Win32k Privilege Escalation Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-17) [1]. The other two, CVE-2019-0859 and CVE-2019-0803, were both added to CISA KEV 2021-11-03 [2].\n\nRelated details for CVE-2021-40449:\n- **Impact:** Unspecified vulnerability allows for an authenticated user to escalate privileges. [1]\n- **Required action:** Apply updates per vendor instructions. [1]\n- **Deadline and other metadata:** (due 2021-12-01) Known ransomware campaign use: Known Weaknesses: CWE-416 [1]\n\nTo find the newest entry in the full catalog, check the current CISA KEV catalog directly, since it is updated over time.",
+      "cited_ids": [
+        "CVE-2019-0859",
+        "CVE-2021-40449"
+      ],
+      "sent_passages": [
+        "T1212#detection",
+        "T1195.002#detection",
+        "T1190#detection-1",
+        "T1190#detection-2",
+        "T1212#description",
+        "CVE-2021-40449#vulnerability",
+        "CVE-2019-0859#vulnerability",
+        "CVE-2019-0803#vulnerability"
+      ],
+      "citations": [
+        {
+          "passage_id": "CVE-2021-40449#vulnerability",
+          "doc_id": "CVE-2021-40449",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-40449",
+          "cited_text": "CVE-2021-40449 Microsoft Windows: Microsoft Windows Win32k Privilege Escalation Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-17)\nUnspecified vulnerability allows for an authenticated user to escalate privileges.\n"
+        },
+        {
+          "passage_id": "CVE-2019-0859#vulnerability",
+          "doc_id": "CVE-2019-0859",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-0859",
+          "cited_text": "CVE-2019-0859 Microsoft Win32k: Microsoft Win32k Privilege Escalation Vulnerability (Known Exploited Vulnerability, added to CISA KEV 2021-11-03)\nMicrosoft Win32k fails to properly handle objects in memory causing privilege escalation. "
+        }
+      ],
+      "refusal_category": null,
+      "input_tokens": 5700,
+      "output_tokens": 936
+    }
+  ]
+}
