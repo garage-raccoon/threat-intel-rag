@@ -1,0 +1,239 @@
+{
+  "version": 1,
+  "status": "Approved by the project owner 2026-11-18 (as drafted)",
+  "written": "2026-11-18",
+  "scope": "CISA KEV catalog 2026.11.17 (1,782 entries)",
+  "provenance": "Drafted by Claude. Described questions use products with exactly one KEV entry, so there is one correct CVE.",
+  "questions": [
+    {
+      "id": "K01",
+      "question": "Our SonicWall SMA 100 SSL VPN appliance was hit by an unauthenticated SQL injection that exposed credentials. Is this a known exploited bug?",
+      "expected": [
+        "CVE-2021-20016"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K02",
+      "question": "TeamViewer installs share one encryption key across customers, letting attackers bypass remote-login controls. Which KEV entry is that?",
+      "expected": [
+        "CVE-2019-18988"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K03",
+      "question": "A regular domain user was able to make themselves a domain admin through a flaw in the Kerberos KDC. What vulnerability is this?",
+      "expected": [
+        "CVE-2014-6324"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K04",
+      "question": "Attackers pointed our FortiGate's LDAP settings at their own server to steal the LDAP bind credentials. Known exploited?",
+      "expected": [
+        "CVE-2018-13374"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K05",
+      "question": "Users opened attachments without the Outlook security warning appearing, because of a bypass bug. Which CVE?",
+      "expected": [
+        "CVE-2023-35311"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K06",
+      "question": "Shell metacharacters sent to a Sunhillo SureLine device let attackers run commands on it.",
+      "expected": [
+        "CVE-2021-36380"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K07",
+      "question": "Someone hijacked an admin session on our D-Link DIR-600 router with a forged request and changed its settings.",
+      "expected": [
+        "CVE-2014-100005"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K08",
+      "question": "A crafted ping parameter on a D-Link DIR-820 router gave a remote attacker root.",
+      "expected": [
+        "CVE-2023-25280"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K09",
+      "question": "The management interface of our Kemp LoadMaster load balancer was abused for unauthenticated command injection.",
+      "expected": [
+        "CVE-2024-1212"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K10",
+      "question": "An Edimax IC-7100 IP camera was taken over with crafted requests that ran OS commands.",
+      "expected": [
+        "CVE-2025-1316"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K11",
+      "question": "Attackers uploaded and ran PHP on our Joomla site by creating new editor profiles in JCE.",
+      "expected": [
+        "CVE-2026-48907"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K12",
+      "question": "Attackers used ProFTPD's site copy commands to read and write files they shouldn't reach.",
+      "expected": [
+        "CVE-2015-3306"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K13",
+      "question": "Puppet Enterprise report processing was abused through untrusted deserialization. Is this on the KEV list?",
+      "expected": [
+        "CVE-2026-115731"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K14",
+      "question": "Our Check Point security gateways and management server were hit by a recently added exploited vulnerability. Which one?",
+      "expected": [
+        "CVE-2026-123039"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "K15",
+      "question": "What is CVE-2024-3400?",
+      "expected": [
+        "CVE-2024-3400"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "K16",
+      "question": "Tell me about CVE-2021-44228.",
+      "expected": [
+        "CVE-2021-44228"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "K17",
+      "question": "What does CISA say to do about CVE-2026-20320?",
+      "expected": [
+        "CVE-2026-20320"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "K18",
+      "question": "is cve-2016-0151 used by ransomware?",
+      "expected": [
+        "CVE-2016-0151"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "K19",
+      "question": "Explain CVE-2013-3993.",
+      "expected": [
+        "CVE-2013-3993"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "K20",
+      "question": "Compare CVE-2023-25280 and CVE-2014-100005.",
+      "expected": [
+        "CVE-2023-25280",
+        "CVE-2014-100005"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "KU1",
+      "question": "What is CVE-2099-12345?",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "Nonexistent CVE"
+    },
+    {
+      "id": "KU2",
+      "question": "Is CVE-2017-5754 (Meltdown) being actively exploited according to CISA?",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "Real CVE, not in KEV; expected: not covered"
+    },
+    {
+      "id": "KU3",
+      "question": "What CVSS score does CVE-2021-44228 have?",
+      "expected": [],
+      "answerable": false,
+      "kind": "partial_expected",
+      "note": "In KEV, but KEV has no CVSS scores; expected: partial"
+    },
+    {
+      "id": "KU4",
+      "question": "Which vendor has the most entries in the KEV catalog?",
+      "expected": [],
+      "answerable": false,
+      "kind": "aggregate",
+      "note": "Needs counting across the catalog; retrieval can't do this"
+    },
+    {
+      "id": "KU5",
+      "question": "How many vulnerabilities did CISA add to KEV last month?",
+      "expected": [],
+      "answerable": false,
+      "kind": "aggregate",
+      "note": "Needs counting by date; retrieval can't do this"
+    },
+    {
+      "id": "KU6",
+      "question": "What's the newest vulnerability added to KEV?",
+      "expected": [],
+      "answerable": false,
+      "kind": "aggregate",
+      "note": "Needs date sorting; retrieval can't do this"
+    }
+  ],
+  "approved": "2026-11-18"
+}

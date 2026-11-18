@@ -1,0 +1,14 @@
+# DuckDB warehouse for the ATT&CK + KEV pipeline (research.md D23, D42).
+# Run from the repo root:  .venv/bin/dbt build --project-dir dbt --profiles-dir dbt
+# Every model reads committed text files (data/history/) or generated passages (data/processed/), so the
+# warehouse is rebuilt from scratch on each run and never committed.
+name: attack_rag
+version: "1.0.0"
+config-version: 2
+profile: attack_rag
+model-paths: ["models"]
+test-paths: ["tests"]
+clean-targets: ["target", "logs"]
+models:
+  attack_rag:
+    +materialized: table

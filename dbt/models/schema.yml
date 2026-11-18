@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: stg_passages
+    description: Retrieval passages (ATT&CK in-scope techniques + CISA KEV), one row per passage.
+    columns:
+      - name: passage_id
+        tests: [unique, not_null]
+      - name: doc_id
+        tests: [not_null]
+      - name: url
+        description: Every passage must link back to its source (roadmap Stage 2 test).
+        tests: [not_null]
+      - name: passage_hash
+        description: Content fingerprint used for incremental embedding; duplicates would mean duplicate passages.
+        tests: [unique, not_null]
+      - name: source
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["attack", "kev"]
+      - name: section
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["description", "detection", "mitigations", "vulnerability"]
+
+  - name: stg_attack_versions
+    columns:
+      - name: version
+        tests: [unique, not_null]
+      - name: version_order
+        tests: [unique, not_null]
+
+  - name: stg_attack_history
+    columns:
+      - name: attack_id
+        tests: [not_null]
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["active", "revoked", "deprecated"]
+
+  - name: stg_kev
+    columns:
+      - name: cve_id
+        tests: [unique, not_null]
+      - name: date_added
+        tests: [not_null]
+
+  - name: attack_technique_changes
+    columns:
+      - name: change_type
+        tests:
+          - accepted_values:
+              arguments:
+                values: ["initial", "added", "changed", "revoked", "deprecated", "reactivated", "dropped"]

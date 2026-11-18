@@ -1,0 +1,1311 @@
+{
+  "run_at": "2026-11-18T04:21:49+00:00",
+  "test_set": "kev_test_set.json",
+  "attack_version": "20.1",
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "top_k": 5,
+  "summary": {
+    "top5_retrieval_accuracy": "18/20",
+    "rank1_accuracy": "18/20",
+    "answerable_wrongly_gated": "3/20",
+    "answerable_hit_and_not_gated": "16/20",
+    "unanswerable_gated": "3/6",
+    "gated_by_reason": {
+      "below_threshold": 1,
+      "out_of_scope": 3,
+      "unknown_id": 2
+    },
+    "threshold_in_use": 0.555,
+    "marker_margin_in_use": 0.02,
+    "threshold_analysis": {
+      "threshold": 0.63,
+      "correct": 16,
+      "of": 17,
+      "gap": 0.0035
+    }
+  },
+  "rows": [
+    {
+      "id": "K01",
+      "question": "Our SonicWall SMA 100 SSL VPN appliance was hit by an unauthenticated SQL injection that exposed credentials. Is this a known exploited bug?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2021-20016"
+      ],
+      "retrieved": [
+        [
+          "T1190",
+          0.719
+        ],
+        [
+          "T1187",
+          0.71
+        ],
+        [
+          "T1606",
+          0.704
+        ],
+        [
+          "T1190",
+          0.703
+        ],
+        [
+          "T1557.001",
+          0.702
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-20016",
+          0.874
+        ],
+        [
+          "CVE-2019-7481",
+          0.853
+        ],
+        [
+          "CVE-2021-20028",
+          0.836
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7188,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1185",
+      "marker_tactics": [
+        "Collection"
+      ],
+      "marker_score": 0.6894,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K02",
+      "question": "TeamViewer installs share one encryption key across customers, letting attackers bypass remote-login controls. Which KEV entry is that?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2019-18988"
+      ],
+      "retrieved": [
+        [
+          "T1111",
+          0.689
+        ],
+        [
+          "T1212",
+          0.687
+        ],
+        [
+          "T1528",
+          0.687
+        ],
+        [
+          "T1558",
+          0.672
+        ],
+        [
+          "T1558.005",
+          0.669
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-18988",
+          0.853
+        ],
+        [
+          "CVE-2023-42793",
+          0.717
+        ],
+        [
+          "CVE-2024-27198",
+          0.715
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6893,
+      "top_doc_id": "T1111",
+      "unknown_ids": [],
+      "marker_id": "T1219.001",
+      "marker_tactics": [
+        "Command and Control"
+      ],
+      "marker_score": 0.6666,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K03",
+      "question": "A regular domain user was able to make themselves a domain admin through a flaw in the Kerberos KDC. What vulnerability is this?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2014-6324"
+      ],
+      "retrieved": [
+        [
+          "T1558",
+          0.745
+        ],
+        [
+          "T1556.001",
+          0.727
+        ],
+        [
+          "T1078.002",
+          0.722
+        ],
+        [
+          "T1558.004",
+          0.72
+        ],
+        [
+          "T1212",
+          0.718
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2014-6324",
+          0.822
+        ],
+        [
+          "CVE-2026-56155",
+          0.732
+        ],
+        [
+          "CVE-2023-0386",
+          0.725
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.745,
+      "top_doc_id": "T1558",
+      "unknown_ids": [],
+      "marker_id": "T1207",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.7174,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K04",
+      "question": "Attackers pointed our FortiGate's LDAP settings at their own server to steal the LDAP bind credentials. Known exploited?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2018-13374"
+      ],
+      "retrieved": [
+        [
+          "T1212",
+          0.681
+        ],
+        [
+          "T1190",
+          0.674
+        ],
+        [
+          "T1552",
+          0.671
+        ],
+        [
+          "T1212",
+          0.667
+        ],
+        [
+          "T1528",
+          0.661
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2018-13374",
+          0.784
+        ],
+        [
+          "CVE-2019-5591",
+          0.754
+        ],
+        [
+          "CVE-2018-13382",
+          0.72
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.681,
+      "top_doc_id": "T1212",
+      "unknown_ids": [],
+      "marker_id": "T1584.002",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.6905,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K05",
+      "question": "Users opened attachments without the Outlook security warning appearing, because of a bypass bug. Which CVE?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2023-35311"
+      ],
+      "retrieved": [
+        [
+          "T1606",
+          0.686
+        ],
+        [
+          "T1566.001",
+          0.673
+        ],
+        [
+          "T1556.001",
+          0.67
+        ],
+        [
+          "T1552.008",
+          0.667
+        ],
+        [
+          "T1078",
+          0.651
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-35311",
+          0.828
+        ],
+        [
+          "CVE-2017-11774",
+          0.818
+        ],
+        [
+          "CVE-2024-21413",
+          0.799
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6865,
+      "top_doc_id": "T1606",
+      "unknown_ids": [],
+      "marker_id": "T1564.012",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.6708,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K06",
+      "question": "Shell metacharacters sent to a Sunhillo SureLine device let attackers run commands on it.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2021-36380"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.698
+        ],
+        [
+          "T1195.002",
+          0.677
+        ],
+        [
+          "T1566.001",
+          0.672
+        ],
+        [
+          "T1566.004",
+          0.67
+        ],
+        [
+          "T1557.001",
+          0.665
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-36380",
+          0.792
+        ],
+        [
+          "CVE-2024-50603",
+          0.708
+        ],
+        [
+          "CVE-2024-55956",
+          0.708
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6978,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1059.004",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.6969,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K07",
+      "question": "Someone hijacked an admin session on our D-Link DIR-600 router with a forged request and changed its settings.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2014-100005"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.679
+        ],
+        [
+          "T1566.002",
+          0.667
+        ],
+        [
+          "T1566.002",
+          0.662
+        ],
+        [
+          "T1556.006",
+          0.659
+        ],
+        [
+          "T1110.004",
+          0.653
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2014-100005",
+          0.792
+        ],
+        [
+          "CVE-2021-40655",
+          0.764
+        ],
+        [
+          "CVE-2024-0769",
+          0.745
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6791,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1584.001",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.7234,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "K08",
+      "question": "A crafted ping parameter on a D-Link DIR-820 router gave a remote attacker root.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2023-25280"
+      ],
+      "retrieved": [
+        [
+          "T1190",
+          0.721
+        ],
+        [
+          "T1190",
+          0.709
+        ],
+        [
+          "T1189",
+          0.699
+        ],
+        [
+          "T1557.001",
+          0.697
+        ],
+        [
+          "T1557.001",
+          0.695
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-25280",
+          0.852
+        ],
+        [
+          "CVE-2015-2051",
+          0.822
+        ],
+        [
+          "CVE-2022-26258",
+          0.813
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7214,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1210",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.731,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K09",
+      "question": "The management interface of our Kemp LoadMaster load balancer was abused for unauthenticated command injection.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2024-1212"
+      ],
+      "retrieved": [
+        [
+          "T1078.002",
+          0.632
+        ],
+        [
+          "T1199",
+          0.628
+        ],
+        [
+          "T1212",
+          0.628
+        ],
+        [
+          "T1566.003",
+          0.628
+        ],
+        [
+          "T1189",
+          0.627
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-1212",
+          0.815
+        ],
+        [
+          "CVE-2026-8037",
+          0.77
+        ],
+        [
+          "CVE-2020-4006",
+          0.708
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6325,
+      "top_doc_id": "T1078.002",
+      "unknown_ids": [],
+      "marker_id": "T1574.014",
+      "marker_tactics": [
+        "Execution",
+        "Stealth"
+      ],
+      "marker_score": 0.6428,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K10",
+      "question": "An Edimax IC-7100 IP camera was taken over with crafted requests that ran OS commands.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2025-1316"
+      ],
+      "retrieved": [
+        [
+          "T1111",
+          0.645
+        ],
+        [
+          "T1200",
+          0.631
+        ],
+        [
+          "T1056",
+          0.631
+        ],
+        [
+          "T1056.001",
+          0.631
+        ],
+        [
+          "T1056.002",
+          0.63
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-1316",
+          0.809
+        ],
+        [
+          "CVE-2019-11001",
+          0.698
+        ],
+        [
+          "CVE-2021-40407",
+          0.682
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6451,
+      "top_doc_id": "T1111",
+      "unknown_ids": [],
+      "marker_id": "T1125",
+      "marker_tactics": [
+        "Collection"
+      ],
+      "marker_score": 0.6559,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K11",
+      "question": "Attackers uploaded and ran PHP on our Joomla site by creating new editor profiles in JCE.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-48907"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.632
+        ],
+        [
+          "T1189",
+          0.622
+        ],
+        [
+          "T1056.003",
+          0.598
+        ],
+        [
+          "T1659",
+          0.592
+        ],
+        [
+          "T1606",
+          0.587
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-48908",
+          0.772
+        ],
+        [
+          "CVE-2023-23752",
+          0.751
+        ],
+        [
+          "CVE-2026-56290",
+          0.748
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6317,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1574.006",
+      "marker_tactics": [
+        "Execution",
+        "Stealth"
+      ],
+      "marker_score": 0.6541,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "K12",
+      "question": "Attackers used ProFTPD's site copy commands to read and write files they shouldn't reach.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2015-3306"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.666
+        ],
+        [
+          "T1003.007",
+          0.651
+        ],
+        [
+          "T1003.003",
+          0.647
+        ],
+        [
+          "T1566.001",
+          0.646
+        ],
+        [
+          "T1659",
+          0.637
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2015-3306",
+          0.752
+        ],
+        [
+          "CVE-2020-7247",
+          0.67
+        ],
+        [
+          "CVE-2014-0130",
+          0.663
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6656,
+      "top_doc_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1204.004",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.6996,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "K13",
+      "question": "Puppet Enterprise report processing was abused through untrusted deserialization. Is this on the KEV list?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-115731"
+      ],
+      "retrieved": [
+        [
+          "T1552.007",
+          0.69
+        ],
+        [
+          "T1558.004",
+          0.659
+        ],
+        [
+          "T1558",
+          0.658
+        ],
+        [
+          "T1558.004",
+          0.655
+        ],
+        [
+          "T1078",
+          0.652
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-115731",
+          0.825
+        ],
+        [
+          "CVE-2018-4939",
+          0.762
+        ],
+        [
+          "CVE-2023-26359",
+          0.758
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6902,
+      "top_doc_id": "T1552.007",
+      "unknown_ids": [],
+      "marker_id": "T1684.002",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.6793,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K14",
+      "question": "Our Check Point security gateways and management server were hit by a recently added exploited vulnerability. Which one?",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-123039"
+      ],
+      "retrieved": [
+        [
+          "T1190",
+          0.717
+        ],
+        [
+          "T1190",
+          0.692
+        ],
+        [
+          "T1190",
+          0.687
+        ],
+        [
+          "T1212",
+          0.675
+        ],
+        [
+          "T1190",
+          0.66
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-50751",
+          0.792
+        ],
+        [
+          "CVE-2024-24919",
+          0.761
+        ],
+        [
+          "CVE-2026-93616",
+          0.739
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7169,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1210",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.6888,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K15",
+      "question": "What is CVE-2024-3400?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2024-3400"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2024-3400",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2024-3400",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K16",
+      "question": "Tell me about CVE-2021-44228.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2021-44228"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2021-44228",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2021-44228",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K17",
+      "question": "What does CISA say to do about CVE-2026-20320?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2026-20320"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2026-20320",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2026-20320",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K18",
+      "question": "is cve-2016-0151 used by ransomware?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2016-0151"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2016-0151",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2016-0151",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K19",
+      "question": "Explain CVE-2013-3993.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2013-3993"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2013-3993",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2013-3993",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "K20",
+      "question": "Compare CVE-2023-25280 and CVE-2014-100005.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "CVE-2023-25280",
+        "CVE-2014-100005"
+      ],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2023-25280",
+          1.0
+        ],
+        [
+          "CVE-2014-100005",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2023-25280",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "KU1",
+      "question": "What is CVE-2099-12345?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.65
+        ],
+        [
+          "T1190",
+          0.614
+        ],
+        [
+          "T1195.002",
+          0.614
+        ],
+        [
+          "T1189",
+          0.611
+        ],
+        [
+          "T1557.001",
+          0.608
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-17621",
+          0.742
+        ],
+        [
+          "CVE-2025-12480",
+          0.732
+        ],
+        [
+          "CVE-2023-22527",
+          0.725
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6495,
+      "top_doc_id": "T1190",
+      "unknown_ids": [
+        "CVE-2099-12345"
+      ],
+      "marker_id": "T1218.010",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.6327,
+      "gated": true,
+      "gate_reason": "unknown_id"
+    },
+    {
+      "id": "KU2",
+      "question": "Is CVE-2017-5754 (Meltdown) being actively exploited according to CISA?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.714
+        ],
+        [
+          "T1190",
+          0.704
+        ],
+        [
+          "T1190",
+          0.688
+        ],
+        [
+          "T1212",
+          0.663
+        ],
+        [
+          "T1212",
+          0.66
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-20333",
+          0.783
+        ],
+        [
+          "CVE-2026-76418",
+          0.779
+        ],
+        [
+          "CVE-2021-42321",
+          0.778
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7136,
+      "top_doc_id": "T1190",
+      "unknown_ids": [
+        "CVE-2017-5754"
+      ],
+      "marker_id": "T1210",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.676,
+      "gated": true,
+      "gate_reason": "unknown_id"
+    },
+    {
+      "id": "KU3",
+      "question": "What CVSS score does CVE-2021-44228 have?",
+      "kind": "partial_expected",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [],
+      "retrieved_kev": [
+        [
+          "CVE-2021-44228",
+          1.0
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2021-44228",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "KU4",
+      "question": "Which vendor has the most entries in the KEV catalog?",
+      "kind": "aggregate",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1558.001",
+          0.546
+        ],
+        [
+          "T1558.002",
+          0.532
+        ],
+        [
+          "T1558",
+          0.529
+        ],
+        [
+          "T1558.004",
+          0.527
+        ],
+        [
+          "T1558.003",
+          0.521
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-21589",
+          0.567
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5459,
+      "top_doc_id": "T1558.001",
+      "unknown_ids": [],
+      "marker_id": "T1597.001",
+      "marker_tactics": [
+        "Reconnaissance"
+      ],
+      "marker_score": 0.5483,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "KU5",
+      "question": "How many vulnerabilities did CISA add to KEV last month?",
+      "kind": "aggregate",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.628
+        ],
+        [
+          "T1190",
+          0.626
+        ],
+        [
+          "T1212",
+          0.616
+        ],
+        [
+          "T1621",
+          0.612
+        ],
+        [
+          "T1212",
+          0.611
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-32648",
+          0.764
+        ],
+        [
+          "CVE-2021-40449",
+          0.757
+        ],
+        [
+          "CVE-2026-81963",
+          0.754
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6282,
+      "top_doc_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1068",
+      "marker_tactics": [
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.6194,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "KU6",
+      "question": "What's the newest vulnerability added to KEV?",
+      "kind": "aggregate",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1212",
+          0.662
+        ],
+        [
+          "T1195.002",
+          0.653
+        ],
+        [
+          "T1190",
+          0.652
+        ],
+        [
+          "T1190",
+          0.649
+        ],
+        [
+          "T1212",
+          0.646
+        ]
+      ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-40449",
+          0.774
+        ],
+        [
+          "CVE-2019-0859",
+          0.774
+        ],
+        [
+          "CVE-2019-0803",
+          0.773
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6619,
+      "top_doc_id": "T1212",
+      "unknown_ids": [],
+      "marker_id": "T1068",
+      "marker_tactics": [
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.6716,
+      "gated": false,
+      "gate_reason": null
+    }
+  ]
+}

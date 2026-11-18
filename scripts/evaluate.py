@@ -3,6 +3,7 @@
 Usage:
   .venv/bin/python -I scripts/evaluate.py                  # approved set (D26): retrieval + gate, free, no API key
   .venv/bin/python -I scripts/evaluate.py --set holdout    # held-out set (D34), written after settings were fixed
+  .venv/bin/python -I scripts/evaluate.py --set kev        # KEV set (D48)
   .venv/bin/python -I scripts/evaluate.py --claude         # also calls Claude for questions that pass the gate
 Writes data/eval/<prefix>results.json (machine-readable) and data/eval/<prefix>report.md (per-question table).
 See research.md D26+.
@@ -25,6 +26,7 @@ EVAL_DIR = ROOT / "data/eval"
 TEST_SETS = {  # name -> (test set file, output prefix)
     "main": ("test_set.json", ""),
     "holdout": ("holdout_set.json", "holdout_"),
+    "kev": ("kev_test_set.json", "kev_"),
 }
 # claude-haiku-5-5 list price per million input / output tokens (Claude API reference, cached 2026-11-03).
 # Used only for the cost estimate printed after a --claude run.
@@ -35,16 +37,22 @@ def score_retrieval(questions: list[dict], retriever: Retriever) -> list[dict]:
     rows = []
     for q in questions:
         r = retriever.retrieve(q["question"])
-        found = [p["attack_id"] for p in r.passages]
+        kev = retriever.kev_to_send(r)
+        # Techniques are judged on the technique list, CVEs on the KEV list (separate lists, D47); rank is the
+        # position within the list the expected ID belongs to.
+        lists = [[p["doc_id"] for p in r.passages], [p["doc_id"] for p in kev]]
+        rank = next((i + 1 for found in lists for i, a in enumerate(found) if a in q["expected"]), None)
         reason = gate_reason(r)
+        first = (r.passages or r.kev)[0]
         rows.append({
             "id": q["id"], "question": q["question"], "kind": q["kind"], "answerable": q["answerable"],
             "expected": q["expected"],
-            "retrieved": [[p["attack_id"], round(p["score"], 3)] for p in r.passages],
-            "hit": any(e in found for e in q["expected"]),
-            "rank": next((i + 1 for i, a in enumerate(found) if a in q["expected"]), None),
-            "match": r.passages[0]["match"], "top_score": round(r.passages[0]["score"], 4),
-            "top_attack_id": r.passages[0]["attack_id"], "unknown_ids": r.unknown_ids,
+            "retrieved": [[p["doc_id"], round(p["score"], 3)] for p in r.passages],
+            "retrieved_kev": [[p["doc_id"], round(p["score"], 3)] for p in kev],
+            "hit": rank is not None,
+            "rank": rank,
+            "match": first["match"], "top_score": round(r.top_score, 4),
+            "top_doc_id": first["doc_id"], "unknown_ids": r.unknown_ids,
             "marker_id": r.marker["attack_id"] if r.marker else None,
             "marker_tactics": r.marker["tactics"] if r.marker else None,
             "marker_score": round(r.marker["score"], 4) if r.marker else None,
@@ -89,7 +97,7 @@ def score_claude(questions: list[dict], rows: list[dict], retriever: Retriever) 
             print(f"  [{n}/{len(todo)}] {r['id']}: {type(e).__name__}")
             continue
         r.update(claude=res["status"], coverage=res.get("coverage"), answer=res.get("answer"),
-                 cited_ids=sorted({c["attack_id"] for c in res.get("citations", [])}),
+                 cited_ids=sorted({c["doc_id"] for c in res.get("citations", [])}),
                  refusal_category=res.get("refusal_category"),
                  input_tokens=res["usage"]["input_tokens"], output_tokens=res["usage"]["output_tokens"])
         print(f"  [{n}/{len(todo)}] {r['id']}: {r['claude']} / coverage {r['coverage']}")
@@ -142,8 +150,8 @@ def summarize(rows: list[dict]) -> dict:
 
 def write_report(path: Path, title: str, meta: dict, summary: dict, rows: list[dict]) -> None:
     """Human-readable version of the results: one row per question with its full top 5."""
-    top5 = lambda r: ", ".join(f"**{a}** ({s:.2f})" if a in r["expected"] else f"{a} ({s:.2f})"
-                               for a, s in r["retrieved"])
+    fmt = lambda r, items: ", ".join(f"**{a}** ({s:.2f})" if a in r["expected"] else f"{a} ({s:.2f})" for a, s in items)
+    top5 = lambda r: fmt(r, r["retrieved"]) + (f"<br>KEV: {fmt(r, r['retrieved_kev'])}" if r.get("retrieved_kev") else "")
     marker = lambda r: f"{r['marker_id']} ({r['marker_score']:.2f}, {', '.join(r['marker_tactics'])})" if r["marker_id"] else "–"
     stopped = lambda r: f"Yes: {r['gate_reason']}" if r["gated"] else "No"
     header = "| ID | Question | {} | Best in-scope | Nearest out-of-scope | Stopped? | Top 5 (score) |"
@@ -157,7 +165,7 @@ def write_report(path: Path, title: str, meta: dict, summary: dict, rows: list[d
         "Rank = position of the first correct technique in the top 5 (– = not found). Bold = an expected ID. "
         "Scores are cosine similarity; exact-ID lookups show 1.00. Stopped reasons: below_threshold (off-topic), "
         "out_of_scope (an out-of-scope marker beat the best in-scope passage by more than the margin), "
-        "unknown_id (names an ATT&CK ID that isn't loaded).", "",
+        "unknown_id (names an ATT&CK or CVE ID that isn't loaded).", "",
         "## Answerable", "", header.format("Expected / Rank"), "|---|---|---|---|---|---|---|",
         *[f"| {r['id']} | {r['question']} | {' / '.join(r['expected'])} · {r['rank'] or '–'} | {r['top_score']:.2f} | "
           f"{marker(r)} | {stopped(r)} | {top5(r)} |" for r in rows if r["answerable"]], "",
@@ -171,7 +179,7 @@ def write_report(path: Path, title: str, meta: dict, summary: dict, rows: list[d
         lines += [
             "## Claude answers", "",
             "Every question that passed the gate, with Claude's own coverage tag (covered / partial / not_covered) "
-            "and the ATT&CK IDs its citations point to. Answers shown in full.", "",
+            "and the ATT&CK / CVE IDs its citations point to. Answers shown in full.", "",
             "| ID | Answerable? | Expected | Status | Coverage | Cited IDs | Answer |", "|---|---|---|---|---|---|---|",
             *[f"| {r['id']} | {'yes' if r['answerable'] else 'no'} | {' / '.join(r['expected']) or '–'} | {r['claude']} | "
               f"{r.get('coverage') or '–'} | {', '.join(r.get('cited_ids', [])) or '–'} | {cell(r.get('answer') or r.get('error'))} |"
@@ -215,7 +223,7 @@ def main() -> None:
     for r in rows:
         if (r["answerable"] and (not r["hit"] or r["gated"])) or (not r["answerable"] and not r["gated"]):
             m = f"marker {r['marker_id']} {r['marker_score']:.3f}" if r["marker_id"] else ""
-            print(f"  {r['id']:5} {r['kind']:13} top={r['top_attack_id']:10} {r['top_score']:.3f} {m:24} "
+            print(f"  {r['id']:5} {r['kind']:13} top={r['top_doc_id']:14} {r['top_score']:.3f} {m:24} "
                   f"expected={r['expected']} stopped={r['gate_reason']}")
     print(f"\nWrote {results_path.relative_to(ROOT)} and {report_path.relative_to(ROOT)}")
 

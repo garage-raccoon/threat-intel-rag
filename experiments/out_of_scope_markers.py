@@ -19,7 +19,11 @@ import ask  # noqa: E402
 from parse_stix import attack_ref, clean, is_active  # noqa: E402
 
 r = ask.Retriever()
-P = r.index["passages"]
+# Recorded with the ATT&CK-only index (before KEV was added in Stage 2): restrict to ATT&CK passages so the
+# experiment still reproduces its recorded numbers on a later index.
+ATT = [i for i, p in enumerate(r.index["passages"]) if p.get("source", "attack") == "attack"]
+P = [r.index["passages"][i] for i in ATT]
+V_IN = r.vectors[ATT]
 questions = json.loads((ROOT / "data/eval/test_set.json").read_text())["questions"]
 in_scope = {p["attack_id"] for p in P}
 
@@ -54,16 +58,20 @@ def ranked_techniques(scores: np.ndarray) -> list[tuple[str, float]]:
 
 rows = []
 for q in questions:
-    passages, unknown = r.retrieve(q["question"])
-    exact = passages[0]["match"] == "exact"
+    ret = r.retrieve(q["question"])
+    unknown = ret.unknown_ids
+    exact_hit = bool(ret.passages) and ret.passages[0]["match"] == "exact"
+    exact = exact_hit
     v = r.model.encode(r.index["query_instruction"] + q["question"], normalize_embeddings=True)
-    s_in, s_out = r.vectors @ v, M @ v
-    base_ids = [p["attack_id"] for p in passages]
+    s_in, s_out = V_IN @ v, M @ v
+    base_ids = ([p["doc_id"] for p in ret.passages] if exact
+                else [P[i]["attack_id"] for i in np.argsort(-s_in)[:ask.TOP_K]])
     tech = ranked_techniques(s_in)[:ask.TOP_K]
     dedup_ids = base_ids if exact else [t for t, _ in tech]
     best_in, j = float(s_in.max()), int(s_out.argmax())
     out_wins = (not exact) and float(s_out[j]) > best_in
-    base_gate = ask.is_gated(passages, unknown)
+    # Baseline = the gate before markers existed (D29): unknown ID, or best ATT&CK score below the threshold.
+    base_gate = (not exact_hit) and (bool(unknown) or float(s_in.max()) < ask.THRESHOLD)
     rows.append({
         "id": q["id"], "answerable": q["answerable"], "expected": q["expected"],
         "base_hit": any(e in base_ids for e in q["expected"]),

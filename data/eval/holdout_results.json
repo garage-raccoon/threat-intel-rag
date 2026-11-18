@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-11-17T23:53:26+00:00",
+  "run_at": "2026-11-18T03:31:58+00:00",
   "test_set": "holdout_set.json",
   "attack_version": "20.1",
   "embedding_model": "BAAI/bge-small-en-v1.5",
@@ -9,18 +9,18 @@
     "rank1_accuracy": "42/50",
     "answerable_wrongly_gated": "2/50",
     "answerable_hit_and_not_gated": "45/50",
-    "unanswerable_gated": "40/50",
+    "unanswerable_gated": "39/50",
     "gated_by_reason": {
       "below_threshold": 10,
-      "out_of_scope": 27,
+      "out_of_scope": 26,
       "unknown_id": 5
     },
     "threshold_in_use": 0.555,
     "marker_margin_in_use": 0.02,
     "threshold_analysis": {
       "threshold": 0.691,
-      "correct": 72,
-      "of": 90,
+      "correct": 71,
+      "of": 89,
       "gap": 0.0016
     }
   },
@@ -55,11 +55,25 @@
           0.696
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-36934",
+          0.7
+        ],
+        [
+          "CVE-2024-43451",
+          0.7
+        ],
+        [
+          "CVE-2020-2021",
+          0.698
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7767,
-      "top_attack_id": "T1003.002",
+      "top_doc_id": "T1003.002",
       "unknown_ids": [],
       "marker_id": "T1525",
       "marker_tactics": [
@@ -99,11 +113,25 @@
           0.658
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-23760",
+          0.602
+        ],
+        [
+          "CVE-2022-26925",
+          0.591
+        ],
+        [
+          "CVE-2021-36942",
+          0.587
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7524,
-      "top_attack_id": "T1003.004",
+      "top_doc_id": "T1003.004",
       "unknown_ids": [],
       "marker_id": "T1531",
       "marker_tactics": [
@@ -143,11 +171,25 @@
           0.715
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-22555",
+          0.709
+        ],
+        [
+          "CVE-2022-0995",
+          0.709
+        ],
+        [
+          "CVE-2024-3393",
+          0.703
+        ]
+      ],
       "hit": true,
       "rank": 4,
       "match": "vector",
       "top_score": 0.7356,
-      "top_attack_id": "T1078.002",
+      "top_doc_id": "T1078.002",
       "unknown_ids": [],
       "marker_id": "T1485",
       "marker_tactics": [
@@ -187,11 +229,25 @@
           0.713
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-22555",
+          0.75
+        ],
+        [
+          "CVE-2022-0185",
+          0.745
+        ],
+        [
+          "CVE-2023-0386",
+          0.743
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.8144,
-      "top_attack_id": "T1003.008",
+      "top_doc_id": "T1003.008",
       "unknown_ids": [],
       "marker_id": "T1204.003",
       "marker_tactics": [
@@ -231,11 +287,25 @@
           0.733
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-22555",
+          0.771
+        ],
+        [
+          "CVE-2022-0185",
+          0.757
+        ],
+        [
+          "CVE-2024-50302",
+          0.747
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7434,
-      "top_attack_id": "T1003.001",
+      "top_doc_id": "T1003.001",
       "unknown_ids": [],
       "marker_id": "T1497.001",
       "marker_tactics": [
@@ -276,11 +346,25 @@
           0.709
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2011-4723",
+          0.734
+        ],
+        [
+          "CVE-2015-3035",
+          0.693
+        ],
+        [
+          "CVE-2015-2051",
+          0.69
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7747,
-      "top_attack_id": "T1040",
+      "top_doc_id": "T1040",
       "unknown_ids": [],
       "marker_id": "T1600",
       "marker_tactics": [
@@ -320,11 +404,25 @@
           0.687
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-49113",
+          0.636
+        ],
+        [
+          "CVE-2019-15107",
+          0.629
+        ],
+        [
+          "CVE-2009-1151",
+          0.628
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7304,
-      "top_attack_id": "T1056.003",
+      "top_doc_id": "T1056.003",
       "unknown_ids": [],
       "marker_id": "T1534",
       "marker_tactics": [
@@ -364,11 +462,25 @@
           0.626
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-30657",
+          0.605
+        ],
+        [
+          "CVE-2021-30860",
+          0.605
+        ],
+        [
+          "CVE-2019-6223",
+          0.588
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.6506,
-      "top_attack_id": "T1056.002",
+      "top_doc_id": "T1056.002",
       "unknown_ids": [],
       "marker_id": "T1553.001",
       "marker_tactics": [
@@ -408,11 +520,25 @@
           0.725
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2013-3900",
+          0.71
+        ],
+        [
+          "CVE-2020-1464",
+          0.705
+        ],
+        [
+          "CVE-2020-8657",
+          0.702
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.828,
-      "top_attack_id": "T1056.004",
+      "top_doc_id": "T1056.004",
       "unknown_ids": [],
       "marker_id": "T1027.007",
       "marker_tactics": [
@@ -453,11 +579,25 @@
           0.732
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-49105",
+          0.693
+        ],
+        [
+          "CVE-2023-27532",
+          0.69
+        ],
+        [
+          "CVE-2019-0344",
+          0.688
+        ]
+      ],
       "hit": true,
       "rank": 3,
       "match": "vector",
       "top_score": 0.7631,
-      "top_attack_id": "T1528",
+      "top_doc_id": "T1528",
       "unknown_ids": [],
       "marker_id": "T1098.001",
       "marker_tactics": [
@@ -499,11 +639,25 @@
           0.686
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-37085",
+          0.679
+        ],
+        [
+          "CVE-2026-56155",
+          0.673
+        ],
+        [
+          "CVE-2022-26923",
+          0.668
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7254,
-      "top_attack_id": "T1078",
+      "top_doc_id": "T1078",
       "unknown_ids": [],
       "marker_id": "T1033",
       "marker_tactics": [
@@ -544,11 +698,25 @@
           0.679
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-23760",
+          0.653
+        ],
+        [
+          "CVE-2021-36942",
+          0.652
+        ],
+        [
+          "CVE-2017-5521",
+          0.645
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6918,
-      "top_attack_id": "T1110.004",
+      "top_doc_id": "T1110.004",
       "unknown_ids": [],
       "marker_id": "T1531",
       "marker_tactics": [
@@ -589,11 +757,25 @@
           0.654
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2017-5521",
+          0.598
+        ],
+        [
+          "CVE-2023-49105",
+          0.577
+        ],
+        [
+          "CVE-2026-23760",
+          0.575
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7088,
-      "top_attack_id": "T1110.001",
+      "top_doc_id": "T1110.001",
       "unknown_ids": [],
       "marker_id": "T1586",
       "marker_tactics": [
@@ -633,11 +815,25 @@
           0.708
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-48558",
+          0.703
+        ],
+        [
+          "CVE-2026-19868",
+          0.694
+        ],
+        [
+          "CVE-2022-22536",
+          0.688
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.754,
-      "top_attack_id": "T1111",
+      "top_doc_id": "T1111",
       "unknown_ids": [],
       "marker_id": "T1550.004",
       "marker_tactics": [
@@ -678,11 +874,25 @@
           0.682
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-8069",
+          0.759
+        ],
+        [
+          "CVE-2026-19490",
+          0.755
+        ],
+        [
+          "CVE-2024-8068",
+          0.754
+        ]
+      ],
       "hit": true,
       "rank": 5,
       "match": "vector",
       "top_score": 0.703,
-      "top_attack_id": "T1539",
+      "top_doc_id": "T1539",
       "unknown_ids": [],
       "marker_id": "T1134",
       "marker_tactics": [
@@ -723,11 +933,25 @@
           0.72
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-24054",
+          0.82
+        ],
+        [
+          "CVE-2024-43451",
+          0.815
+        ],
+        [
+          "CVE-2025-24984",
+          0.761
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7878,
-      "top_attack_id": "T1187",
+      "top_doc_id": "T1187",
       "unknown_ids": [],
       "marker_id": "T1021.002",
       "marker_tactics": [
@@ -767,11 +991,25 @@
           0.603
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-37085",
+          0.639
+        ],
+        [
+          "CVE-2023-36761",
+          0.636
+        ],
+        [
+          "CVE-2013-7331",
+          0.631
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.6478,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1583.008",
       "marker_tactics": [
@@ -811,11 +1049,25 @@
           0.685
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-9082",
+          0.789
+        ],
+        [
+          "CVE-2016-2386",
+          0.78
+        ],
+        [
+          "CVE-2024-6670",
+          0.766
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7604,
-      "top_attack_id": "T1190",
+      "top_doc_id": "T1190",
       "unknown_ids": [],
       "marker_id": "T1608.006",
       "marker_tactics": [
@@ -856,11 +1108,25 @@
           0.609
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2020-0638",
+          0.682
+        ],
+        [
+          "CVE-2025-59374",
+          0.674
+        ],
+        [
+          "CVE-2024-20953",
+          0.669
+        ]
+      ],
       "hit": true,
       "rank": 2,
       "match": "vector",
       "top_score": 0.6295,
-      "top_attack_id": "T1566",
+      "top_doc_id": "T1566",
       "unknown_ids": [],
       "marker_id": "T1496.004",
       "marker_tactics": [
@@ -901,11 +1167,25 @@
           0.627
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2018-0155",
+          0.622
+        ],
+        [
+          "CVE-2021-20090",
+          0.618
+        ],
+        [
+          "CVE-2026-0257",
+          0.618
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.6915,
-      "top_attack_id": "T1195.003",
+      "top_doc_id": "T1195.003",
       "unknown_ids": [],
       "marker_id": "T1650",
       "marker_tactics": [
@@ -945,11 +1225,25 @@
           0.61
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2020-8193",
+          0.648
+        ],
+        [
+          "CVE-2025-6543",
+          0.632
+        ],
+        [
+          "CVE-2022-31199",
+          0.632
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.6496,
-      "top_attack_id": "T1200",
+      "top_doc_id": "T1200",
       "unknown_ids": [],
       "marker_id": "T1205",
       "marker_tactics": [
@@ -991,11 +1285,25 @@
           0.726
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2022-0492",
+          0.745
+        ],
+        [
+          "CVE-2021-32030",
+          0.743
+        ],
+        [
+          "CVE-2025-20337",
+          0.741
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.8092,
-      "top_attack_id": "T1212",
+      "top_doc_id": "T1212",
       "unknown_ids": [],
       "marker_id": "T1687",
       "marker_tactics": [
@@ -1036,11 +1344,25 @@
           0.716
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-29824",
+          0.707
+        ],
+        [
+          "CVE-2025-32701",
+          0.706
+        ],
+        [
+          "CVE-2019-1214",
+          0.684
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7935,
-      "top_attack_id": "T1552.002",
+      "top_doc_id": "T1552.002",
       "unknown_ids": [],
       "marker_id": "T1547.001",
       "marker_tactics": [
@@ -1082,11 +1404,25 @@
           0.697
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-15107",
+          0.688
+        ],
+        [
+          "CVE-2009-1151",
+          0.668
+        ],
+        [
+          "CVE-2014-6278",
+          0.666
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7891,
-      "top_attack_id": "T1552.003",
+      "top_doc_id": "T1552.003",
       "unknown_ids": [],
       "marker_id": "T1070.003",
       "marker_tactics": [
@@ -1127,11 +1463,25 @@
           0.666
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-33053",
+          0.678
+        ],
+        [
+          "CVE-2023-49105",
+          0.676
+        ],
+        [
+          "CVE-2024-12686",
+          0.671
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.6818,
-      "top_attack_id": "T1552.004",
+      "top_doc_id": "T1552.004",
       "unknown_ids": [],
       "marker_id": "T1563.001",
       "marker_tactics": [
@@ -1172,11 +1522,25 @@
           0.696
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2014-1812",
+          0.746
+        ],
+        [
+          "CVE-2024-21338",
+          0.709
+        ],
+        [
+          "CVE-2020-2021",
+          0.706
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.8249,
-      "top_attack_id": "T1552.006",
+      "top_doc_id": "T1552.006",
       "unknown_ids": [],
       "marker_id": "T1201",
       "marker_tactics": [
@@ -1217,11 +1581,25 @@
           0.707
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2018-15133",
+          0.716
+        ],
+        [
+          "CVE-2026-63077",
+          0.713
+        ],
+        [
+          "CVE-2020-8657",
+          0.706
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7704,
-      "top_attack_id": "T1552.007",
+      "top_doc_id": "T1552.007",
       "unknown_ids": [],
       "marker_id": "T1610",
       "marker_tactics": [
@@ -1262,11 +1640,25 @@
           0.64
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2011-4723",
+          0.632
+        ],
+        [
+          "CVE-2020-25078",
+          0.629
+        ],
+        [
+          "CVE-2013-5223",
+          0.621
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7137,
-      "top_attack_id": "T1552.008",
+      "top_doc_id": "T1552.008",
       "unknown_ids": [],
       "marker_id": "T1567.003",
       "marker_tactics": [
@@ -1307,11 +1699,25 @@
           0.748
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-38014",
+          0.663
+        ],
+        [
+          "CVE-2026-21519",
+          0.658
+        ],
+        [
+          "CVE-2025-62221",
+          0.656
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.8208,
-      "top_attack_id": "T1555.004",
+      "top_doc_id": "T1555.004",
       "unknown_ids": [],
       "marker_id": "T1134",
       "marker_tactics": [
@@ -1353,11 +1759,25 @@
           0.647
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-49105",
+          0.648
+        ],
+        [
+          "CVE-2026-67277",
+          0.642
+        ],
+        [
+          "CVE-2026-104935",
+          0.639
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.6937,
-      "top_attack_id": "T1555.005",
+      "top_doc_id": "T1555.005",
       "unknown_ids": [],
       "marker_id": "T1531",
       "marker_tactics": [
@@ -1398,11 +1818,25 @@
           0.677
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-30066",
+          0.686
+        ],
+        [
+          "CVE-2020-4427",
+          0.681
+        ],
+        [
+          "CVE-2019-1215",
+          0.679
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7449,
-      "top_attack_id": "T1555.006",
+      "top_doc_id": "T1555.006",
       "unknown_ids": [],
       "marker_id": "T1586.003",
       "marker_tactics": [
@@ -1443,11 +1877,25 @@
           0.704
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2022-0492",
+          0.716
+        ],
+        [
+          "CVE-2021-22555",
+          0.702
+        ],
+        [
+          "CVE-2014-0196",
+          0.689
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7256,
-      "top_attack_id": "T1556.003",
+      "top_doc_id": "T1556.003",
       "unknown_ids": [],
       "marker_id": "T1685.006",
       "marker_tactics": [
@@ -1488,11 +1936,25 @@
           0.708
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2011-4723",
+          0.723
+        ],
+        [
+          "CVE-2020-25078",
+          0.721
+        ],
+        [
+          "CVE-2023-49105",
+          0.721
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.789,
-      "top_attack_id": "T1556.002",
+      "top_doc_id": "T1556.002",
       "unknown_ids": [],
       "marker_id": "T1574.001",
       "marker_tactics": [
@@ -1534,11 +1996,25 @@
           0.697
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2020-8193",
+          0.729
+        ],
+        [
+          "CVE-2019-19781",
+          0.707
+        ],
+        [
+          "CVE-2026-20182",
+          0.704
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.711,
-      "top_attack_id": "T1556.006",
+      "top_doc_id": "T1556.006",
       "unknown_ids": [],
       "marker_id": "T1098.001",
       "marker_tactics": [
@@ -1580,11 +2056,25 @@
           0.715
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-3393",
+          0.693
+        ],
+        [
+          "CVE-2026-86060",
+          0.686
+        ],
+        [
+          "CVE-2026-20349",
+          0.686
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7897,
-      "top_attack_id": "T1556.009",
+      "top_doc_id": "T1556.009",
       "unknown_ids": [],
       "marker_id": "T1484",
       "marker_tactics": [
@@ -1626,11 +2116,25 @@
           0.748
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-22991",
+          0.689
+        ],
+        [
+          "CVE-2020-8816",
+          0.686
+        ],
+        [
+          "CVE-2021-36942",
+          0.686
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.8098,
-      "top_attack_id": "T1557.002",
+      "top_doc_id": "T1557.002",
       "unknown_ids": [],
       "marker_id": "T1498.002",
       "marker_tactics": [
@@ -1671,11 +2175,25 @@
           0.675
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-3393",
+          0.768
+        ],
+        [
+          "CVE-2024-38475",
+          0.719
+        ],
+        [
+          "CVE-2013-5223",
+          0.711
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7631,
-      "top_attack_id": "T1557.003",
+      "top_doc_id": "T1557.003",
       "unknown_ids": [],
       "marker_id": "T1584.002",
       "marker_tactics": [
@@ -1716,11 +2234,25 @@
           0.79
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2014-6324",
+          0.675
+        ],
+        [
+          "CVE-2024-43451",
+          0.67
+        ],
+        [
+          "CVE-2026-67277",
+          0.665
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.8174,
-      "top_attack_id": "T1558.002",
+      "top_doc_id": "T1558.002",
       "unknown_ids": [],
       "marker_id": "T1550.003",
       "marker_tactics": [
@@ -1761,11 +2293,25 @@
           0.691
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-67277",
+          0.703
+        ],
+        [
+          "CVE-2026-49869",
+          0.699
+        ],
+        [
+          "CVE-2023-27532",
+          0.692
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.7605,
-      "top_attack_id": "T1558.004",
+      "top_doc_id": "T1558.004",
       "unknown_ids": [],
       "marker_id": "T1586.003",
       "marker_tactics": [
@@ -1806,11 +2352,25 @@
           0.777
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-31431",
+          0.724
+        ],
+        [
+          "CVE-2021-22555",
+          0.709
+        ],
+        [
+          "CVE-2014-6324",
+          0.707
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.8219,
-      "top_attack_id": "T1558.005",
+      "top_doc_id": "T1558.005",
       "unknown_ids": [],
       "marker_id": "T1550.003",
       "marker_tactics": [
@@ -1851,11 +2411,25 @@
           0.762
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-49103",
+          0.689
+        ],
+        [
+          "CVE-2023-49105",
+          0.686
+        ],
+        [
+          "CVE-2025-53690",
+          0.683
+        ]
+      ],
       "hit": true,
       "rank": 2,
       "match": "vector",
       "top_score": 0.834,
-      "top_attack_id": "T1539",
+      "top_doc_id": "T1539",
       "unknown_ids": [],
       "marker_id": "T1550.004",
       "marker_tactics": [
@@ -1895,11 +2469,25 @@
           0.693
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-115731",
+          0.706
+        ],
+        [
+          "CVE-2026-20127",
+          0.698
+        ],
+        [
+          "CVE-2026-123218",
+          0.694
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.734,
-      "top_attack_id": "T1649",
+      "top_doc_id": "T1649",
       "unknown_ids": [],
       "marker_id": "T1584.001",
       "marker_tactics": [
@@ -1939,11 +2527,25 @@
           0.712
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2020-1631",
+          0.751
+        ],
+        [
+          "CVE-2026-34909",
+          0.744
+        ],
+        [
+          "CVE-2021-41773",
+          0.735
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.774,
-      "top_attack_id": "T1659",
+      "top_doc_id": "T1659",
       "unknown_ids": [],
       "marker_id": "T1080",
       "marker_tactics": [
@@ -1983,11 +2585,25 @@
           0.583
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-18187",
+          0.586
+        ],
+        [
+          "CVE-2021-38646",
+          0.579
+        ],
+        [
+          "CVE-2018-4063",
+          0.578
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.66,
-      "top_attack_id": "T1669",
+      "top_doc_id": "T1669",
       "unknown_ids": [],
       "marker_id": "T1584.008",
       "marker_tactics": [
@@ -2027,11 +2643,25 @@
           0.709
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-23760",
+          0.724
+        ],
+        [
+          "CVE-2011-1823",
+          0.698
+        ],
+        [
+          "CVE-2026-76519",
+          0.694
+        ]
+      ],
       "hit": true,
       "rank": 1,
       "match": "vector",
       "top_score": 0.768,
-      "top_attack_id": "T1697",
+      "top_doc_id": "T1697",
       "unknown_ids": [],
       "marker_id": "T1550.001",
       "marker_tactics": [
@@ -2063,11 +2693,12 @@
           1.0
         ]
       ],
+      "retrieved_kev": [],
       "hit": true,
       "rank": 1,
       "match": "exact",
       "top_score": 1.0,
-      "top_attack_id": "T1558.003",
+      "top_doc_id": "T1558.003",
       "unknown_ids": [],
       "marker_id": null,
       "marker_tactics": null,
@@ -2097,11 +2728,12 @@
           1.0
         ]
       ],
+      "retrieved_kev": [],
       "hit": true,
       "rank": 1,
       "match": "exact",
       "top_score": 1.0,
-      "top_attack_id": "T1557.004",
+      "top_doc_id": "T1557.004",
       "unknown_ids": [],
       "marker_id": null,
       "marker_tactics": null,
@@ -2131,11 +2763,12 @@
           1.0
         ]
       ],
+      "retrieved_kev": [],
       "hit": true,
       "rank": 1,
       "match": "exact",
       "top_score": 1.0,
-      "top_attack_id": "T1110.004",
+      "top_doc_id": "T1110.004",
       "unknown_ids": [],
       "marker_id": null,
       "marker_tactics": null,
@@ -2165,11 +2798,12 @@
           1.0
         ]
       ],
+      "retrieved_kev": [],
       "hit": true,
       "rank": 1,
       "match": "exact",
       "top_score": 1.0,
-      "top_attack_id": "T1195",
+      "top_doc_id": "T1195",
       "unknown_ids": [],
       "marker_id": null,
       "marker_tactics": null,
@@ -2216,11 +2850,12 @@
           1.0
         ]
       ],
+      "retrieved_kev": [],
       "hit": true,
       "rank": 1,
       "match": "exact",
       "top_score": 1.0,
-      "top_attack_id": "T1003.001",
+      "top_doc_id": "T1003.001",
       "unknown_ids": [],
       "marker_id": null,
       "marker_tactics": null,
@@ -2256,11 +2891,12 @@
           0.412
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.4295,
-      "top_attack_id": "T1558.004",
+      "top_doc_id": "T1558.004",
       "unknown_ids": [],
       "marker_id": "T1029",
       "marker_tactics": [
@@ -2298,11 +2934,12 @@
           0.437
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.4445,
-      "top_attack_id": "T1566.001",
+      "top_doc_id": "T1566.001",
       "unknown_ids": [],
       "marker_id": "T1218.005",
       "marker_tactics": [
@@ -2340,11 +2977,12 @@
           0.425
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.4528,
-      "top_attack_id": "T1555.006",
+      "top_doc_id": "T1555.006",
       "unknown_ids": [],
       "marker_id": "T1036.005",
       "marker_tactics": [
@@ -2382,11 +3020,12 @@
           0.465
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.5047,
-      "top_attack_id": "T1056.002",
+      "top_doc_id": "T1056.002",
       "unknown_ids": [],
       "marker_id": "T1612",
       "marker_tactics": [
@@ -2424,11 +3063,12 @@
           0.417
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.4484,
-      "top_attack_id": "T1200",
+      "top_doc_id": "T1200",
       "unknown_ids": [],
       "marker_id": "T1120",
       "marker_tactics": [
@@ -2466,11 +3106,12 @@
           0.375
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.3932,
-      "top_attack_id": "T1078.002",
+      "top_doc_id": "T1078.002",
       "unknown_ids": [],
       "marker_id": "T1137.001",
       "marker_tactics": [
@@ -2508,11 +3149,12 @@
           0.407
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.4421,
-      "top_attack_id": "T1558.001",
+      "top_doc_id": "T1558.001",
       "unknown_ids": [],
       "marker_id": "T1546.017",
       "marker_tactics": [
@@ -2551,11 +3193,12 @@
           0.488
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.4944,
-      "top_attack_id": "T1078.002",
+      "top_doc_id": "T1078.002",
       "unknown_ids": [],
       "marker_id": "T1216.001",
       "marker_tactics": [
@@ -2593,11 +3236,12 @@
           0.449
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.4677,
-      "top_attack_id": "T1003.001",
+      "top_doc_id": "T1003.001",
       "unknown_ids": [],
       "marker_id": "T1600.001",
       "marker_tactics": [
@@ -2635,11 +3279,12 @@
           0.488
         ]
       ],
+      "retrieved_kev": [],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.5363,
-      "top_attack_id": "T1091",
+      "top_doc_id": "T1091",
       "unknown_ids": [],
       "marker_id": "T1036.009",
       "marker_tactics": [
@@ -2655,41 +3300,24 @@
       "kind": "non_attack_security",
       "answerable": false,
       "expected": [],
-      "retrieved": [
+      "retrieved": [],
+      "retrieved_kev": [
         [
-          "T1190",
-          0.584
-        ],
-        [
-          "T1557.001",
-          0.584
-        ],
-        [
-          "T1557.001",
-          0.583
-        ],
-        [
-          "T1190",
-          0.569
-        ],
-        [
-          "T1557.004",
-          0.567
+          "CVE-2024-3400",
+          1.0
         ]
       ],
       "hit": false,
       "rank": null,
-      "match": "vector",
-      "top_score": 0.5844,
-      "top_attack_id": "T1190",
+      "match": "exact",
+      "top_score": 1.0,
+      "top_doc_id": "CVE-2024-3400",
       "unknown_ids": [],
-      "marker_id": "T1218.010",
-      "marker_tactics": [
-        "Stealth"
-      ],
-      "marker_score": 0.6418,
-      "gated": true,
-      "gate_reason": "out_of_scope"
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
     },
     {
       "id": "HU12",
@@ -2719,11 +3347,25 @@
           0.624
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-20079",
+          0.647
+        ],
+        [
+          "CVE-2024-3393",
+          0.638
+        ],
+        [
+          "CVE-2026-20316",
+          0.634
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6514,
-      "top_attack_id": "T1187",
+      "top_doc_id": "T1187",
       "unknown_ids": [],
       "marker_id": "T1686.003",
       "marker_tactics": [
@@ -2761,11 +3403,25 @@
           0.635
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-20079",
+          0.647
+        ],
+        [
+          "CVE-2026-20131",
+          0.636
+        ],
+        [
+          "CVE-2026-20230",
+          0.633
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6554,
-      "top_attack_id": "T1078",
+      "top_doc_id": "T1078",
       "unknown_ids": [],
       "marker_id": "T1553.001",
       "marker_tactics": [
@@ -2803,11 +3459,25 @@
           0.626
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-0257",
+          0.683
+        ],
+        [
+          "CVE-2019-18988",
+          0.671
+        ],
+        [
+          "CVE-2024-0012",
+          0.669
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6586,
-      "top_attack_id": "T1133",
+      "top_doc_id": "T1133",
       "unknown_ids": [],
       "marker_id": "T1021",
       "marker_tactics": [
@@ -2845,11 +3515,25 @@
           0.56
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-27915",
+          0.591
+        ],
+        [
+          "CVE-2024-44309",
+          0.574
+        ],
+        [
+          "CVE-2023-34192",
+          0.568
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.5935,
-      "top_attack_id": "T1556.007",
+      "top_doc_id": "T1556.007",
       "unknown_ids": [],
       "marker_id": "T1559",
       "marker_tactics": [
@@ -2887,11 +3571,25 @@
           0.587
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-62221",
+          0.655
+        ],
+        [
+          "CVE-2025-24983",
+          0.655
+        ],
+        [
+          "CVE-2021-36942",
+          0.652
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6195,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1547.002",
       "marker_tactics": [
@@ -2930,11 +3628,25 @@
           0.577
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2022-36537",
+          0.592
+        ],
+        [
+          "CVE-2021-27562",
+          0.583
+        ],
+        [
+          "CVE-2026-48558",
+          0.579
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6164,
-      "top_attack_id": "T1199",
+      "top_doc_id": "T1199",
       "unknown_ids": [],
       "marker_id": "T1482",
       "marker_tactics": [
@@ -2972,11 +3684,25 @@
           0.613
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2022-22675",
+          0.574
+        ],
+        [
+          "CVE-2026-82078",
+          0.572
+        ],
+        [
+          "CVE-2023-2533",
+          0.57
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6362,
-      "top_attack_id": "T1621",
+      "top_doc_id": "T1621",
       "unknown_ids": [],
       "marker_id": "T1654",
       "marker_tactics": [
@@ -3014,11 +3740,25 @@
           0.627
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2020-4427",
+          0.67
+        ],
+        [
+          "CVE-2023-22894",
+          0.667
+        ],
+        [
+          "CVE-2026-96655",
+          0.655
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.652,
-      "top_attack_id": "T1558.002",
+      "top_doc_id": "T1558.002",
       "unknown_ids": [],
       "marker_id": "T1030",
       "marker_tactics": [
@@ -3056,11 +3796,25 @@
           0.631
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-3393",
+          0.672
+        ],
+        [
+          "CVE-2026-20316",
+          0.664
+        ],
+        [
+          "CVE-2026-0300",
+          0.661
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.657,
-      "top_attack_id": "T1187",
+      "top_doc_id": "T1187",
       "unknown_ids": [],
       "marker_id": "T1685.006",
       "marker_tactics": [
@@ -3098,11 +3852,25 @@
           0.688
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2017-8464",
+          0.727
+        ],
+        [
+          "CVE-2018-20753",
+          0.726
+        ],
+        [
+          "CVE-2018-8174",
+          0.723
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.716,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1059.001",
       "marker_tactics": [
@@ -3140,11 +3908,25 @@
           0.614
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-0708",
+          0.675
+        ],
+        [
+          "CVE-2020-25213",
+          0.665
+        ],
+        [
+          "CVE-2024-43572",
+          0.661
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6166,
-      "top_attack_id": "T1187",
+      "top_doc_id": "T1187",
       "unknown_ids": [],
       "marker_id": "T1047",
       "marker_tactics": [
@@ -3182,11 +3964,25 @@
           0.611
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-57728",
+          0.641
+        ],
+        [
+          "CVE-2021-20123",
+          0.636
+        ],
+        [
+          "CVE-2024-11667",
+          0.63
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6598,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1204.004",
       "marker_tactics": [
@@ -3224,11 +4020,25 @@
           0.693
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-32202",
+          0.691
+        ],
+        [
+          "CVE-2024-3393",
+          0.688
+        ],
+        [
+          "CVE-2019-11001",
+          0.686
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.717,
-      "top_attack_id": "T1056.001",
+      "top_doc_id": "T1056.001",
       "unknown_ids": [],
       "marker_id": "T1547.001",
       "marker_tactics": [
@@ -3267,11 +4077,25 @@
           0.718
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-21510",
+          0.726
+        ],
+        [
+          "CVE-2026-32202",
+          0.725
+        ],
+        [
+          "CVE-2017-8464",
+          0.721
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7476,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1505.003",
       "marker_tactics": [
@@ -3309,11 +4133,25 @@
           0.709
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-36942",
+          0.634
+        ],
+        [
+          "CVE-2009-1151",
+          0.632
+        ],
+        [
+          "CVE-2026-33825",
+          0.632
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7444,
-      "top_attack_id": "T1078.003",
+      "top_doc_id": "T1078.003",
       "unknown_ids": [],
       "marker_id": "T1136.001",
       "marker_tactics": [
@@ -3351,11 +4189,25 @@
           0.728
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-33073",
+          0.731
+        ],
+        [
+          "CVE-2014-1812",
+          0.718
+        ],
+        [
+          "CVE-2025-59230",
+          0.714
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7473,
-      "top_attack_id": "T1697",
+      "top_doc_id": "T1697",
       "unknown_ids": [],
       "marker_id": "T1548.002",
       "marker_tactics": [
@@ -3393,11 +4245,25 @@
           0.677
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2013-6282",
+          0.778
+        ],
+        [
+          "CVE-2023-0386",
+          0.777
+        ],
+        [
+          "CVE-2022-0492",
+          0.762
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7118,
-      "top_attack_id": "T1212",
+      "top_doc_id": "T1212",
       "unknown_ids": [],
       "marker_id": "T1068",
       "marker_tactics": [
@@ -3435,11 +4301,25 @@
           0.69
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-34486",
+          0.715
+        ],
+        [
+          "CVE-2026-20805",
+          0.695
+        ],
+        [
+          "CVE-2025-29824",
+          0.69
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7228,
-      "top_attack_id": "T1056.001",
+      "top_doc_id": "T1056.001",
       "unknown_ids": [],
       "marker_id": "T1685.005",
       "marker_tactics": [
@@ -3477,11 +4357,25 @@
           0.67
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-38178",
+          0.733
+        ],
+        [
+          "CVE-2025-30397",
+          0.729
+        ],
+        [
+          "CVE-2021-34448",
+          0.725
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6991,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1027",
       "marker_tactics": [
@@ -3519,11 +4413,25 @@
           0.701
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2016-3235",
+          0.745
+        ],
+        [
+          "CVE-2024-57728",
+          0.714
+        ],
+        [
+          "CVE-2012-1854",
+          0.699
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7297,
-      "top_attack_id": "T1556.002",
+      "top_doc_id": "T1556.002",
       "unknown_ids": [],
       "marker_id": "T1574.001",
       "marker_tactics": [
@@ -3562,11 +4470,25 @@
           0.663
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-17621",
+          0.687
+        ],
+        [
+          "CVE-2020-1350",
+          0.677
+        ],
+        [
+          "CVE-2023-25280",
+          0.671
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6899,
-      "top_attack_id": "T1078.002",
+      "top_doc_id": "T1078.002",
       "unknown_ids": [],
       "marker_id": "T1087.002",
       "marker_tactics": [
@@ -3604,11 +4526,25 @@
           0.643
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-3393",
+          0.662
+        ],
+        [
+          "CVE-2023-25280",
+          0.661
+        ],
+        [
+          "CVE-2019-17621",
+          0.655
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6513,
-      "top_attack_id": "T1200",
+      "top_doc_id": "T1200",
       "unknown_ids": [],
       "marker_id": "T1205.001",
       "marker_tactics": [
@@ -3648,11 +4584,25 @@
           0.657
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2007-3010",
+          0.706
+        ],
+        [
+          "CVE-2024-9463",
+          0.696
+        ],
+        [
+          "CVE-2024-3400",
+          0.69
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6643,
-      "top_attack_id": "T1557.002",
+      "top_doc_id": "T1557.002",
       "unknown_ids": [],
       "marker_id": "T1569.002",
       "marker_tactics": [
@@ -3690,11 +4640,25 @@
           0.726
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-43451",
+          0.708
+        ],
+        [
+          "CVE-2025-24054",
+          0.689
+        ],
+        [
+          "CVE-2019-18988",
+          0.666
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7387,
-      "top_attack_id": "T1110.002",
+      "top_doc_id": "T1110.002",
       "unknown_ids": [],
       "marker_id": "T1550.002",
       "marker_tactics": [
@@ -3732,11 +4696,25 @@
           0.613
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-0708",
+          0.637
+        ],
+        [
+          "CVE-2025-48543",
+          0.632
+        ],
+        [
+          "CVE-2019-15752",
+          0.631
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6587,
-      "top_attack_id": "T1091",
+      "top_doc_id": "T1091",
       "unknown_ids": [],
       "marker_id": "T1546.002",
       "marker_tactics": [
@@ -3775,11 +4753,25 @@
           0.673
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-0411",
+          0.694
+        ],
+        [
+          "CVE-2011-4723",
+          0.692
+        ],
+        [
+          "CVE-2025-31161",
+          0.682
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6953,
-      "top_attack_id": "T1110.002",
+      "top_doc_id": "T1110.002",
       "unknown_ids": [],
       "marker_id": "T1027.015",
       "marker_tactics": [
@@ -3817,11 +4809,25 @@
           0.701
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2021-42013",
+          0.723
+        ],
+        [
+          "CVE-2021-41773",
+          0.722
+        ],
+        [
+          "CVE-2022-0028",
+          0.719
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.7291,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1102.002",
       "marker_tactics": [
@@ -3859,11 +4865,25 @@
           0.643
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-49105",
+          0.701
+        ],
+        [
+          "CVE-2023-49103",
+          0.7
+        ],
+        [
+          "CVE-2021-27852",
+          0.682
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6612,
-      "top_attack_id": "T1078",
+      "top_doc_id": "T1078",
       "unknown_ids": [],
       "marker_id": "T1537",
       "marker_tactics": [
@@ -3901,11 +4921,25 @@
           0.571
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2026-94127",
+          0.616
+        ],
+        [
+          "CVE-2011-4723",
+          0.613
+        ],
+        [
+          "CVE-2025-24993",
+          0.613
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.5839,
-      "top_attack_id": "T1003.001",
+      "top_doc_id": "T1003.001",
       "unknown_ids": [],
       "marker_id": "T1561",
       "marker_tactics": [
@@ -3943,11 +4977,25 @@
           0.599
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-0344",
+          0.672
+        ],
+        [
+          "CVE-2023-49105",
+          0.642
+        ],
+        [
+          "CVE-2026-64849",
+          0.642
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6215,
-      "top_attack_id": "T1528",
+      "top_doc_id": "T1528",
       "unknown_ids": [],
       "marker_id": "T1496.001",
       "marker_tactics": [
@@ -3985,11 +5033,25 @@
           0.605
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2011-4723",
+          0.626
+        ],
+        [
+          "CVE-2023-46747",
+          0.625
+        ],
+        [
+          "CVE-2023-46748",
+          0.618
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6219,
-      "top_attack_id": "T1566",
+      "top_doc_id": "T1566",
       "unknown_ids": [],
       "marker_id": "T1595.001",
       "marker_tactics": [
@@ -4027,11 +5089,25 @@
           0.662
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2019-4716",
+          0.63
+        ],
+        [
+          "CVE-2019-18988",
+          0.624
+        ],
+        [
+          "CVE-2026-55040",
+          0.624
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6854,
-      "top_attack_id": "T1566",
+      "top_doc_id": "T1566",
       "unknown_ids": [],
       "marker_id": "T1589.003",
       "marker_tactics": [
@@ -4069,11 +5145,25 @@
           0.647
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2022-43939",
+          0.676
+        ],
+        [
+          "CVE-2025-24893",
+          0.674
+        ],
+        [
+          "CVE-2021-21973",
+          0.666
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6743,
-      "top_attack_id": "T1078.002",
+      "top_doc_id": "T1078.002",
       "unknown_ids": [],
       "marker_id": "T1584.001",
       "marker_tactics": [
@@ -4111,11 +5201,25 @@
           0.616
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2023-32049",
+          0.705
+        ],
+        [
+          "CVE-2022-44698",
+          0.692
+        ],
+        [
+          "CVE-2023-36025",
+          0.69
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6517,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [],
       "marker_id": "T1112",
       "marker_tactics": [
@@ -4154,11 +5258,25 @@
           0.545
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-48927",
+          0.587
+        ],
+        [
+          "CVE-2025-48928",
+          0.586
+        ],
+        [
+          "CVE-2019-10149",
+          0.571
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.562,
-      "top_attack_id": "T1189",
+      "top_doc_id": "T1189",
       "unknown_ids": [
         "T1059.001"
       ],
@@ -4198,11 +5316,25 @@
           0.574
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2015-3035",
+          0.594
+        ],
+        [
+          "CVE-2023-50224",
+          0.592
+        ],
+        [
+          "CVE-2014-6332",
+          0.584
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.594,
-      "top_attack_id": "T1190",
+      "top_doc_id": "T1190",
       "unknown_ids": [
         "T1486"
       ],
@@ -4242,11 +5374,25 @@
           0.676
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2025-47729",
+          0.641
+        ],
+        [
+          "CVE-2025-48928",
+          0.638
+        ],
+        [
+          "CVE-2024-39891",
+          0.637
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6942,
-      "top_attack_id": "T1621",
+      "top_doc_id": "T1621",
       "unknown_ids": [
         "T1047"
       ],
@@ -4286,11 +5432,25 @@
           0.654
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2020-24363",
+          0.664
+        ],
+        [
+          "CVE-2025-48927",
+          0.661
+        ],
+        [
+          "CVE-2025-48928",
+          0.652
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.6783,
-      "top_attack_id": "T1557.001",
+      "top_doc_id": "T1557.001",
       "unknown_ids": [
         "T1547.001"
       ],
@@ -4330,11 +5490,17 @@
           0.524
         ]
       ],
+      "retrieved_kev": [
+        [
+          "CVE-2024-39891",
+          0.564
+        ]
+      ],
       "hit": false,
       "rank": null,
       "match": "vector",
       "top_score": 0.5643,
-      "top_attack_id": "T1199",
+      "top_doc_id": "T1199",
       "unknown_ids": [
         "T9999"
       ],

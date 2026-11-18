@@ -1,0 +1,67 @@
+# Scheduled pipeline run (research.md D41-D42): fetch KEV (ETag check) -> check for a new ATT&CK release ->
+# rebuild passages -> dbt build + data tests -> embed changed passages -> free retrieval eval -> CHANGELOG.md.
+# Commits only the small text files that carry history (data/history/, CHANGELOG.md, eval results).
+name: scheduled-pipeline
+
+on:
+  schedule:
+    - cron: "0 6 1,15 * *"   # 06:00 UTC on the 1st and 15th (cron can't express "every 14 days")
+  workflow_dispatch: {}       # manual "Run workflow" button
+
+permissions:
+  contents: write             # push the history/changelog commit; nothing else
+
+concurrency:
+  group: scheduled-pipeline
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies (CPU-only PyTorch: the runner has no GPU, and the CUDA build is a much larger download)
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
+          .venv/bin/pip install --quiet -r requirements.txt
+
+      - name: Restore model + embedding cache (a miss just means a full re-embed)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            data/processed/embedding_cache.npz
+          key: embeddings-${{ github.run_id }}
+          restore-keys: embeddings-
+
+      - name: Run pipeline
+        id: pipeline
+        continue-on-error: true   # still commit the changelog entry so a failed run is visible
+        run: .venv/bin/python -I scripts/run_pipeline.py
+
+      - name: Install gitleaks
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            | tar -xz -C /usr/local/bin gitleaks
+
+      - name: Commit history + changelog (secret-scanned first)
+        run: |
+          git add data/history CHANGELOG.md data/eval/*results.json data/eval/*report.md
+          if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
+          gitleaks git --pre-commit --staged --redact --no-banner
+          # Commit identity: the owner's GitHub no-reply address (global rule: every commit uses it).
+          git -c user.name="rag-pipeline (scheduled)" \
+              -c user.email="282076488+garage-raccoon@users.noreply.github.com" \
+              commit -m "Scheduled pipeline run $(date -u +%Y-%m-%d)" -m "$(head -c 4000 CHANGELOG.md | sed -n '5,40p')"
+          git push
+
+      - name: Fail the job if the pipeline failed
+        if: steps.pipeline.outcome == 'failure'
+        run: exit 1

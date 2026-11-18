@@ -1,6 +1,10 @@
 anthropic==2.9.0
+dbt-core==1.12.7
+dbt-duckdb==1.11.1
+duckdb==2.0.0
 numpy==2.5.5
 python-dotenv==1.2.4
+requests==2.32.3
 sentence-transformers==6.3.0
 torch==2.15.0
 transformers==5.23.0

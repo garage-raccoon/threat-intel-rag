@@ -1,8 +1,13 @@
-"""Stage 1, step 3: turn each technique into retrieval passages that fit the embedding model.
+"""Turn ATT&CK techniques (Stage 1, step 3) and CISA KEV entries (Stage 2, step 4) into retrieval passages.
 
-Usage: .venv/bin/python -I scripts/build_passages.py [techniques_path] [out_path]
-See research.md D9 / D12 for the passage format.
+Usage: .venv/bin/python -I scripts/build_passages.py
+Reads  data/processed/techniques.json (parse_stix.py) and data/history/kev_state.csv (fetch_kev.py)
+Writes data/processed/passages.json
+Every passage and marker gets a content fingerprint (passage_hash) so embed_passages.py re-embeds only
+what changed (research.md D42). See research.md D9 / D12 for the ATT&CK passage format.
 """
+import csv
+import hashlib
 import json
 import re
 import sys
@@ -13,11 +18,17 @@ from sentence_transformers import SentenceTransformer
 # --- CONFIG ---
 ROOT = Path(__file__).resolve().parent.parent
 TECHNIQUES_PATH = ROOT / "data/processed/techniques.json"
+KEV_STATE_PATH = ROOT / "data/history/kev_state.csv"
 OUT_PATH = ROOT / "data/processed/passages.json"
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
 MODEL_REVISION = "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"  # keep in sync with embed_passages.py
+NVD_URL = "https://nvd.nist.gov/vuln/detail/{}"
 
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+")
+
+
+def fingerprint(text: str) -> str:
+    return hashlib.sha256(text.encode()).hexdigest()[:16]
 
 
 def section_lines(tech: dict) -> dict[str, list[str]]:
@@ -56,7 +67,15 @@ class Packer:
         return passages
 
 
-def build(techniques: list[dict], packer: Packer) -> list[dict]:
+def passage(doc_id: str, source: str, name: str, tactics: list[str], section: str, text: str, url: str,
+            packer: Packer, suffix: str = "") -> dict:
+    return {"passage_id": f"{doc_id}#{section}{suffix}", "doc_id": doc_id, "source": source,
+            "attack_id": doc_id if source == "attack" else None, "name": name, "tactics": tactics,
+            "section": section, "text": text, "n_tokens": packer.count(text), "url": url,
+            "passage_hash": fingerprint(text)}
+
+
+def build_attack(techniques: list[dict], packer: Packer) -> list[dict]:
     passages = []
     for tech in techniques:
         for section, lines in section_lines(tech).items():
@@ -65,28 +84,39 @@ def build(techniques: list[dict], packer: Packer) -> list[dict]:
             header = f"{tech['attack_id']} {tech['name']} ({', '.join(tech['tactics'])}): {section.capitalize()}"
             texts = packer.pack(header, lines)
             for i, text in enumerate(texts, 1):
-                suffix = f"-{i}" if len(texts) > 1 else ""
-                passages.append({
-                    "passage_id": f"{tech['attack_id']}#{section}{suffix}",
-                    "attack_id": tech["attack_id"],
-                    "name": tech["name"],
-                    "tactics": tech["tactics"],
-                    "section": section,
-                    "text": text,
-                    "n_tokens": packer.count(text),
-                    "url": tech["url"],
-                })
+                passages.append(passage(tech["attack_id"], "attack", tech["name"], tech["tactics"], section, text,
+                                        tech["url"], packer, f"-{i}" if len(texts) > 1 else ""))
+    return passages
+
+
+def build_kev(rows: list[dict], packer: Packer) -> list[dict]:
+    """One passage per KEV entry (split only if it ever exceeds the token limit)."""
+    passages = []
+    for r in rows:
+        name = f"{r['vendorProject']} {r['product']}: {r['vulnerabilityName']}"
+        header = f"{r['cveID']} {name} (Known Exploited Vulnerability, added to CISA KEV {r['dateAdded']})"
+        lines = [r["shortDescription"],
+                 f"Required action: {r['requiredAction']} (due {r['dueDate']})",
+                 f"Known ransomware campaign use: {r['knownRansomwareCampaignUse']}"]
+        if r["cwes"]:
+            lines.append(f"Weaknesses: {r['cwes'].replace(';', ', ')}")
+        texts = packer.pack(header, [l for l in lines if l.strip()])
+        for i, text in enumerate(texts, 1):
+            passages.append(passage(r["cveID"], "kev", name, [], "vulnerability", text, NVD_URL.format(r["cveID"]),
+                                    packer, f"-{i}" if len(texts) > 1 else ""))
     return passages
 
 
 def main() -> None:
-    techniques_path = Path(sys.argv[1]) if len(sys.argv) > 1 else TECHNIQUES_PATH
-    out_path = Path(sys.argv[2]) if len(sys.argv) > 2 else OUT_PATH
-    source = json.loads(techniques_path.read_text(encoding="utf-8"))
+    source = json.loads(TECHNIQUES_PATH.read_text(encoding="utf-8"))
+    kev_rows = []
+    if KEV_STATE_PATH.exists():
+        with KEV_STATE_PATH.open(newline="", encoding="utf-8") as f:
+            kev_rows = list(csv.DictReader(f))
 
     model = SentenceTransformer(MODEL_NAME, revision=MODEL_REVISION)
     packer = Packer(model.tokenizer, model.max_seq_length)
-    passages = build(source["techniques"], packer)
+    passages = build_attack(source["techniques"], packer) + build_kev(kev_rows, packer)
 
     over = [p["passage_id"] for p in passages if p["n_tokens"] > packer.max_tokens]
     if over:
@@ -94,23 +124,27 @@ def main() -> None:
 
     # One description-only passage per out-of-scope technique. Never sent to Claude; the model truncates
     # anything past its limit, which is fine for a marker that only needs the gist (research.md D33).
-    markers = [{
-        "attack_id": m["attack_id"], "name": m["name"], "tactics": m["tactics"],
-        "text": f"{m['attack_id']} {m['name']} ({', '.join(m['tactics'])}): Description\n{m['description']}",
-    } for m in source["out_of_scope_markers"]]
+    markers = []
+    for m in source["out_of_scope_markers"]:
+        text = f"{m['attack_id']} {m['name']} ({', '.join(m['tactics'])}): Description\n{m['description']}"
+        markers.append({"attack_id": m["attack_id"], "name": m["name"], "tactics": m["tactics"], "text": text,
+                        "passage_hash": fingerprint(text)})
 
-    out_path.write_text(json.dumps({
+    OUT_PATH.write_text(json.dumps({
         "attack_version": source["attack_version"],
+        "kev_entries": len(kev_rows),
         "model": MODEL_NAME,
         "max_tokens": packer.max_tokens,
         "passages": passages,
         "markers": markers,
     }, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    by_source = {s: [p for p in passages if p["source"] == s] for s in ("attack", "kev")}
     split = sorted({p["passage_id"].split("-")[0] for p in passages if re.search(r"-\d+$", p["passage_id"])})
-    print(f"{len(source['techniques'])} techniques -> {len(passages)} passages "
-          f"(max {max(p['n_tokens'] for p in passages)} / {packer.max_tokens} tokens) -> {out_path}")
-    print(f"Sections split further ({len(split)}): {', '.join(split) or 'none'}")
+    print(f"{len(source['techniques'])} techniques -> {len(by_source['attack'])} passages; "
+          f"{len(kev_rows)} KEV entries -> {len(by_source['kev'])} passages "
+          f"(max {max(p['n_tokens'] for p in passages)} / {packer.max_tokens} tokens) -> {OUT_PATH.relative_to(ROOT)}")
+    print(f"Split into several passages ({len(split)}): {', '.join(split) or 'none'}")
     print(f"Out-of-scope markers: {len(markers)}")
 
 

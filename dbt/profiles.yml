@@ -1,0 +1,7 @@
+attack_rag:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: data/processed/warehouse.duckdb   # relative to the repo root (where dbt is run from)
+      threads: 4

@@ -20,18 +20,21 @@ ROOT = Path(__file__).resolve().parent.parent
 VECTORS_PATH = ROOT / "data/processed/vectors.npy"
 MARKER_VECTORS_PATH = ROOT / "data/processed/marker_vectors.npy"
 INDEX_PATH = ROOT / "data/processed/index.json"
-TOP_K = 5
+TOP_K = 5  # ATT&CK techniques per question
+KEV_TOP_K = 3  # known exploited vulnerabilities, ranked separately so they never crowd out techniques (D47)
 THRESHOLD = 0.555  # Set from step 6 scores (D29): mid-gap between 0.512 (off-topic) and 0.599 (lowest answerable)
 # Out-of-scope marker must beat the best in-scope passage by more than this to answer NO_INFO (D32, D33).
 MARKER_MARGIN = 0.02
 CLAUDE_MODEL = "claude-haiku-5-5"
 NO_INFO = "I don't have information on that."
-# Embeddings can't tell IDs apart ("T1110.003" retrieves the wrong technique), so IDs are matched exactly (D25).
-ATTACK_ID = re.compile(r"\bT\d{4}(?:\.\d{3})?\b", re.IGNORECASE)
+# Embeddings can't tell IDs apart ("T1110.003" retrieves the wrong technique), so IDs are matched exactly (D25):
+# ATT&CK technique IDs and, since KEV was added (Stage 2), CVE IDs.
+DOC_ID = re.compile(r"\b(?:T\d{4}(?:\.\d{3})?|CVE-\d{4}-\d{4,})\b", re.IGNORECASE)
 SYSTEM_PROMPT = (
-    "You answer security analysts' questions about MITRE ATT&CK techniques.\n"
+    "You answer security analysts' questions about MITRE ATT&CK techniques and CISA Known Exploited "
+    "Vulnerabilities (KEV).\n"
     "- Answer only from the provided passages. Do not add facts from outside them.\n"
-    "- Name the ATT&CK ID (e.g. T1566.002) of each technique you discuss.\n"
+    "- Name the ATT&CK ID (e.g. T1566.002) of each technique and the CVE ID of each vulnerability you discuss.\n"
     "- Where relevant, cover what the attack is, how to detect it, and how to mitigate it.\n"
     "- If the passages do not answer the question, say so plainly in your first sentence. "
     "You may then offer the closest related guidance from the passages, clearly labeled as related "
@@ -54,9 +57,18 @@ def split_coverage(text: str) -> tuple[str, str]:
 
 @dataclass
 class Retrieval:
-    passages: list[dict]
-    unknown_ids: list[str] = field(default_factory=list)  # ATT&CK IDs named in the question but not loaded
+    passages: list[dict]  # ATT&CK technique passages (the list the Stage 1 checks and metrics are based on)
+    kev: list[dict] = field(default_factory=list)  # KEV passages: a separate list, never mixed into `passages`
+    unknown_ids: list[str] = field(default_factory=list)  # ATT&CK / CVE IDs named in the question but not loaded
     marker: dict | None = None  # nearest out-of-scope technique: {attack_id, name, tactics, score}
+
+    @property
+    def exact_hit(self) -> bool:
+        return any(p["match"] == "exact" for p in self.passages + self.kev)
+
+    @property
+    def top_score(self) -> float:
+        return (self.passages or self.kev)[0]["score"]
 
 
 class Retriever:
@@ -67,37 +79,51 @@ class Retriever:
         if (len(self.index["passages"]), len(self.index["markers"])) != (len(self.vectors), len(self.marker_vectors)):
             sys.exit("index.json and the .npy vector files are out of sync: re-run embed_passages.py")
         self.model = SentenceTransformer(self.index["model"], revision=self.index["model_revision"])
-        self.by_attack_id: dict[str, list[int]] = {}
+        self.by_doc_id: dict[str, list[int]] = {}
         for row, p in enumerate(self.index["passages"]):
-            self.by_attack_id.setdefault(p["attack_id"], []).append(row)
+            self.by_doc_id.setdefault(p["doc_id"], []).append(row)
+        rows_of = lambda src: np.array([i for i, p in enumerate(self.index["passages"]) if p.get("source", "attack") == src],
+                                       dtype=int)
+        self.attack_rows, self.kev_rows = rows_of("attack"), rows_of("kev")
 
-    def search(self, question: str, k: int = TOP_K) -> tuple[list[dict], dict]:
-        """Top-k in-scope passages, plus the single nearest out-of-scope marker."""
+    def _top(self, scores: np.ndarray, rows: np.ndarray, k: int) -> list[dict]:
+        order = rows[np.argsort(-scores[rows])][:k]
+        return [{**self.index["passages"][i], "score": float(scores[i]), "match": "vector"} for i in order]
+
+    def search(self, question: str) -> tuple[list[dict], list[dict], dict]:
+        """Top ATT&CK passages and top KEV passages (ranked separately), plus the nearest out-of-scope marker."""
         query = self.model.encode(self.index["query_instruction"] + question, normalize_embeddings=True)
         scores = self.vectors @ query
         marker_scores = self.marker_vectors @ query
         j = int(marker_scores.argmax())
-        return ([{**self.index["passages"][i], "score": float(scores[i]), "match": "vector"}
-                 for i in np.argsort(-scores)[:k]],
+        return (self._top(scores, self.attack_rows, TOP_K), self._top(scores, self.kev_rows, KEV_TOP_K),
                 {**self.index["markers"][j], "score": float(marker_scores[j])})
 
     def exact(self, question: str) -> tuple[list[dict], list[str]]:
-        """Passages for ATT&CK IDs named in the question, plus any named IDs that aren't in the index."""
-        ids = list(dict.fromkeys(m.upper() for m in ATTACK_ID.findall(question)))
-        rows = [r for i in ids for r in self.by_attack_id.get(i, [])]
+        """Passages for ATT&CK / CVE IDs named in the question, plus any named IDs that aren't in the index."""
+        ids = list(dict.fromkeys(m.upper() for m in DOC_ID.findall(question)))
+        rows = [r for i in ids for r in self.by_doc_id.get(i, [])]
         return ([{**self.index["passages"][r], "score": 1.0, "match": "exact"} for r in rows],
-                [i for i in ids if i not in self.by_attack_id])
+                [i for i in ids if i not in self.by_doc_id])
 
-    def retrieve(self, question: str, k: int = TOP_K) -> Retrieval:
-        """Passages of every known ATT&CK ID named in the question; vector search only when none is named.
+    def retrieve(self, question: str) -> Retrieval:
+        """Passages of every known ATT&CK / CVE ID named in the question; vector search only when none is named.
 
         No vector top-up on an exact hit: for an ID-only question the vector results are near-random.
         """
         exact, unknown_ids = self.exact(question)
         if exact:
-            return Retrieval(exact, unknown_ids)
-        passages, marker = self.search(question, k)
-        return Retrieval(passages, unknown_ids, marker)
+            return Retrieval([p for p in exact if p["source"] == "attack"], [p for p in exact if p["source"] == "kev"],
+                             unknown_ids)
+        passages, kev, marker = self.search(question)
+        return Retrieval(passages, kev, unknown_ids, marker)
+
+    def kev_to_send(self, r: Retrieval, threshold: float = THRESHOLD) -> list[dict]:
+        """KEV passages worth showing / sending: exact CVE hits, or vector hits above the same off-topic threshold.
+
+        The threshold here is provisional (reused from D29, not measured on KEV questions yet: D47).
+        """
+        return [p for p in r.kev if p["match"] == "exact" or p["score"] >= threshold]
 
 
 def ask_claude(client: anthropic.Anthropic, question: str, passages: list[dict], unknown_ids: list[str]) -> dict:
@@ -134,7 +160,7 @@ def ask_claude(client: anthropic.Anthropic, question: str, passages: list[dict],
         for c in block.citations or []:
             source = passages[c.document_index]
             if source["passage_id"] not in [x["passage_id"] for x in citations]:
-                citations.append({"passage_id": source["passage_id"], "attack_id": source["attack_id"],
+                citations.append({"passage_id": source["passage_id"], "doc_id": source["doc_id"],
                                   "url": source["url"], "cited_text": c.cited_text})
             answer.append(f" [{[x['passage_id'] for x in citations].index(source['passage_id']) + 1}]")
 
@@ -145,7 +171,9 @@ def ask_claude(client: anthropic.Anthropic, question: str, passages: list[dict],
 
 def gate_reason(r: Retrieval, threshold: float = THRESHOLD, margin: float = MARKER_MARGIN) -> str | None:
     """Why we answer NO_INFO without calling Claude, or None to go ahead."""
-    if r.passages[0]["match"] == "exact":
+    # Decided on the ATT&CK list only, exactly as in Stage 1, so adding KEV can't change these decisions (D47).
+    # A KEV vector match does not override a stop; only an exact CVE ID does.
+    if r.exact_hit:
         return None
     if r.unknown_ids:  # an ID we don't hold must not fall back to similar-looking IDs (D25)
         return "unknown_id"
@@ -159,13 +187,15 @@ def gate_reason(r: Retrieval, threshold: float = THRESHOLD, margin: float = MARK
 def answer(question: str, retriever: Retriever, client: anthropic.Anthropic | None = None) -> dict:
     """Full step 5 for one question. Step 6 imports this to run the test set."""
     r = retriever.retrieve(question)
-    result = {"question": question, "top_score": r.passages[0]["score"], "threshold": THRESHOLD,
+    kev = retriever.kev_to_send(r)
+    brief = lambda ps: [{"passage_id": p["passage_id"], "doc_id": p["doc_id"], "score": p["score"], "match": p["match"]}
+                        for p in ps]
+    result = {"question": question, "top_score": r.top_score, "threshold": THRESHOLD,
               "unknown_ids": r.unknown_ids, "nearest_out_of_scope": r.marker,
-              "retrieved": [{"passage_id": p["passage_id"], "attack_id": p["attack_id"], "score": p["score"],
-                             "match": p["match"]} for p in r.passages]}
+              "retrieved": brief(r.passages), "retrieved_kev": brief(kev)}
     if reason := gate_reason(r):
         return {**result, "status": "gated", "gate_reason": reason, "answer": NO_INFO, "citations": []}
-    return {**result, **ask_claude(client or anthropic.Anthropic(), question, r.passages, r.unknown_ids)}
+    return {**result, **ask_claude(client or anthropic.Anthropic(), question, r.passages + kev, r.unknown_ids)}
 
 
 def main() -> None:
@@ -185,9 +215,12 @@ def main() -> None:
     except anthropic.APIConnectionError:
         sys.exit("Could not reach the Claude API: check your network connection")
 
-    print("Retrieved:")
+    print("ATT&CK techniques:")
     for r in result["retrieved"]:
         print(f"  {r['score']:.3f}  {r['match']:6}  {r['passage_id']}")
+    print("Known exploited vulnerabilities (CISA KEV):")
+    for r in result["retrieved_kev"] or [{"score": 0, "match": "", "passage_id": "(none above threshold)"}]:
+        print(f"  {r['score']:.3f}  {r['match']:6}  {r['passage_id']}" if r["match"] else f"  {r['passage_id']}")
     if result["unknown_ids"]:
         print(f"  not in index: {', '.join(result['unknown_ids'])}")
     if m := result["nearest_out_of_scope"]:
