@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-11-18T03:31:58+00:00",
+  "run_at": "2026-11-18T04:40:50+00:00",
   "test_set": "holdout_set.json",
   "attack_version": "20.1",
   "embedding_model": "BAAI/bge-small-en-v1.5",
@@ -9,10 +9,10 @@
     "rank1_accuracy": "42/50",
     "answerable_wrongly_gated": "2/50",
     "answerable_hit_and_not_gated": "45/50",
-    "unanswerable_gated": "39/50",
+    "unanswerable_gated": "37/50",
     "gated_by_reason": {
       "below_threshold": 10,
-      "out_of_scope": 26,
+      "out_of_scope": 24,
       "unknown_id": 5
     },
     "threshold_in_use": 0.555,
@@ -4890,8 +4890,8 @@
         "Exfiltration"
       ],
       "marker_score": 0.6989,
-      "gated": true,
-      "gate_reason": "out_of_scope"
+      "gated": false,
+      "gate_reason": null
     },
     {
       "id": "HU40",
@@ -5227,8 +5227,8 @@
         "Persistence"
       ],
       "marker_score": 0.676,
-      "gated": true,
-      "gate_reason": "out_of_scope"
+      "gated": false,
+      "gate_reason": null
     },
     {
       "id": "HU46",

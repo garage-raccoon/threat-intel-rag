@@ -171,15 +171,16 @@ def ask_claude(client: anthropic.Anthropic, question: str, passages: list[dict],
 
 def gate_reason(r: Retrieval, threshold: float = THRESHOLD, margin: float = MARKER_MARGIN) -> str | None:
     """Why we answer NO_INFO without calling Claude, or None to go ahead."""
-    # Decided on the ATT&CK list only, exactly as in Stage 1, so adding KEV can't change these decisions (D47).
-    # A KEV vector match does not override a stop; only an exact CVE ID does.
     if r.exact_hit:
         return None
     if r.unknown_ids:  # an ID we don't hold must not fall back to similar-looking IDs (D25)
         return "unknown_id"
     if r.passages[0]["score"] < threshold:  # off-topic (D29)
         return "below_threshold"
-    if r.marker and r.marker["score"] - r.passages[0]["score"] > margin:  # covered by a topic we didn't load (D33)
+    # Out of scope only if a topic we didn't load beats BOTH lists: otherwise a vulnerability question that KEV
+    # answers would be stopped because no technique fits it (D48, D49).
+    best_in_scope = max(r.passages[0]["score"], r.kev[0]["score"] if r.kev else 0.0)
+    if r.marker and r.marker["score"] - best_in_scope > margin:  # covered by a topic we didn't load (D33)
         return "out_of_scope"
     return None
 
