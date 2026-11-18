@@ -1,0 +1,886 @@
+{
+  "version": 1,
+  "written": "2026-11-18",
+  "scope": "ATT&CK Enterprise 20.1: Initial Access + Credential Access",
+  "purpose": "Held-out check of the settings fixed in D29 (threshold 0.555) and D33 (marker margin 0.02). Written before running it; settings must not be tuned on this set.",
+  "provenance": "Written by Claude at the user's request, in analyst language. NOT reviewed by the project owner before running.",
+  "questions": [
+    {
+      "id": "H01",
+      "question": "An attacker saved the SAM and SYSTEM registry hives from a workstation to extract local password hashes.",
+      "expected": [
+        "T1003.002"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H02",
+      "question": "Someone dumped LSA secrets from the registry to recover service account passwords.",
+      "expected": [
+        "T1003.004"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H03",
+      "question": "Attackers extracted cached domain logon hashes from a laptop that was offline from the corporate network.",
+      "expected": [
+        "T1003.005"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H04",
+      "question": "On a Linux server, an attacker copied the shadow password file to get user hashes.",
+      "expected": [
+        "T1003.008"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H05",
+      "question": "Malware scraped credentials out of the memory of running Linux processes.",
+      "expected": [
+        "T1003.007"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H06",
+      "question": "An attacker captured network traffic to grab cleartext passwords from protocols like FTP and Telnet.",
+      "expected": [
+        "T1040"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H07",
+      "question": "A fake login form was injected into our internal web portal to collect employee passwords.",
+      "expected": [
+        "T1056.003"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H08",
+      "question": "A pop-up that looked like a macOS system dialog asked users to type their password.",
+      "expected": [
+        "T1056.002"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H09",
+      "question": "Malware hooked Windows API functions to capture credentials as users entered them.",
+      "expected": [
+        "T1056.004"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H10",
+      "question": "Stolen credentials for a cloud console account were used to log in to our AWS environment.",
+      "expected": [
+        "T1078.004",
+        "T1078"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H11",
+      "question": "The intruder logged in with a legitimate Active Directory user account they had compromised.",
+      "expected": [
+        "T1078.002",
+        "T1078"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H12",
+      "question": "Attackers reused the local administrator password that was identical on every workstation.",
+      "expected": [
+        "T1078.003",
+        "T1078"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H13",
+      "question": "Someone kept guessing passwords for a single admin account until one worked.",
+      "expected": [
+        "T1110.001",
+        "T1110"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H14",
+      "question": "Malware intercepted one-time codes from a user's token to get past two-factor authentication.",
+      "expected": [
+        "T1111"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H15",
+      "question": "Attackers logged into our Citrix gateway from the internet using stolen credentials.",
+      "expected": [
+        "T1133",
+        "T1078"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H16",
+      "question": "A malicious document made Windows automatically authenticate to an attacker's SMB server, leaking NTLM hashes.",
+      "expected": [
+        "T1187"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H17",
+      "question": "Employees were infected by malicious ads shown on a popular news website.",
+      "expected": [
+        "T1189"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H18",
+      "question": "Attackers exploited a SQL injection flaw in our customer-facing web application to get in.",
+      "expected": [
+        "T1190"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H19",
+      "question": "A trojanized update for a widely used IT management product was pushed to its customers.",
+      "expected": [
+        "T1195.002",
+        "T1195"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H20",
+      "question": "Network switches arrived from a supplier with backdoored firmware already installed.",
+      "expected": [
+        "T1195.003",
+        "T1195"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H21",
+      "question": "Someone plugged a rogue device into an open network port in our office.",
+      "expected": [
+        "T1200"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H22",
+      "question": "Attackers exploited a vulnerability in our authentication service to obtain credentials.",
+      "expected": [
+        "T1212"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H23",
+      "question": "Plaintext passwords were found in Windows registry keys used for automatic logon.",
+      "expected": [
+        "T1552.002",
+        "T1552"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H24",
+      "question": "A server's command history contained a database password typed on the command line.",
+      "expected": [
+        "T1552.003",
+        "T1552"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H25",
+      "question": "An attacker stole SSH private keys from users' home directories.",
+      "expected": [
+        "T1552.004",
+        "T1552"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H26",
+      "question": "Attackers decrypted passwords found in Group Policy files on the SYSVOL share.",
+      "expected": [
+        "T1552.006",
+        "T1552"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H27",
+      "question": "An attacker queried the Kubernetes API to read secrets stored in the cluster.",
+      "expected": [
+        "T1552.007",
+        "T1552"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H28",
+      "question": "Passwords that staff had shared in Slack channels were harvested by attackers.",
+      "expected": [
+        "T1552.008",
+        "T1552"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H29",
+      "question": "Saved credentials were pulled from the Windows Credential Manager vault.",
+      "expected": [
+        "T1555.004",
+        "T1555"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H30",
+      "question": "Attackers went after our KeePass database and its master password.",
+      "expected": [
+        "T1555.005",
+        "T1555"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H31",
+      "question": "After compromising a cloud role, attackers read secrets from AWS Secrets Manager.",
+      "expected": [
+        "T1555.006",
+        "T1555"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H32",
+      "question": "A malicious authentication module was installed on Linux servers to log every password.",
+      "expected": [
+        "T1556.003",
+        "T1556"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H33",
+      "question": "A malicious DLL was registered to receive plaintext passwords whenever users changed them.",
+      "expected": [
+        "T1556.002",
+        "T1556"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H34",
+      "question": "Attackers tampered with the Azure AD pass-through authentication agent so any password would be accepted.",
+      "expected": [
+        "T1556.007",
+        "T1556"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H35",
+      "question": "An attacker changed conditional access policies to exempt their own IP address from MFA.",
+      "expected": [
+        "T1556.009",
+        "T1556"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H36",
+      "question": "An attacker on the local network spoofed ARP replies to intercept traffic between hosts.",
+      "expected": [
+        "T1557.002",
+        "T1557"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H37",
+      "question": "A rogue DHCP server handed out malicious DNS settings to clients.",
+      "expected": [
+        "T1557.003",
+        "T1557"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H38",
+      "question": "Attackers forged Kerberos service tickets using a service account's password hash.",
+      "expected": [
+        "T1558.002",
+        "T1558"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H39",
+      "question": "Attackers requested authentication data for accounts that don't require Kerberos pre-authentication and cracked it offline.",
+      "expected": [
+        "T1558.004",
+        "T1558"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H40",
+      "question": "Kerberos ticket cache files were stolen from a Linux host.",
+      "expected": [
+        "T1558.005",
+        "T1558"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H41",
+      "question": "Attackers generated their own valid web session cookies using a stolen secret key.",
+      "expected": [
+        "T1606.001",
+        "T1606"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H42",
+      "question": "Attackers abused a misconfigured certificate template to obtain a certificate that authenticates as a domain admin.",
+      "expected": [
+        "T1649"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H43",
+      "question": "Attackers sitting in the network path injected malicious content into unencrypted web traffic.",
+      "expected": [
+        "T1659"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H44",
+      "question": "Attackers broke into a branch office's wireless network from the parking lot to get initial access.",
+      "expected": [
+        "T1669"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H45",
+      "question": "Attackers stole app passwords that let legacy email clients bypass MFA.",
+      "expected": [
+        "T1697"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "H46",
+      "question": "Explain T1558.003.",
+      "expected": [
+        "T1558.003"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "H47",
+      "question": "How can I detect T1557.004?",
+      "expected": [
+        "T1557.004"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "H48",
+      "question": "mitigations for t1110.004?",
+      "expected": [
+        "T1110.004"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "H49",
+      "question": "Is T1195 relevant to software vendors?",
+      "expected": [
+        "T1195"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "H50",
+      "question": "Compare T1003.001 with T1003.006.",
+      "expected": [
+        "T1003.001",
+        "T1003.006"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "HU01",
+      "question": "What's the weather going to be like in Seattle this weekend?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU02",
+      "question": "Give me a recipe for chicken tikka masala.",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU03",
+      "question": "What is the capital of Australia?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU04",
+      "question": "How do I house-train a puppy?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU05",
+      "question": "What's the best laptop for gaming under $1,500?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU06",
+      "question": "How do you say 'good morning' in French?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU07",
+      "question": "Who won the 2022 FIFA World Cup?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU08",
+      "question": "How do I file my taxes as a freelancer?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU09",
+      "question": "What stretches help with lower back pain?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU10",
+      "question": "Explain how photosynthesis works.",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": ""
+    },
+    {
+      "id": "HU11",
+      "question": "What CVSS score does CVE-2024-3400 have?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "CVE data not loaded (KEV is Stage 2)"
+    },
+    {
+      "id": "HU12",
+      "question": "How do I configure a firewall rule on pfSense?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "Product how-to"
+    },
+    {
+      "id": "HU13",
+      "question": "What does SOC 2 compliance require?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "Compliance"
+    },
+    {
+      "id": "HU14",
+      "question": "Do remote workers need a VPN under HIPAA?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "Compliance"
+    },
+    {
+      "id": "HU15",
+      "question": "What's the difference between an IDS and an IPS?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "General concept"
+    },
+    {
+      "id": "HU16",
+      "question": "Which antivirus is best for Windows 11?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "Product comparison"
+    },
+    {
+      "id": "HU17",
+      "question": "What is zero trust architecture?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "General concept"
+    },
+    {
+      "id": "HU18",
+      "question": "How do I write a Sigma detection rule?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "Tooling how-to"
+    },
+    {
+      "id": "HU19",
+      "question": "What is the maximum GDPR fine for a data breach?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "Compliance"
+    },
+    {
+      "id": "HU20",
+      "question": "How long must we keep firewall logs for PCI DSS?",
+      "expected": [],
+      "answerable": false,
+      "kind": "non_attack_security",
+      "note": "Compliance"
+    },
+    {
+      "id": "HU21",
+      "question": "How do attackers abuse PowerShell to run malicious scripts?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Execution T1059.001"
+    },
+    {
+      "id": "HU22",
+      "question": "How is WMI used to execute commands on remote machines?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Execution T1047"
+    },
+    {
+      "id": "HU23",
+      "question": "A user double-clicked a malicious file they downloaded, which launched the malware.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Execution T1204.002 (hard: close to phishing)"
+    },
+    {
+      "id": "HU24",
+      "question": "How do attackers use registry Run keys to survive reboots?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Persistence T1547.001"
+    },
+    {
+      "id": "HU25",
+      "question": "How do web shells give attackers ongoing access to a server?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Persistence T1505.003"
+    },
+    {
+      "id": "HU26",
+      "question": "Attackers created a new local admin account to keep access.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Persistence T1136.001 (hard: close to Valid Accounts)"
+    },
+    {
+      "id": "HU27",
+      "question": "How do attackers bypass User Account Control on Windows?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Privilege Escalation T1548.002"
+    },
+    {
+      "id": "HU28",
+      "question": "An attacker exploited a kernel bug to go from a normal user to SYSTEM.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Privilege Escalation T1068"
+    },
+    {
+      "id": "HU29",
+      "question": "How do attackers clear Windows event logs to hide their tracks?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Indicator removal T1070.001"
+    },
+    {
+      "id": "HU30",
+      "question": "How do attackers obfuscate scripts so antivirus misses them?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Stealth T1027"
+    },
+    {
+      "id": "HU31",
+      "question": "How does DLL side-loading help malware hide inside a legitimate program?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "T1574.002"
+    },
+    {
+      "id": "HU32",
+      "question": "Attackers ran net commands to list members of the Domain Admins group.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Discovery T1069.002"
+    },
+    {
+      "id": "HU33",
+      "question": "Attackers scanned the internal network for open ports after getting in.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Discovery T1046"
+    },
+    {
+      "id": "HU34",
+      "question": "How do attackers use PsExec to run commands on other hosts?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Lateral Movement T1021.002 / T1569.002"
+    },
+    {
+      "id": "HU35",
+      "question": "How does pass-the-hash let attackers log in to other machines?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Lateral Movement T1550.002 (hard: credential-related)"
+    },
+    {
+      "id": "HU36",
+      "question": "Malware took screenshots of the user's desktop every few seconds.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Collection T1113"
+    },
+    {
+      "id": "HU37",
+      "question": "Attackers compressed stolen files into password-protected archives before sending them out.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Collection T1560"
+    },
+    {
+      "id": "HU38",
+      "question": "Malware beacons to its command server over normal-looking HTTPS traffic.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Command and Control T1071.001"
+    },
+    {
+      "id": "HU39",
+      "question": "Attackers uploaded stolen data to a personal Dropbox account.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Exfiltration T1567.002"
+    },
+    {
+      "id": "HU40",
+      "question": "Attackers wiped the hard drives of hundreds of machines.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Impact T1561"
+    },
+    {
+      "id": "HU41",
+      "question": "Our cloud servers were hijacked to mine cryptocurrency.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Impact T1496"
+    },
+    {
+      "id": "HU42",
+      "question": "Attackers scanned our public IP ranges for weeks before the attack.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Reconnaissance T1595"
+    },
+    {
+      "id": "HU43",
+      "question": "Attackers collected employee names and roles from LinkedIn to plan their targeting.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Reconnaissance T1589/T1593 (hard: close to phishing)"
+    },
+    {
+      "id": "HU44",
+      "question": "Attackers registered lookalike domains of our company name.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Resource Development T1583.001"
+    },
+    {
+      "id": "HU45",
+      "question": "Attackers turned off Windows Defender's real-time protection through the registry.",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Defense Impairment"
+    },
+    {
+      "id": "HU46",
+      "question": "What is T1059.001?",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "Execution"
+    },
+    {
+      "id": "HU47",
+      "question": "Explain T1486.",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "Impact"
+    },
+    {
+      "id": "HU48",
+      "question": "How do I detect T1047?",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "Execution"
+    },
+    {
+      "id": "HU49",
+      "question": "Mitigations for T1547.001?",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "Persistence"
+    },
+    {
+      "id": "HU50",
+      "question": "What is T9999?",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "Does not exist"
+    }
+  ]
+}

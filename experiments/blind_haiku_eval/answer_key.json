@@ -1,0 +1,123 @@
+{
+ "Q01": {
+  "set": "holdout",
+  "test_id": "HU20",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q02": {
+  "set": "holdout",
+  "test_id": "HU17",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q03": {
+  "set": "holdout",
+  "test_id": "HU16",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q04": {
+  "set": "holdout",
+  "test_id": "H26",
+  "role": "control_answerable",
+  "expected": [
+   "T1552.006",
+   "T1552"
+  ]
+ },
+ "Q05": {
+  "set": "approved",
+  "test_id": "U8",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q06": {
+  "set": "holdout",
+  "test_id": "HU19",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q07": {
+  "set": "holdout",
+  "test_id": "H18",
+  "role": "control_answerable",
+  "expected": [
+   "T1190"
+  ]
+ },
+ "Q08": {
+  "set": "holdout",
+  "test_id": "HU28",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q09": {
+  "set": "holdout",
+  "test_id": "H02",
+  "role": "control_answerable",
+  "expected": [
+   "T1003.004"
+  ]
+ },
+ "Q10": {
+  "set": "approved",
+  "test_id": "U7",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q11": {
+  "set": "holdout",
+  "test_id": "HU14",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q12": {
+  "set": "holdout",
+  "test_id": "HU13",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q13": {
+  "set": "holdout",
+  "test_id": "H06",
+  "role": "control_answerable",
+  "expected": [
+   "T1040"
+  ]
+ },
+ "Q14": {
+  "set": "holdout",
+  "test_id": "HU18",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q15": {
+  "set": "holdout",
+  "test_id": "HU38",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q16": {
+  "set": "holdout",
+  "test_id": "H03",
+  "role": "control_answerable",
+  "expected": [
+   "T1003.005"
+  ]
+ },
+ "Q17": {
+  "set": "holdout",
+  "test_id": "HU36",
+  "role": "unanswerable",
+  "expected": []
+ },
+ "Q18": {
+  "set": "holdout",
+  "test_id": "H16",
+  "role": "control_answerable",
+  "expected": [
+   "T1187"
+  ]
+ }
+}

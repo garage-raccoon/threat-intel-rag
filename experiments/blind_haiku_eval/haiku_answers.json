@@ -1,0 +1,128 @@
+[
+  {
+    "id": "Q01",
+    "label": "declined",
+    "cited_ids": [],
+    "answer": "The passages do not contain PCI DSS requirements for firewall log retention. They cover credential access, supply chain and DCSync detection and mitigation only. I can't answer this from the retrieved material; check the PCI DSS standard directly.",
+    "reason": "None of the passages mention PCI DSS or log retention, and no related information is offered."
+  },
+  {
+    "id": "Q02",
+    "label": "partial",
+    "cited_ids": ["T1199"],
+    "answer": "The passages do not define zero trust architecture. They cover related ideas only. T1199 Trusted Relationship (Initial Access) describes abuse of third-party and delegated admin access, where partner connections may sit on the same network as the rest of the enterprise and receive less scrutiny. Its detection guidance covers third-party logons, privilege elevation and anomalous actions from partner identities. Nothing here describes zero trust principles.",
+    "reason": "The passages discuss trust-relationship abuse (T1199) but do not define zero trust, so the question is only partly covered."
+  },
+  {
+    "id": "Q03",
+    "label": "partial",
+    "cited_ids": ["T1189", "T1212"],
+    "answer": "The passages do not recommend any antivirus product, so which one is best for Windows 11 is not answered. Related mitigations: for T1189 Drive-by Compromise, keep browsers and plugins updated (M1051), use exploit protection such as Windows Defender Exploit Guard and EMET (M1050), and sandbox applications (M1048). T1212 Exploitation for Credential Access cites exploit protection and patch management too. These are attack mitigations, not product rankings.",
+    "reason": "The passages contain no antivirus product comparison, but they offer related Windows exploit-mitigation guidance."
+  },
+  {
+    "id": "Q04",
+    "label": "answered",
+    "cited_ids": ["T1552.006"],
+    "answer": "This matches T1552.006 Unsecured Credentials: Group Policy Preferences. GPP stores embedded credentials in XML files in SYSVOL, which any domain user can read, and the AES key is public, so tools such as Get-GPPPassword, gpprefdecrypt.py and Metasploit's gpp module can decrypt them. Detection: correlate enumeration of GPP XML files on SYSVOL (for example dir /s *.xml) with decryption tooling and abnormal SYSVOL access. Mitigations: remove vulnerable GPP settings (M1015), search SYSVOL for credentials and remove them (M1047), and apply patch KB2962486 (M1051).",
+    "reason": "The passages directly describe this technique, its tooling, detection and mitigations."
+  },
+  {
+    "id": "Q05",
+    "label": "declined",
+    "cited_ids": [],
+    "answer": "The passages do not contain a CVE or any information about a current Chrome zero-day. I can't identify the CVE from the retrieved material; check the Chrome release notes or a vulnerability database.",
+    "reason": "The passages contain no CVE identifiers or Chrome zero-day details, and no related information is offered."
+  },
+  {
+    "id": "Q06",
+    "label": "declined",
+    "cited_ids": [],
+    "answer": "The passages do not mention GDPR or its fine levels. They cover ATT&CK credential access and initial access techniques only, so the maximum fine cannot be determined from the retrieved material.",
+    "reason": "No passage addresses GDPR, fines, or breach penalties, and no related information is offered."
+  },
+  {
+    "id": "Q07",
+    "label": "answered",
+    "cited_ids": ["T1190"],
+    "answer": "This maps to T1190 Exploit Public-Facing Application (Initial Access). The passages say exploited applications include websites and databases (like SQL), and that the OWASP Top 10 and CWE Top 25 list the most common web vulnerabilities. They do not name SQL injection specifically. Detection: look for crafted requests followed by elevated 4xx/5xx errors, then a server process such as w3wp.exe, apache2 or nginx spawning a shell, curl or wget, followed by outbound callbacks. Mitigations: vulnerability scanning (M1016), a WAF (M1050), a DMZ for public servers (M1030), least privilege for service accounts (M1026) and patching (M1051).",
+    "reason": "The passages describe the exploit, detection and mitigations for this public-facing application attack, though SQL injection itself is not named."
+  },
+  {
+    "id": "Q08",
+    "label": "partial",
+    "cited_ids": ["T1212", "T1190"],
+    "answer": "The passages do not describe a kernel exploit that takes a normal user to SYSTEM. The closest material is T1212 Exploitation for Credential Access, which defines exploiting a programming error in OS software or the kernel to run adversary code, and notes that such exploitation may result in privilege escalation depending on the target process. Its detection guidance mentions abnormal crashes in authentication services. T1190 covers initial access, not local escalation.",
+    "reason": "T1212 mentions kernel exploitation and possible privilege escalation, but the passages do not describe the normal-user-to-SYSTEM path asked about."
+  },
+  {
+    "id": "Q09",
+    "label": "answered",
+    "cited_ids": ["T1003.004"],
+    "answer": "This matches T1003.004 OS Credential Dumping: LSA Secrets (Credential Access). LSA secrets are stored in the registry under the Security Policy Secrets key and can hold credentials such as service account passwords. An adversary with SYSTEM access can export that key with reg, or dump LSA secrets from memory with Mimikatz. Detection: flag registry export of the Security Policy Secrets key, or memory scraping with Mimikatz or Invoke-Mimikatz. The passages do not include mitigations for this technique.",
+    "reason": "The passages directly describe LSA secret dumping, its tools and detection, though not its mitigations."
+  },
+  {
+    "id": "Q10",
+    "label": "declined",
+    "cited_ids": [],
+    "answer": "The passages do not describe how attackers disable EDR. They cover exploitation of public-facing applications, replication through removable media and content injection, none of which address security tool tampering. I can't answer this from the retrieved material.",
+    "reason": "No passage covers disabling security tools, and no related information on that subject is offered."
+  },
+  {
+    "id": "Q11",
+    "label": "partial",
+    "cited_ids": ["T1133", "T1056.003", "T1078"],
+    "answer": "The passages do not address HIPAA or whether remote workers need a VPN. Related material: T1133 External Remote Services (Initial Access, Persistence) explains that VPNs, Citrix and similar gateways let users reach internal resources from outside, and that adversaries abuse them with valid accounts. T1056.003 Input Capture: Web Portal Capture describes malicious code on a VPN login page capturing credentials. For T1078 Valid Accounts, the passages recommend MFA (M1032) and conditional access (M1036).",
+    "reason": "The passages describe VPN-based remote access risks and mitigations but do not answer the HIPAA requirement question."
+  },
+  {
+    "id": "Q12",
+    "label": "partial",
+    "cited_ids": ["T1078", "T1195", "T1649", "T1606.002"],
+    "answer": "The passages do not describe SOC 2 requirements. They are ATT&CK mitigation text for T1078 Valid Accounts, T1195 Supply Chain Compromise, T1649 and T1606.002. They recommend controls such as MFA (M1032), privileged account management (M1026), password policies (M1027), account reviews (M1018), conditional access (M1036) and locking dependency versions (M1013). These are attack mitigations, not SOC 2 criteria.",
+    "reason": "The passages offer attack-mitigation controls related to security practice but do not describe SOC 2 at all."
+  },
+  {
+    "id": "Q13",
+    "label": "answered",
+    "cited_ids": ["T1040"],
+    "answer": "This matches T1040 Network Sniffing (Credential Access, Discovery). An adversary passively captures traffic, for example by placing an interface in promiscuous mode or using span ports, and the captured data can include user credentials sent over insecure, unencrypted protocols. Detection: flag promiscuous mode changes and sniffing tools such as tcpdump, tshark or Wireshark, and on cloud platforms, new traffic mirroring sessions. The passages do not list mitigations for this technique, and they do not name FTP or Telnet explicitly.",
+    "reason": "The passages describe credential capture from unencrypted protocols via network sniffing, with detection guidance."
+  },
+  {
+    "id": "Q14",
+    "label": "partial",
+    "cited_ids": ["T1056.001"],
+    "answer": "The passages do not explain Sigma rule syntax or how to structure one. They contain ATT&CK detection-strategy text. For example, T1056.001 Input Capture: Keylogging lists behaviors per platform, such as non-system access to /dev/input on Linux or CGEventTapCreate on macOS. That text can inform what a rule should look for, but it is not a Sigma how-to.",
+    "reason": "The passages contain detection ideas that could inform a rule but do not explain how to write a Sigma rule."
+  },
+  {
+    "id": "Q15",
+    "label": "partial",
+    "cited_ids": ["T1189", "T1190"],
+    "answer": "The passages do not describe malware beaconing over HTTPS. Related material: the T1189 Drive-by Compromise Linux detection looks for outbound connections that deviate from baseline and C2-like traffic after a browser spawns a child process. T1190 Exploit Public-Facing Application detection looks for outbound callbacks from a compromised server, and its mitigations recommend restricting outbound traffic from public-facing servers to block attacker-controlled infrastructure. Detection of beaconing itself is not covered.",
+    "reason": "The passages mention C2-like outbound connections and egress restrictions but do not cover beaconing over HTTPS."
+  },
+  {
+    "id": "Q16",
+    "label": "answered",
+    "cited_ids": ["T1003.005"],
+    "answer": "This matches T1003.005 OS Credential Dumping: Cached Domain Credentials. When a domain controller is unavailable, Windows uses cached DCC2 (MS-Cache v2) hashes. These cannot be used for pass-the-hash and must be cracked offline to recover plaintext. Tools include Mimikatz, reg and secretsdump.py on Windows, and Linikatz or tdbdump against the SSSD or Quest VAS caches on Linux. Detection: watch for access to cached credential files or registry exports, often with LSASS scraping, and for Linux cache access requiring root or sudo. The passages do not include mitigations.",
+    "reason": "The passages directly describe cached credential extraction from a host, its tools and detection."
+  },
+  {
+    "id": "Q17",
+    "label": "declined",
+    "cited_ids": ["T1091", "T1539", "T1056.001", "T1056.002"],
+    "answer": "The passages do not describe malware taking periodic screenshots. They cover removable media replication (T1091), web session cookie theft (T1539), keylogging (T1056.001) and GUI credential prompts (T1056.002), none of which address screen capture. I can't answer this from the retrieved material.",
+    "reason": "No passage covers screen capture, and the offered techniques are unrelated to the question."
+  },
+  {
+    "id": "Q18",
+    "label": "answered",
+    "cited_ids": ["T1187"],
+    "answer": "This matches T1187 Forced Authentication (Credential Access). A lure, such as a document that loads a remote template (for example Normal.dotm), or a .LNK or .SCF file whose icon points to a remote share, makes Windows send the user's NTLM credentials over SMB, or over WebDAV on ports 80/443, to the attacker's server. The hashes can then be cracked offline. Detection: outbound SMB (139/445) or WebDAV from a host to an untrusted destination after a lure file is accessed, especially with repeated attempts across hosts. Mitigations: block SMB and WebDAV egress (M1037) and enforce strong passwords (M1027).",
+    "reason": "The passages directly describe forced SMB/WebDAV authentication via lure files, with detection and mitigations."
+  }
+]

@@ -1,0 +1,702 @@
+[
+ {
+  "id": "A01",
+  "answerable": true,
+  "expected": [
+   "T1566.002"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 3,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.715,
+  "best_out": 0.71,
+  "margin": -0.005341887474060059,
+  "best_out_id": "T1684.002",
+  "best_out_tactics": "Stealth"
+ },
+ {
+  "id": "A02",
+  "answerable": true,
+  "expected": [
+   "T1566.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.643,
+  "best_out": 0.723,
+  "margin": 0.07955986261367798,
+  "best_out_id": "T1137.001",
+  "best_out_tactics": "Persistence"
+ },
+ {
+  "id": "A03",
+  "answerable": true,
+  "expected": [
+   "T1566.004"
+  ],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.599,
+  "best_out": 0.643,
+  "margin": 0.044304072856903076,
+  "best_out_id": "T1219.002",
+  "best_out_tactics": "Command and Control"
+ },
+ {
+  "id": "A04",
+  "answerable": true,
+  "expected": [
+   "T1566.003"
+  ],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.709,
+  "best_out": 0.705,
+  "margin": -0.004131972789764404,
+  "best_out_id": "T1598.003",
+  "best_out_tactics": "Reconnaissance"
+ },
+ {
+  "id": "A05",
+  "answerable": true,
+  "expected": [
+   "T1110.003"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.733,
+  "best_out": 0.664,
+  "margin": -0.06981754302978516,
+  "best_out_id": "T1201",
+  "best_out_tactics": "Discovery"
+ },
+ {
+  "id": "A06",
+  "answerable": true,
+  "expected": [
+   "T1110.004"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.69,
+  "best_out": 0.673,
+  "margin": -0.017314910888671875,
+  "best_out_id": "T1589.001",
+  "best_out_tactics": "Reconnaissance"
+ },
+ {
+  "id": "A07",
+  "answerable": true,
+  "expected": [
+   "T1110.002"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.739,
+  "best_out": 0.685,
+  "margin": -0.05417299270629883,
+  "best_out_id": "T1204.003",
+  "best_out_tactics": "Execution"
+ },
+ {
+  "id": "A08",
+  "answerable": true,
+  "expected": [
+   "T1003.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 4,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.771,
+  "best_out": 0.72,
+  "margin": -0.050473034381866455,
+  "best_out_id": "T1547.004",
+  "best_out_tactics": "Persistence, Privilege Escalation"
+ },
+ {
+  "id": "A09",
+  "answerable": true,
+  "expected": [
+   "T1003.003"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.75,
+  "best_out": 0.75,
+  "margin": 0.00045222043991088867,
+  "best_out_id": "T1207",
+  "best_out_tactics": "Defense Impairment"
+ },
+ {
+  "id": "A10",
+  "answerable": true,
+  "expected": [
+   "T1003.006"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.758,
+  "best_out": 0.728,
+  "margin": -0.02941519021987915,
+  "best_out_id": "T1583.001",
+  "best_out_tactics": "Resource Development"
+ },
+ {
+  "id": "A11",
+  "answerable": true,
+  "expected": [
+   "T1558.003"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.71,
+  "best_out": 0.635,
+  "margin": -0.07429420948028564,
+  "best_out_id": "T1496.004",
+  "best_out_tactics": "Impact"
+ },
+ {
+  "id": "A12",
+  "answerable": true,
+  "expected": [
+   "T1558.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.8,
+  "best_out": 0.728,
+  "margin": -0.07235181331634521,
+  "best_out_id": "T1550.003",
+  "best_out_tactics": "Lateral Movement"
+ },
+ {
+  "id": "A13",
+  "answerable": true,
+  "expected": [
+   "T1621"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.7,
+  "best_out": 0.627,
+  "margin": -0.07298648357391357,
+  "best_out_id": "T1696",
+  "best_out_tactics": "Stealth"
+ },
+ {
+  "id": "A14",
+  "answerable": true,
+  "expected": [
+   "T1539"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.811,
+  "best_out": 0.793,
+  "margin": -0.017983853816986084,
+  "best_out_id": "T1550.004",
+  "best_out_tactics": "Lateral Movement"
+ },
+ {
+  "id": "A15",
+  "answerable": true,
+  "expected": [
+   "T1528"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.783,
+  "best_out": 0.745,
+  "margin": -0.03764677047729492,
+  "best_out_id": "T1550.001",
+  "best_out_tactics": "Lateral Movement"
+ },
+ {
+  "id": "A16",
+  "answerable": true,
+  "expected": [
+   "T1552.005"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 4,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.731,
+  "best_out": 0.71,
+  "margin": -0.02133965492248535,
+  "best_out_id": "T1021.008",
+  "best_out_tactics": "Lateral Movement"
+ },
+ {
+  "id": "A17",
+  "answerable": true,
+  "expected": [
+   "T1552.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.733,
+  "best_out": 0.7,
+  "margin": -0.032215237617492676,
+  "best_out_id": "T1027",
+  "best_out_tactics": "Stealth"
+ },
+ {
+  "id": "A18",
+  "answerable": true,
+  "expected": [
+   "T1555.003"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.698,
+  "best_out": 0.661,
+  "margin": -0.036820173263549805,
+  "best_out_id": "T1176.001",
+  "best_out_tactics": "Persistence"
+ },
+ {
+  "id": "A19",
+  "answerable": true,
+  "expected": [
+   "T1555.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.701,
+  "best_out": 0.606,
+  "margin": -0.09407943487167358,
+  "best_out_id": "T1561.002",
+  "best_out_tactics": "Impact"
+ },
+ {
+  "id": "A20",
+  "answerable": true,
+  "expected": [
+   "T1557.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.799,
+  "best_out": 0.68,
+  "margin": -0.1181035041809082,
+  "best_out_id": "T1564.004",
+  "best_out_tactics": "Stealth"
+ },
+ {
+  "id": "A21",
+  "answerable": true,
+  "expected": [
+   "T1557.004",
+   "T1669"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.679,
+  "best_out": 0.626,
+  "margin": -0.053013503551483154,
+  "best_out_id": "T1016.002",
+  "best_out_tactics": "Discovery"
+ },
+ {
+  "id": "A22",
+  "answerable": true,
+  "expected": [
+   "T1056.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.694,
+  "best_out": 0.657,
+  "margin": -0.037547171115875244,
+  "best_out_id": "T1674",
+  "best_out_tactics": "Execution"
+ },
+ {
+  "id": "A23",
+  "answerable": true,
+  "expected": [
+   "T1133",
+   "T1078"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.649,
+  "best_out": 0.635,
+  "margin": -0.013555824756622314,
+  "best_out_id": "T1496.002",
+  "best_out_tactics": "Impact"
+ },
+ {
+  "id": "A24",
+  "answerable": true,
+  "expected": [
+   "T1190"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.717,
+  "best_out": 0.666,
+  "margin": -0.051145076751708984,
+  "best_out_id": "T1210",
+  "best_out_tactics": "Lateral Movement"
+ },
+ {
+  "id": "A25",
+  "answerable": true,
+  "expected": [
+   "T1189"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.75,
+  "best_out": 0.71,
+  "margin": -0.03951442241668701,
+  "best_out_id": "T1608.006",
+  "best_out_tactics": "Resource Development"
+ },
+ {
+  "id": "A26",
+  "answerable": true,
+  "expected": [
+   "T1195.001",
+   "T1195"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.744,
+  "best_out": 0.757,
+  "margin": 0.013354957103729248,
+  "best_out_id": "T1204.005",
+  "best_out_tactics": "Execution"
+ },
+ {
+  "id": "A27",
+  "answerable": true,
+  "expected": [
+   "T1199"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.671,
+  "best_out": 0.675,
+  "margin": 0.0030579566955566406,
+  "best_out_id": "T1496.004",
+  "best_out_tactics": "Impact"
+ },
+ {
+  "id": "A28",
+  "answerable": true,
+  "expected": [
+   "T1078.001"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.686,
+  "best_out": 0.646,
+  "margin": -0.04008746147155762,
+  "best_out_id": "T1601.001",
+  "best_out_tactics": "Defense Impairment"
+ },
+ {
+  "id": "A29",
+  "answerable": true,
+  "expected": [
+   "T1091"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.657,
+  "best_out": 0.66,
+  "margin": 0.0026181936264038086,
+  "best_out_id": "T1052.001",
+  "best_out_tactics": "Exfiltration"
+ },
+ {
+  "id": "A30",
+  "answerable": true,
+  "expected": [
+   "T1606.002"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.788,
+  "best_out": 0.695,
+  "margin": -0.09249550104141235,
+  "best_out_id": "T1588.004",
+  "best_out_tactics": "Resource Development"
+ },
+ {
+  "id": "A31",
+  "answerable": true,
+  "expected": [
+   "T1556.006"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.577,
+  "best_out": 0.551,
+  "margin": -0.025451362133026123,
+  "best_out_id": "T1055.013",
+  "best_out_tactics": "Privilege Escalation, Stealth"
+ },
+ {
+  "id": "A32",
+  "answerable": true,
+  "expected": [
+   "T1003.008"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.653,
+  "best_out": 0.629,
+  "margin": -0.02421391010284424,
+  "best_out_id": "T1499.002",
+  "best_out_tactics": "Impact"
+ },
+ {
+  "id": "A33",
+  "answerable": true,
+  "expected": [
+   "T1110.001",
+   "T1110.003"
+  ],
+  "base_hit": true,
+  "dedup_hit": true,
+  "dedup_rank": 1,
+  "base_gated": false,
+  "e2_gated": false,
+  "best_in": 0.566,
+  "best_out": 0.547,
+  "margin": -0.01833975315093994,
+  "best_out_id": "T1601.001",
+  "best_out_tactics": "Defense Impairment"
+ },
+ {
+  "id": "U1",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": true,
+  "e2_gated": true,
+  "best_in": 0.361,
+  "best_out": 0.351,
+  "margin": -0.009786546230316162,
+  "best_out_id": "T1564.014",
+  "best_out_tactics": "Stealth"
+ },
+ {
+  "id": "U2",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": true,
+  "e2_gated": true,
+  "best_in": 0.512,
+  "best_out": 0.485,
+  "margin": -0.02736198902130127,
+  "best_out_id": "T1546.004",
+  "best_out_tactics": "Persistence, Privilege Escalation"
+ },
+ {
+  "id": "U3",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.679,
+  "best_out": 0.767,
+  "margin": 0.0886724591255188,
+  "best_out_id": "T1563.002",
+  "best_out_tactics": "Lateral Movement"
+ },
+ {
+  "id": "U4",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.673,
+  "best_out": 0.798,
+  "margin": 0.12459075450897217,
+  "best_out_id": "T1486",
+  "best_out_tactics": "Impact"
+ },
+ {
+  "id": "U5",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.662,
+  "best_out": 0.777,
+  "margin": 0.11519229412078857,
+  "best_out_id": "T1053",
+  "best_out_tactics": "Execution, Persistence, Privilege Escalation"
+ },
+ {
+  "id": "U6",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.735,
+  "best_out": 0.778,
+  "margin": 0.04295867681503296,
+  "best_out_id": "T1596.001",
+  "best_out_tactics": "Reconnaissance"
+ },
+ {
+  "id": "U7",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.722,
+  "best_out": 0.742,
+  "margin": 0.019429326057434082,
+  "best_out_id": "T1574.005",
+  "best_out_tactics": "Execution, Stealth"
+ },
+ {
+  "id": "U8",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": false,
+  "e2_gated": true,
+  "best_in": 0.61,
+  "best_out": 0.619,
+  "margin": 0.00850522518157959,
+  "best_out_id": "T1185",
+  "best_out_tactics": "Collection"
+ },
+ {
+  "id": "U9",
+  "answerable": false,
+  "expected": [],
+  "base_hit": false,
+  "dedup_hit": false,
+  "dedup_rank": null,
+  "base_gated": true,
+  "e2_gated": true,
+  "best_in": 0.591,
+  "best_out": 0.56,
+  "margin": -0.03129708766937256,
+  "best_out_id": "T1601.001",
+  "best_out_tactics": "Defense Impairment"
+ }
+]

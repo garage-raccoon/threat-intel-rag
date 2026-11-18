@@ -1,0 +1,32 @@
+marker passages embedded: 616 out-of-scope techniques
+
+                                    baseline  E1 dedup  E2 markers   E1+E2
+top-5 retrieval accuracy               31/33     31/33       31/33   31/33
+answerable wrongly gated                0/33      0/33        6/33    6/33
+unanswerable gated                       3/9       3/9         9/9     9/9
+
+Per question (only rows where something changed or is interesting):
+  A02  hit True ->True  rank(dedup)=1 | gated False->True  | best in-scope 0.643 vs out-of-scope 0.723 T1137.001 (Persistence)
+  A03  hit False->False rank(dedup)=None | gated False->True  | best in-scope 0.599 vs out-of-scope 0.643 T1219.002 (Command and Control)
+  A04  hit False->False rank(dedup)=None | gated False->False | best in-scope 0.709 vs out-of-scope 0.705 T1598.003 (Reconnaissance)
+  A09  hit True ->True  rank(dedup)=1 | gated False->True  | best in-scope 0.750 vs out-of-scope 0.750 T1207 (Defense Impairment)
+  A26  hit True ->True  rank(dedup)=1 | gated False->True  | best in-scope 0.744 vs out-of-scope 0.757 T1204.005 (Execution)
+  A27  hit True ->True  rank(dedup)=1 | gated False->True  | best in-scope 0.671 vs out-of-scope 0.675 T1496.004 (Impact)
+  A29  hit True ->True  rank(dedup)=1 | gated False->True  | best in-scope 0.657 vs out-of-scope 0.660 T1052.001 (Exfiltration)
+  U1   hit False->False rank(dedup)=None | gated True ->True  | best in-scope 0.361 vs out-of-scope 0.351 T1564.014 (Stealth)
+  U2   hit False->False rank(dedup)=None | gated True ->True  | best in-scope 0.512 vs out-of-scope 0.485 T1546.004 (Persistence, Privilege Escalation)
+  U3   hit False->False rank(dedup)=None | gated False->True  | best in-scope 0.679 vs out-of-scope 0.767 T1563.002 (Lateral Movement)
+  U4   hit False->False rank(dedup)=None | gated False->True  | best in-scope 0.673 vs out-of-scope 0.798 T1486 (Impact)
+  U5   hit False->False rank(dedup)=None | gated False->True  | best in-scope 0.662 vs out-of-scope 0.777 T1053 (Execution, Persistence, Privilege Escalation)
+  U6   hit False->False rank(dedup)=None | gated False->True  | best in-scope 0.735 vs out-of-scope 0.778 T1596.001 (Reconnaissance)
+  U7   hit False->False rank(dedup)=None | gated False->True  | best in-scope 0.722 vs out-of-scope 0.742 T1574.005 (Execution, Stealth)
+  U8   hit False->False rank(dedup)=None | gated False->True  | best in-scope 0.610 vs out-of-scope 0.619 T1185 (Collection)
+  U9   hit False->False rank(dedup)=None | gated True ->True  | best in-scope 0.591 vs out-of-scope 0.560 T1601.001 (Defense Impairment)
+
+Margin sweep: gate when (best out-of-scope - best in-scope) > m
+  m=0.00  answerable wrongly gated 6/33   unanswerable gated 9/9
+  m=0.01  answerable wrongly gated 3/33   unanswerable gated 8/9
+  m=0.02  answerable wrongly gated 2/33   unanswerable gated 7/9
+  m=0.03  answerable wrongly gated 2/33   unanswerable gated 7/9
+  m=0.05  answerable wrongly gated 1/33   unanswerable gated 6/9
+  m=0.09  answerable wrongly gated 0/33   unanswerable gated 5/9

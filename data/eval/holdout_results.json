@@ -1,0 +1,4350 @@
+{
+  "run_at": "2026-11-17T23:53:26+00:00",
+  "test_set": "holdout_set.json",
+  "attack_version": "20.1",
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "top_k": 5,
+  "summary": {
+    "top5_retrieval_accuracy": "47/50",
+    "rank1_accuracy": "42/50",
+    "answerable_wrongly_gated": "2/50",
+    "answerable_hit_and_not_gated": "45/50",
+    "unanswerable_gated": "40/50",
+    "gated_by_reason": {
+      "below_threshold": 10,
+      "out_of_scope": 27,
+      "unknown_id": 5
+    },
+    "threshold_in_use": 0.555,
+    "marker_margin_in_use": 0.02,
+    "threshold_analysis": {
+      "threshold": 0.691,
+      "correct": 72,
+      "of": 90,
+      "gap": 0.0016
+    }
+  },
+  "rows": [
+    {
+      "id": "H01",
+      "question": "An attacker saved the SAM and SYSTEM registry hives from a workstation to extract local password hashes.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1003.002"
+      ],
+      "retrieved": [
+        [
+          "T1003.002",
+          0.777
+        ],
+        [
+          "T1003.002",
+          0.749
+        ],
+        [
+          "T1552.002",
+          0.736
+        ],
+        [
+          "T1110.002",
+          0.696
+        ],
+        [
+          "T1557.001",
+          0.696
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7767,
+      "top_attack_id": "T1003.002",
+      "unknown_ids": [],
+      "marker_id": "T1525",
+      "marker_tactics": [
+        "Persistence"
+      ],
+      "marker_score": 0.6853,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H02",
+      "question": "Someone dumped LSA secrets from the registry to recover service account passwords.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1003.004"
+      ],
+      "retrieved": [
+        [
+          "T1003.004",
+          0.752
+        ],
+        [
+          "T1003.004",
+          0.745
+        ],
+        [
+          "T1003.001",
+          0.694
+        ],
+        [
+          "T1003.002",
+          0.668
+        ],
+        [
+          "T1003.001",
+          0.658
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7524,
+      "top_attack_id": "T1003.004",
+      "unknown_ids": [],
+      "marker_id": "T1531",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.6148,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H03",
+      "question": "Attackers extracted cached domain logon hashes from a laptop that was offline from the corporate network.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1003.005"
+      ],
+      "retrieved": [
+        [
+          "T1078.002",
+          0.736
+        ],
+        [
+          "T1078",
+          0.722
+        ],
+        [
+          "T1539",
+          0.715
+        ],
+        [
+          "T1003.005",
+          0.715
+        ],
+        [
+          "T1003.005",
+          0.715
+        ]
+      ],
+      "hit": true,
+      "rank": 4,
+      "match": "vector",
+      "top_score": 0.7356,
+      "top_attack_id": "T1078.002",
+      "unknown_ids": [],
+      "marker_id": "T1485",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.6999,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H04",
+      "question": "On a Linux server, an attacker copied the shadow password file to get user hashes.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1003.008"
+      ],
+      "retrieved": [
+        [
+          "T1003.008",
+          0.814
+        ],
+        [
+          "T1003.008",
+          0.755
+        ],
+        [
+          "T1110.002",
+          0.732
+        ],
+        [
+          "T1110.002",
+          0.723
+        ],
+        [
+          "T1539",
+          0.713
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.8144,
+      "top_attack_id": "T1003.008",
+      "unknown_ids": [],
+      "marker_id": "T1204.003",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.7297,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H05",
+      "question": "Malware scraped credentials out of the memory of running Linux processes.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1003.007"
+      ],
+      "retrieved": [
+        [
+          "T1003.001",
+          0.743
+        ],
+        [
+          "T1555.002",
+          0.74
+        ],
+        [
+          "T1552.003",
+          0.74
+        ],
+        [
+          "T1003",
+          0.739
+        ],
+        [
+          "T1003.008",
+          0.733
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7434,
+      "top_attack_id": "T1003.001",
+      "unknown_ids": [],
+      "marker_id": "T1497.001",
+      "marker_tactics": [
+        "Discovery",
+        "Stealth"
+      ],
+      "marker_score": 0.7205,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H06",
+      "question": "An attacker captured network traffic to grab cleartext passwords from protocols like FTP and Telnet.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1040"
+      ],
+      "retrieved": [
+        [
+          "T1040",
+          0.775
+        ],
+        [
+          "T1040",
+          0.731
+        ],
+        [
+          "T1669",
+          0.729
+        ],
+        [
+          "T1056.003",
+          0.717
+        ],
+        [
+          "T1110.002",
+          0.709
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7747,
+      "top_attack_id": "T1040",
+      "unknown_ids": [],
+      "marker_id": "T1600",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.738,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H07",
+      "question": "A fake login form was injected into our internal web portal to collect employee passwords.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1056.003"
+      ],
+      "retrieved": [
+        [
+          "T1056.003",
+          0.73
+        ],
+        [
+          "T1056.003",
+          0.705
+        ],
+        [
+          "T1056.003",
+          0.692
+        ],
+        [
+          "T1606",
+          0.69
+        ],
+        [
+          "T1606.001",
+          0.687
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7304,
+      "top_attack_id": "T1056.003",
+      "unknown_ids": [],
+      "marker_id": "T1534",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.6713,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H08",
+      "question": "A pop-up that looked like a macOS system dialog asked users to type their password.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1056.002"
+      ],
+      "retrieved": [
+        [
+          "T1056.002",
+          0.651
+        ],
+        [
+          "T1056.002",
+          0.631
+        ],
+        [
+          "T1110.001",
+          0.63
+        ],
+        [
+          "T1555.002",
+          0.626
+        ],
+        [
+          "T1555.001",
+          0.626
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6506,
+      "top_attack_id": "T1056.002",
+      "unknown_ids": [],
+      "marker_id": "T1553.001",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.618,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H09",
+      "question": "Malware hooked Windows API functions to capture credentials as users entered them.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1056.004"
+      ],
+      "retrieved": [
+        [
+          "T1056.004",
+          0.828
+        ],
+        [
+          "T1056.004",
+          0.769
+        ],
+        [
+          "T1056.002",
+          0.748
+        ],
+        [
+          "T1056.001",
+          0.738
+        ],
+        [
+          "T1056.003",
+          0.725
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.828,
+      "top_attack_id": "T1056.004",
+      "unknown_ids": [],
+      "marker_id": "T1027.007",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.755,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H10",
+      "question": "Stolen credentials for a cloud console account were used to log in to our AWS environment.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1078.004",
+        "T1078"
+      ],
+      "retrieved": [
+        [
+          "T1528",
+          0.763
+        ],
+        [
+          "T1555.006",
+          0.758
+        ],
+        [
+          "T1078.004",
+          0.751
+        ],
+        [
+          "T1606",
+          0.739
+        ],
+        [
+          "T1649",
+          0.732
+        ]
+      ],
+      "hit": true,
+      "rank": 3,
+      "match": "vector",
+      "top_score": 0.7631,
+      "top_attack_id": "T1528",
+      "unknown_ids": [],
+      "marker_id": "T1098.001",
+      "marker_tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.7713,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H11",
+      "question": "The intruder logged in with a legitimate Active Directory user account they had compromised.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1078.002",
+        "T1078"
+      ],
+      "retrieved": [
+        [
+          "T1078",
+          0.725
+        ],
+        [
+          "T1078",
+          0.709
+        ],
+        [
+          "T1078.002",
+          0.698
+        ],
+        [
+          "T1078.002",
+          0.696
+        ],
+        [
+          "T1189",
+          0.686
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7254,
+      "top_attack_id": "T1078",
+      "unknown_ids": [],
+      "marker_id": "T1033",
+      "marker_tactics": [
+        "Discovery"
+      ],
+      "marker_score": 0.6942,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H12",
+      "question": "Attackers reused the local administrator password that was identical on every workstation.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1078.003",
+        "T1078"
+      ],
+      "retrieved": [
+        [
+          "T1110.004",
+          0.692
+        ],
+        [
+          "T1110.003",
+          0.682
+        ],
+        [
+          "T1003.006",
+          0.681
+        ],
+        [
+          "T1003.001",
+          0.679
+        ],
+        [
+          "T1003.003",
+          0.679
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6918,
+      "top_attack_id": "T1110.004",
+      "unknown_ids": [],
+      "marker_id": "T1531",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.6621,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H13",
+      "question": "Someone kept guessing passwords for a single admin account until one worked.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1110.001",
+        "T1110"
+      ],
+      "retrieved": [
+        [
+          "T1110.001",
+          0.709
+        ],
+        [
+          "T1110.003",
+          0.664
+        ],
+        [
+          "T1110.001",
+          0.66
+        ],
+        [
+          "T1003.003",
+          0.657
+        ],
+        [
+          "T1110.001",
+          0.654
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7088,
+      "top_attack_id": "T1110.001",
+      "unknown_ids": [],
+      "marker_id": "T1586",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.6396,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H14",
+      "question": "Malware intercepted one-time codes from a user's token to get past two-factor authentication.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1111"
+      ],
+      "retrieved": [
+        [
+          "T1111",
+          0.754
+        ],
+        [
+          "T1621",
+          0.719
+        ],
+        [
+          "T1621",
+          0.712
+        ],
+        [
+          "T1111",
+          0.71
+        ],
+        [
+          "T1621",
+          0.708
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.754,
+      "top_attack_id": "T1111",
+      "unknown_ids": [],
+      "marker_id": "T1550.004",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.6936,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H15",
+      "question": "Attackers logged into our Citrix gateway from the internet using stolen credentials.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1133",
+        "T1078"
+      ],
+      "retrieved": [
+        [
+          "T1539",
+          0.703
+        ],
+        [
+          "T1649",
+          0.685
+        ],
+        [
+          "T1212",
+          0.683
+        ],
+        [
+          "T1528",
+          0.682
+        ],
+        [
+          "T1078",
+          0.682
+        ]
+      ],
+      "hit": true,
+      "rank": 5,
+      "match": "vector",
+      "top_score": 0.703,
+      "top_attack_id": "T1539",
+      "unknown_ids": [],
+      "marker_id": "T1134",
+      "marker_tactics": [
+        "Privilege Escalation",
+        "Stealth"
+      ],
+      "marker_score": 0.6703,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H16",
+      "question": "A malicious document made Windows automatically authenticate to an attacker's SMB server, leaking NTLM hashes.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1187"
+      ],
+      "retrieved": [
+        [
+          "T1187",
+          0.788
+        ],
+        [
+          "T1187",
+          0.765
+        ],
+        [
+          "T1557.001",
+          0.737
+        ],
+        [
+          "T1557.001",
+          0.725
+        ],
+        [
+          "T1003.003",
+          0.72
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7878,
+      "top_attack_id": "T1187",
+      "unknown_ids": [],
+      "marker_id": "T1021.002",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.7374,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H17",
+      "question": "Employees were infected by malicious ads shown on a popular news website.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1189"
+      ],
+      "retrieved": [
+        [
+          "T1189",
+          0.648
+        ],
+        [
+          "T1566.002",
+          0.624
+        ],
+        [
+          "T1566",
+          0.619
+        ],
+        [
+          "T1566",
+          0.604
+        ],
+        [
+          "T1566.002",
+          0.603
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6478,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1583.008",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.7388,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "H18",
+      "question": "Attackers exploited a SQL injection flaw in our customer-facing web application to get in.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1190"
+      ],
+      "retrieved": [
+        [
+          "T1190",
+          0.76
+        ],
+        [
+          "T1189",
+          0.731
+        ],
+        [
+          "T1190",
+          0.715
+        ],
+        [
+          "T1212",
+          0.693
+        ],
+        [
+          "T1189",
+          0.685
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7604,
+      "top_attack_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1608.006",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.7243,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H19",
+      "question": "A trojanized update for a widely used IT management product was pushed to its customers.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1195.002",
+        "T1195"
+      ],
+      "retrieved": [
+        [
+          "T1566",
+          0.629
+        ],
+        [
+          "T1195.002",
+          0.627
+        ],
+        [
+          "T1199",
+          0.614
+        ],
+        [
+          "T1697",
+          0.613
+        ],
+        [
+          "T1195",
+          0.609
+        ]
+      ],
+      "hit": true,
+      "rank": 2,
+      "match": "vector",
+      "top_score": 0.6295,
+      "top_attack_id": "T1566",
+      "unknown_ids": [],
+      "marker_id": "T1496.004",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.63,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H20",
+      "question": "Network switches arrived from a supplier with backdoored firmware already installed.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1195.003",
+        "T1195"
+      ],
+      "retrieved": [
+        [
+          "T1195.003",
+          0.691
+        ],
+        [
+          "T1200",
+          0.673
+        ],
+        [
+          "T1200",
+          0.65
+        ],
+        [
+          "T1556.004",
+          0.63
+        ],
+        [
+          "T1195.003",
+          0.627
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6915,
+      "top_attack_id": "T1195.003",
+      "unknown_ids": [],
+      "marker_id": "T1650",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.6644,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H21",
+      "question": "Someone plugged a rogue device into an open network port in our office.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1200"
+      ],
+      "retrieved": [
+        [
+          "T1200",
+          0.65
+        ],
+        [
+          "T1556.003",
+          0.63
+        ],
+        [
+          "T1556.003",
+          0.624
+        ],
+        [
+          "T1566.002",
+          0.615
+        ],
+        [
+          "T1557.004",
+          0.61
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6496,
+      "top_attack_id": "T1200",
+      "unknown_ids": [],
+      "marker_id": "T1205",
+      "marker_tactics": [
+        "Command and Control",
+        "Persistence",
+        "Stealth"
+      ],
+      "marker_score": 0.6529,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H22",
+      "question": "Attackers exploited a vulnerability in our authentication service to obtain credentials.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1212"
+      ],
+      "retrieved": [
+        [
+          "T1212",
+          0.809
+        ],
+        [
+          "T1212",
+          0.756
+        ],
+        [
+          "T1190",
+          0.753
+        ],
+        [
+          "T1556",
+          0.752
+        ],
+        [
+          "T1078",
+          0.726
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.8092,
+      "top_attack_id": "T1212",
+      "unknown_ids": [],
+      "marker_id": "T1687",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.75,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H23",
+      "question": "Plaintext passwords were found in Windows registry keys used for automatic logon.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1552.002",
+        "T1552"
+      ],
+      "retrieved": [
+        [
+          "T1552.002",
+          0.794
+        ],
+        [
+          "T1552.002",
+          0.746
+        ],
+        [
+          "T1556.002",
+          0.726
+        ],
+        [
+          "T1552",
+          0.725
+        ],
+        [
+          "T1003.004",
+          0.716
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7935,
+      "top_attack_id": "T1552.002",
+      "unknown_ids": [],
+      "marker_id": "T1547.001",
+      "marker_tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.7416,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H24",
+      "question": "A server's command history contained a database password typed on the command line.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1552.003",
+        "T1552"
+      ],
+      "retrieved": [
+        [
+          "T1552.003",
+          0.789
+        ],
+        [
+          "T1552.003",
+          0.742
+        ],
+        [
+          "T1552.003",
+          0.717
+        ],
+        [
+          "T1552",
+          0.703
+        ],
+        [
+          "T1555.005",
+          0.697
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7891,
+      "top_attack_id": "T1552.003",
+      "unknown_ids": [],
+      "marker_id": "T1070.003",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.729,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H25",
+      "question": "An attacker stole SSH private keys from users' home directories.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1552.004",
+        "T1552"
+      ],
+      "retrieved": [
+        [
+          "T1552.004",
+          0.682
+        ],
+        [
+          "T1552.004",
+          0.682
+        ],
+        [
+          "T1003.002",
+          0.67
+        ],
+        [
+          "T1003.003",
+          0.668
+        ],
+        [
+          "T1649",
+          0.666
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6818,
+      "top_attack_id": "T1552.004",
+      "unknown_ids": [],
+      "marker_id": "T1563.001",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.7228,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "H26",
+      "question": "Attackers decrypted passwords found in Group Policy files on the SYSVOL share.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1552.006",
+        "T1552"
+      ],
+      "retrieved": [
+        [
+          "T1552.006",
+          0.825
+        ],
+        [
+          "T1552.006",
+          0.823
+        ],
+        [
+          "T1552.006",
+          0.747
+        ],
+        [
+          "T1556.005",
+          0.696
+        ],
+        [
+          "T1552.001",
+          0.696
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.8249,
+      "top_attack_id": "T1552.006",
+      "unknown_ids": [],
+      "marker_id": "T1201",
+      "marker_tactics": [
+        "Discovery"
+      ],
+      "marker_score": 0.7392,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H27",
+      "question": "An attacker queried the Kubernetes API to read secrets stored in the cluster.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1552.007",
+        "T1552"
+      ],
+      "retrieved": [
+        [
+          "T1552.007",
+          0.77
+        ],
+        [
+          "T1552.007",
+          0.759
+        ],
+        [
+          "T1528",
+          0.732
+        ],
+        [
+          "T1528",
+          0.711
+        ],
+        [
+          "T1552.007",
+          0.707
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7704,
+      "top_attack_id": "T1552.007",
+      "unknown_ids": [],
+      "marker_id": "T1610",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.7237,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H28",
+      "question": "Passwords that staff had shared in Slack channels were harvested by attackers.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1552.008",
+        "T1552"
+      ],
+      "retrieved": [
+        [
+          "T1552.008",
+          0.714
+        ],
+        [
+          "T1110.004",
+          0.654
+        ],
+        [
+          "T1552.008",
+          0.652
+        ],
+        [
+          "T1110.004",
+          0.641
+        ],
+        [
+          "T1212",
+          0.64
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7137,
+      "top_attack_id": "T1552.008",
+      "unknown_ids": [],
+      "marker_id": "T1567.003",
+      "marker_tactics": [
+        "Exfiltration"
+      ],
+      "marker_score": 0.645,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H29",
+      "question": "Saved credentials were pulled from the Windows Credential Manager vault.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1555.004",
+        "T1555"
+      ],
+      "retrieved": [
+        [
+          "T1555.004",
+          0.821
+        ],
+        [
+          "T1555.004",
+          0.763
+        ],
+        [
+          "T1003.002",
+          0.755
+        ],
+        [
+          "T1552.001",
+          0.749
+        ],
+        [
+          "T1003.002",
+          0.748
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.8208,
+      "top_attack_id": "T1555.004",
+      "unknown_ids": [],
+      "marker_id": "T1134",
+      "marker_tactics": [
+        "Privilege Escalation",
+        "Stealth"
+      ],
+      "marker_score": 0.6537,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H30",
+      "question": "Attackers went after our KeePass database and its master password.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1555.005",
+        "T1555"
+      ],
+      "retrieved": [
+        [
+          "T1555.005",
+          0.694
+        ],
+        [
+          "T1555.005",
+          0.673
+        ],
+        [
+          "T1555.005",
+          0.659
+        ],
+        [
+          "T1555",
+          0.654
+        ],
+        [
+          "T1110",
+          0.647
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.6937,
+      "top_attack_id": "T1555.005",
+      "unknown_ids": [],
+      "marker_id": "T1531",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.6396,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H31",
+      "question": "After compromising a cloud role, attackers read secrets from AWS Secrets Manager.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1555.006",
+        "T1555"
+      ],
+      "retrieved": [
+        [
+          "T1555.006",
+          0.745
+        ],
+        [
+          "T1555.006",
+          0.729
+        ],
+        [
+          "T1555.006",
+          0.703
+        ],
+        [
+          "T1078.004",
+          0.698
+        ],
+        [
+          "T1078.004",
+          0.677
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7449,
+      "top_attack_id": "T1555.006",
+      "unknown_ids": [],
+      "marker_id": "T1586.003",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.7433,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H32",
+      "question": "A malicious authentication module was installed on Linux servers to log every password.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1556.003",
+        "T1556"
+      ],
+      "retrieved": [
+        [
+          "T1556.003",
+          0.726
+        ],
+        [
+          "T1110",
+          0.717
+        ],
+        [
+          "T1003.008",
+          0.716
+        ],
+        [
+          "T1078.002",
+          0.714
+        ],
+        [
+          "T1556.008",
+          0.704
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7256,
+      "top_attack_id": "T1556.003",
+      "unknown_ids": [],
+      "marker_id": "T1685.006",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.7059,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H33",
+      "question": "A malicious DLL was registered to receive plaintext passwords whenever users changed them.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1556.002",
+        "T1556"
+      ],
+      "retrieved": [
+        [
+          "T1556.002",
+          0.789
+        ],
+        [
+          "T1556.002",
+          0.763
+        ],
+        [
+          "T1556.008",
+          0.749
+        ],
+        [
+          "T1556.008",
+          0.722
+        ],
+        [
+          "T1556.002",
+          0.708
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.789,
+      "top_attack_id": "T1556.002",
+      "unknown_ids": [],
+      "marker_id": "T1574.001",
+      "marker_tactics": [
+        "Execution",
+        "Stealth"
+      ],
+      "marker_score": 0.7402,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H34",
+      "question": "Attackers tampered with the Azure AD pass-through authentication agent so any password would be accepted.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1556.007",
+        "T1556"
+      ],
+      "retrieved": [
+        [
+          "T1556.006",
+          0.711
+        ],
+        [
+          "T1528",
+          0.706
+        ],
+        [
+          "T1697",
+          0.701
+        ],
+        [
+          "T1212",
+          0.698
+        ],
+        [
+          "T1078",
+          0.697
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.711,
+      "top_attack_id": "T1556.006",
+      "unknown_ids": [],
+      "marker_id": "T1098.001",
+      "marker_tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.6928,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H35",
+      "question": "An attacker changed conditional access policies to exempt their own IP address from MFA.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1556.009",
+        "T1556"
+      ],
+      "retrieved": [
+        [
+          "T1556.009",
+          0.79
+        ],
+        [
+          "T1556.009",
+          0.779
+        ],
+        [
+          "T1556.006",
+          0.755
+        ],
+        [
+          "T1556.009",
+          0.753
+        ],
+        [
+          "T1556.006",
+          0.715
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7897,
+      "top_attack_id": "T1556.009",
+      "unknown_ids": [],
+      "marker_id": "T1484",
+      "marker_tactics": [
+        "Defense Impairment",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.7237,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H36",
+      "question": "An attacker on the local network spoofed ARP replies to intercept traffic between hosts.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1557.002",
+        "T1557"
+      ],
+      "retrieved": [
+        [
+          "T1557.002",
+          0.81
+        ],
+        [
+          "T1557.002",
+          0.763
+        ],
+        [
+          "T1557.002",
+          0.762
+        ],
+        [
+          "T1557.003",
+          0.75
+        ],
+        [
+          "T1557",
+          0.748
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.8098,
+      "top_attack_id": "T1557.002",
+      "unknown_ids": [],
+      "marker_id": "T1498.002",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.7314,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H37",
+      "question": "A rogue DHCP server handed out malicious DNS settings to clients.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1557.003",
+        "T1557"
+      ],
+      "retrieved": [
+        [
+          "T1557.003",
+          0.763
+        ],
+        [
+          "T1557.003",
+          0.754
+        ],
+        [
+          "T1557.001",
+          0.687
+        ],
+        [
+          "T1189",
+          0.679
+        ],
+        [
+          "T1557.003",
+          0.675
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7631,
+      "top_attack_id": "T1557.003",
+      "unknown_ids": [],
+      "marker_id": "T1584.002",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.7428,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H38",
+      "question": "Attackers forged Kerberos service tickets using a service account's password hash.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1558.002",
+        "T1558"
+      ],
+      "retrieved": [
+        [
+          "T1558.002",
+          0.817
+        ],
+        [
+          "T1558.002",
+          0.814
+        ],
+        [
+          "T1558.003",
+          0.802
+        ],
+        [
+          "T1558",
+          0.8
+        ],
+        [
+          "T1558.001",
+          0.79
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.8174,
+      "top_attack_id": "T1558.002",
+      "unknown_ids": [],
+      "marker_id": "T1550.003",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.7434,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H39",
+      "question": "Attackers requested authentication data for accounts that don't require Kerberos pre-authentication and cracked it offline.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1558.004",
+        "T1558"
+      ],
+      "retrieved": [
+        [
+          "T1558.004",
+          0.76
+        ],
+        [
+          "T1558.004",
+          0.714
+        ],
+        [
+          "T1558.005",
+          0.698
+        ],
+        [
+          "T1558.005",
+          0.694
+        ],
+        [
+          "T1558.005",
+          0.691
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.7605,
+      "top_attack_id": "T1558.004",
+      "unknown_ids": [],
+      "marker_id": "T1586.003",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.6796,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H40",
+      "question": "Kerberos ticket cache files were stolen from a Linux host.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1558.005",
+        "T1558"
+      ],
+      "retrieved": [
+        [
+          "T1558.005",
+          0.822
+        ],
+        [
+          "T1558.005",
+          0.808
+        ],
+        [
+          "T1558",
+          0.799
+        ],
+        [
+          "T1558.005",
+          0.791
+        ],
+        [
+          "T1558",
+          0.777
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.8219,
+      "top_attack_id": "T1558.005",
+      "unknown_ids": [],
+      "marker_id": "T1550.003",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.6957,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H41",
+      "question": "Attackers generated their own valid web session cookies using a stolen secret key.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1606.001",
+        "T1606"
+      ],
+      "retrieved": [
+        [
+          "T1539",
+          0.834
+        ],
+        [
+          "T1606.001",
+          0.811
+        ],
+        [
+          "T1539",
+          0.788
+        ],
+        [
+          "T1539",
+          0.775
+        ],
+        [
+          "T1606.001",
+          0.762
+        ]
+      ],
+      "hit": true,
+      "rank": 2,
+      "match": "vector",
+      "top_score": 0.834,
+      "top_attack_id": "T1539",
+      "unknown_ids": [],
+      "marker_id": "T1550.004",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.7899,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H42",
+      "question": "Attackers abused a misconfigured certificate template to obtain a certificate that authenticates as a domain admin.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1649"
+      ],
+      "retrieved": [
+        [
+          "T1649",
+          0.734
+        ],
+        [
+          "T1649",
+          0.726
+        ],
+        [
+          "T1556.001",
+          0.718
+        ],
+        [
+          "T1212",
+          0.698
+        ],
+        [
+          "T1649",
+          0.693
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.734,
+      "top_attack_id": "T1649",
+      "unknown_ids": [],
+      "marker_id": "T1584.001",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.7273,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H43",
+      "question": "Attackers sitting in the network path injected malicious content into unencrypted web traffic.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1659"
+      ],
+      "retrieved": [
+        [
+          "T1659",
+          0.774
+        ],
+        [
+          "T1189",
+          0.766
+        ],
+        [
+          "T1659",
+          0.726
+        ],
+        [
+          "T1189",
+          0.726
+        ],
+        [
+          "T1659",
+          0.712
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.774,
+      "top_attack_id": "T1659",
+      "unknown_ids": [],
+      "marker_id": "T1080",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.7662,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H44",
+      "question": "Attackers broke into a branch office's wireless network from the parking lot to get initial access.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1669"
+      ],
+      "retrieved": [
+        [
+          "T1669",
+          0.66
+        ],
+        [
+          "T1669",
+          0.602
+        ],
+        [
+          "T1200",
+          0.597
+        ],
+        [
+          "T1557.004",
+          0.597
+        ],
+        [
+          "T1669",
+          0.583
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.66,
+      "top_attack_id": "T1669",
+      "unknown_ids": [],
+      "marker_id": "T1584.008",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.6048,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H45",
+      "question": "Attackers stole app passwords that let legacy email clients bypass MFA.",
+      "kind": "described",
+      "answerable": true,
+      "expected": [
+        "T1697"
+      ],
+      "retrieved": [
+        [
+          "T1697",
+          0.768
+        ],
+        [
+          "T1621",
+          0.731
+        ],
+        [
+          "T1697",
+          0.724
+        ],
+        [
+          "T1556.006",
+          0.723
+        ],
+        [
+          "T1528",
+          0.709
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "vector",
+      "top_score": 0.768,
+      "top_attack_id": "T1697",
+      "unknown_ids": [],
+      "marker_id": "T1550.001",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.7257,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H46",
+      "question": "Explain T1558.003.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "T1558.003"
+      ],
+      "retrieved": [
+        [
+          "T1558.003",
+          1.0
+        ],
+        [
+          "T1558.003",
+          1.0
+        ],
+        [
+          "T1558.003",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_attack_id": "T1558.003",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H47",
+      "question": "How can I detect T1557.004?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "T1557.004"
+      ],
+      "retrieved": [
+        [
+          "T1557.004",
+          1.0
+        ],
+        [
+          "T1557.004",
+          1.0
+        ],
+        [
+          "T1557.004",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_attack_id": "T1557.004",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H48",
+      "question": "mitigations for t1110.004?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "T1110.004"
+      ],
+      "retrieved": [
+        [
+          "T1110.004",
+          1.0
+        ],
+        [
+          "T1110.004",
+          1.0
+        ],
+        [
+          "T1110.004",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_attack_id": "T1110.004",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H49",
+      "question": "Is T1195 relevant to software vendors?",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "T1195"
+      ],
+      "retrieved": [
+        [
+          "T1195",
+          1.0
+        ],
+        [
+          "T1195",
+          1.0
+        ],
+        [
+          "T1195",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_attack_id": "T1195",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "H50",
+      "question": "Compare T1003.001 with T1003.006.",
+      "kind": "by_id",
+      "answerable": true,
+      "expected": [
+        "T1003.001",
+        "T1003.006"
+      ],
+      "retrieved": [
+        [
+          "T1003.001",
+          1.0
+        ],
+        [
+          "T1003.001",
+          1.0
+        ],
+        [
+          "T1003.001",
+          1.0
+        ],
+        [
+          "T1003.001",
+          1.0
+        ],
+        [
+          "T1003.006",
+          1.0
+        ],
+        [
+          "T1003.006",
+          1.0
+        ],
+        [
+          "T1003.006",
+          1.0
+        ]
+      ],
+      "hit": true,
+      "rank": 1,
+      "match": "exact",
+      "top_score": 1.0,
+      "top_attack_id": "T1003.001",
+      "unknown_ids": [],
+      "marker_id": null,
+      "marker_tactics": null,
+      "marker_score": null,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU01",
+      "question": "What's the weather going to be like in Seattle this weekend?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1558.004",
+          0.429
+        ],
+        [
+          "T1659",
+          0.424
+        ],
+        [
+          "T1212",
+          0.416
+        ],
+        [
+          "T1558.001",
+          0.414
+        ],
+        [
+          "T1558.004",
+          0.412
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.4295,
+      "top_attack_id": "T1558.004",
+      "unknown_ids": [],
+      "marker_id": "T1029",
+      "marker_tactics": [
+        "Exfiltration"
+      ],
+      "marker_score": 0.4605,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU02",
+      "question": "Give me a recipe for chicken tikka masala.",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1566.001",
+          0.444
+        ],
+        [
+          "T1566",
+          0.443
+        ],
+        [
+          "T1621",
+          0.442
+        ],
+        [
+          "T1566.002",
+          0.44
+        ],
+        [
+          "T1566.003",
+          0.437
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.4445,
+      "top_attack_id": "T1566.001",
+      "unknown_ids": [],
+      "marker_id": "T1218.005",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.4596,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU03",
+      "question": "What is the capital of Australia?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1555.006",
+          0.453
+        ],
+        [
+          "T1552.005",
+          0.434
+        ],
+        [
+          "T1606.001",
+          0.426
+        ],
+        [
+          "T1528",
+          0.425
+        ],
+        [
+          "T1555.004",
+          0.425
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.4528,
+      "top_attack_id": "T1555.006",
+      "unknown_ids": [],
+      "marker_id": "T1036.005",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.4328,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU04",
+      "question": "How do I house-train a puppy?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1056.002",
+          0.505
+        ],
+        [
+          "T1566.004",
+          0.473
+        ],
+        [
+          "T1091",
+          0.468
+        ],
+        [
+          "T1110.003",
+          0.468
+        ],
+        [
+          "T1552.003",
+          0.465
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5047,
+      "top_attack_id": "T1056.002",
+      "unknown_ids": [],
+      "marker_id": "T1612",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.4946,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU05",
+      "question": "What's the best laptop for gaming under $1,500?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1200",
+          0.448
+        ],
+        [
+          "T1091",
+          0.448
+        ],
+        [
+          "T1200",
+          0.448
+        ],
+        [
+          "T1195.003",
+          0.422
+        ],
+        [
+          "T1111",
+          0.417
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.4484,
+      "top_attack_id": "T1200",
+      "unknown_ids": [],
+      "marker_id": "T1120",
+      "marker_tactics": [
+        "Discovery"
+      ],
+      "marker_score": 0.4631,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU06",
+      "question": "How do you say 'good morning' in French?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1078.002",
+          0.393
+        ],
+        [
+          "T1056.002",
+          0.391
+        ],
+        [
+          "T1558.004",
+          0.384
+        ],
+        [
+          "T1078.001",
+          0.379
+        ],
+        [
+          "T1078",
+          0.375
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.3932,
+      "top_attack_id": "T1078.002",
+      "unknown_ids": [],
+      "marker_id": "T1137.001",
+      "marker_tactics": [
+        "Persistence"
+      ],
+      "marker_score": 0.431,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU07",
+      "question": "Who won the 2022 FIFA World Cup?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1558.001",
+          0.442
+        ],
+        [
+          "T1558.001",
+          0.425
+        ],
+        [
+          "T1558.001",
+          0.425
+        ],
+        [
+          "T1558.004",
+          0.414
+        ],
+        [
+          "T1558",
+          0.407
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.4421,
+      "top_attack_id": "T1558.001",
+      "unknown_ids": [],
+      "marker_id": "T1546.017",
+      "marker_tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.425,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU08",
+      "question": "How do I file my taxes as a freelancer?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1078.002",
+          0.494
+        ],
+        [
+          "T1552.001",
+          0.494
+        ],
+        [
+          "T1606.002",
+          0.492
+        ],
+        [
+          "T1078.002",
+          0.488
+        ],
+        [
+          "T1003.006",
+          0.488
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.4944,
+      "top_attack_id": "T1078.002",
+      "unknown_ids": [],
+      "marker_id": "T1216.001",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.5244,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU09",
+      "question": "What stretches help with lower back pain?",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1003.001",
+          0.468
+        ],
+        [
+          "T1003.003",
+          0.456
+        ],
+        [
+          "T1091",
+          0.456
+        ],
+        [
+          "T1659",
+          0.454
+        ],
+        [
+          "T1003.008",
+          0.449
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.4677,
+      "top_attack_id": "T1003.001",
+      "unknown_ids": [],
+      "marker_id": "T1600.001",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.4829,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU10",
+      "question": "Explain how photosynthesis works.",
+      "kind": "off_topic",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1091",
+          0.536
+        ],
+        [
+          "T1133",
+          0.502
+        ],
+        [
+          "T1091",
+          0.495
+        ],
+        [
+          "T1056.004",
+          0.491
+        ],
+        [
+          "T1056.001",
+          0.488
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5363,
+      "top_attack_id": "T1091",
+      "unknown_ids": [],
+      "marker_id": "T1036.009",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.5327,
+      "gated": true,
+      "gate_reason": "below_threshold"
+    },
+    {
+      "id": "HU11",
+      "question": "What CVSS score does CVE-2024-3400 have?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.584
+        ],
+        [
+          "T1557.001",
+          0.584
+        ],
+        [
+          "T1557.001",
+          0.583
+        ],
+        [
+          "T1190",
+          0.569
+        ],
+        [
+          "T1557.004",
+          0.567
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5844,
+      "top_attack_id": "T1190",
+      "unknown_ids": [],
+      "marker_id": "T1218.010",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.6418,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU12",
+      "question": "How do I configure a firewall rule on pfSense?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1187",
+          0.651
+        ],
+        [
+          "T1552.005",
+          0.643
+        ],
+        [
+          "T1110.003",
+          0.639
+        ],
+        [
+          "T1110.001",
+          0.635
+        ],
+        [
+          "T1187",
+          0.624
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6514,
+      "top_attack_id": "T1187",
+      "unknown_ids": [],
+      "marker_id": "T1686.003",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.7176,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU13",
+      "question": "What does SOC 2 compliance require?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1078",
+          0.655
+        ],
+        [
+          "T1195",
+          0.653
+        ],
+        [
+          "T1649",
+          0.644
+        ],
+        [
+          "T1606.002",
+          0.643
+        ],
+        [
+          "T1078.002",
+          0.635
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6554,
+      "top_attack_id": "T1078",
+      "unknown_ids": [],
+      "marker_id": "T1553.001",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.6286,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU14",
+      "question": "Do remote workers need a VPN under HIPAA?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1133",
+          0.659
+        ],
+        [
+          "T1056.003",
+          0.646
+        ],
+        [
+          "T1078.001",
+          0.629
+        ],
+        [
+          "T1003.006",
+          0.628
+        ],
+        [
+          "T1078",
+          0.626
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6586,
+      "top_attack_id": "T1133",
+      "unknown_ids": [],
+      "marker_id": "T1021",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.6659,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU15",
+      "question": "What's the difference between an IDS and an IPS?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1556.007",
+          0.594
+        ],
+        [
+          "T1556.009",
+          0.578
+        ],
+        [
+          "T1557.001",
+          0.571
+        ],
+        [
+          "T1556.009",
+          0.565
+        ],
+        [
+          "T1557.004",
+          0.56
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5935,
+      "top_attack_id": "T1556.007",
+      "unknown_ids": [],
+      "marker_id": "T1559",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.6308,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU16",
+      "question": "Which antivirus is best for Windows 11?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.619
+        ],
+        [
+          "T1111",
+          0.609
+        ],
+        [
+          "T1189",
+          0.602
+        ],
+        [
+          "T1212",
+          0.588
+        ],
+        [
+          "T1111",
+          0.587
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6195,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1547.002",
+      "marker_tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.6176,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU17",
+      "question": "What is zero trust architecture?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1199",
+          0.616
+        ],
+        [
+          "T1199",
+          0.603
+        ],
+        [
+          "T1199",
+          0.593
+        ],
+        [
+          "T1552.006",
+          0.581
+        ],
+        [
+          "T1557.004",
+          0.577
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6164,
+      "top_attack_id": "T1199",
+      "unknown_ids": [],
+      "marker_id": "T1482",
+      "marker_tactics": [
+        "Discovery"
+      ],
+      "marker_score": 0.6217,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU18",
+      "question": "How do I write a Sigma detection rule?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1621",
+          0.636
+        ],
+        [
+          "T1078",
+          0.632
+        ],
+        [
+          "T1552.002",
+          0.631
+        ],
+        [
+          "T1669",
+          0.619
+        ],
+        [
+          "T1056.001",
+          0.613
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6362,
+      "top_attack_id": "T1621",
+      "unknown_ids": [],
+      "marker_id": "T1654",
+      "marker_tactics": [
+        "Discovery"
+      ],
+      "marker_score": 0.6177,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU19",
+      "question": "What is the maximum GDPR fine for a data breach?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1558.002",
+          0.652
+        ],
+        [
+          "T1558.003",
+          0.637
+        ],
+        [
+          "T1078.004",
+          0.632
+        ],
+        [
+          "T1552.001",
+          0.629
+        ],
+        [
+          "T1556.005",
+          0.627
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.652,
+      "top_attack_id": "T1558.002",
+      "unknown_ids": [],
+      "marker_id": "T1030",
+      "marker_tactics": [
+        "Exfiltration"
+      ],
+      "marker_score": 0.6296,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU20",
+      "question": "How long must we keep firewall logs for PCI DSS?",
+      "kind": "non_attack_security",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1187",
+          0.657
+        ],
+        [
+          "T1552",
+          0.644
+        ],
+        [
+          "T1552.003",
+          0.637
+        ],
+        [
+          "T1195.003",
+          0.637
+        ],
+        [
+          "T1003.006",
+          0.631
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.657,
+      "top_attack_id": "T1187",
+      "unknown_ids": [],
+      "marker_id": "T1685.006",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.6596,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU21",
+      "question": "How do attackers abuse PowerShell to run malicious scripts?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.716
+        ],
+        [
+          "T1566.001",
+          0.699
+        ],
+        [
+          "T1189",
+          0.694
+        ],
+        [
+          "T1212",
+          0.691
+        ],
+        [
+          "T1110.003",
+          0.688
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.716,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1059.001",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.7814,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU22",
+      "question": "How is WMI used to execute commands on remote machines?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1187",
+          0.617
+        ],
+        [
+          "T1056.001",
+          0.616
+        ],
+        [
+          "T1187",
+          0.616
+        ],
+        [
+          "T1056.004",
+          0.616
+        ],
+        [
+          "T1659",
+          0.614
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6166,
+      "top_attack_id": "T1187",
+      "unknown_ids": [],
+      "marker_id": "T1047",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.8639,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU23",
+      "question": "A user double-clicked a malicious file they downloaded, which launched the malware.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.66
+        ],
+        [
+          "T1091",
+          0.656
+        ],
+        [
+          "T1189",
+          0.621
+        ],
+        [
+          "T1189",
+          0.612
+        ],
+        [
+          "T1557.004",
+          0.611
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6598,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1204.004",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.704,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU24",
+      "question": "How do attackers use registry Run keys to survive reboots?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1056.001",
+          0.717
+        ],
+        [
+          "T1110.004",
+          0.701
+        ],
+        [
+          "T1649",
+          0.699
+        ],
+        [
+          "T1555.002",
+          0.693
+        ],
+        [
+          "T1552",
+          0.693
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.717,
+      "top_attack_id": "T1056.001",
+      "unknown_ids": [],
+      "marker_id": "T1547.001",
+      "marker_tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.7781,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU25",
+      "question": "How do web shells give attackers ongoing access to a server?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.748
+        ],
+        [
+          "T1187",
+          0.73
+        ],
+        [
+          "T1190",
+          0.723
+        ],
+        [
+          "T1187",
+          0.722
+        ],
+        [
+          "T1659",
+          0.718
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7476,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1505.003",
+      "marker_tactics": [
+        "Persistence"
+      ],
+      "marker_score": 0.8309,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU26",
+      "question": "Attackers created a new local admin account to keep access.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1078.003",
+          0.744
+        ],
+        [
+          "T1078",
+          0.726
+        ],
+        [
+          "T1078.001",
+          0.715
+        ],
+        [
+          "T1078.003",
+          0.709
+        ],
+        [
+          "T1078.003",
+          0.709
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7444,
+      "top_attack_id": "T1078.003",
+      "unknown_ids": [],
+      "marker_id": "T1136.001",
+      "marker_tactics": [
+        "Persistence"
+      ],
+      "marker_score": 0.7784,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU27",
+      "question": "How do attackers bypass User Account Control on Windows?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1697",
+          0.747
+        ],
+        [
+          "T1078",
+          0.739
+        ],
+        [
+          "T1003.001",
+          0.739
+        ],
+        [
+          "T1189",
+          0.732
+        ],
+        [
+          "T1003",
+          0.728
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7473,
+      "top_attack_id": "T1697",
+      "unknown_ids": [],
+      "marker_id": "T1548.002",
+      "marker_tactics": [
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.8067,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU28",
+      "question": "An attacker exploited a kernel bug to go from a normal user to SYSTEM.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1212",
+          0.712
+        ],
+        [
+          "T1212",
+          0.701
+        ],
+        [
+          "T1190",
+          0.678
+        ],
+        [
+          "T1190",
+          0.677
+        ],
+        [
+          "T1078",
+          0.677
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7118,
+      "top_attack_id": "T1212",
+      "unknown_ids": [],
+      "marker_id": "T1068",
+      "marker_tactics": [
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.7198,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU29",
+      "question": "How do attackers clear Windows event logs to hide their tracks?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1056.001",
+          0.723
+        ],
+        [
+          "T1556.008",
+          0.704
+        ],
+        [
+          "T1078",
+          0.699
+        ],
+        [
+          "T1189",
+          0.693
+        ],
+        [
+          "T1056.001",
+          0.69
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7228,
+      "top_attack_id": "T1056.001",
+      "unknown_ids": [],
+      "marker_id": "T1685.005",
+      "marker_tactics": [
+        "Defense Impairment"
+      ],
+      "marker_score": 0.8594,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU30",
+      "question": "How do attackers obfuscate scripts so antivirus misses them?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.699
+        ],
+        [
+          "T1189",
+          0.696
+        ],
+        [
+          "T1078",
+          0.678
+        ],
+        [
+          "T1195.001",
+          0.676
+        ],
+        [
+          "T1189",
+          0.67
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6991,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1027",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.7755,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU31",
+      "question": "How does DLL side-loading help malware hide inside a legitimate program?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1556.002",
+          0.73
+        ],
+        [
+          "T1189",
+          0.712
+        ],
+        [
+          "T1189",
+          0.711
+        ],
+        [
+          "T1556.002",
+          0.704
+        ],
+        [
+          "T1556.008",
+          0.701
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7297,
+      "top_attack_id": "T1556.002",
+      "unknown_ids": [],
+      "marker_id": "T1574.001",
+      "marker_tactics": [
+        "Execution",
+        "Stealth"
+      ],
+      "marker_score": 0.8316,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU32",
+      "question": "Attackers ran net commands to list members of the Domain Admins group.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1078.002",
+          0.69
+        ],
+        [
+          "T1190",
+          0.674
+        ],
+        [
+          "T1003.006",
+          0.672
+        ],
+        [
+          "T1078.002",
+          0.666
+        ],
+        [
+          "T1189",
+          0.663
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6899,
+      "top_attack_id": "T1078.002",
+      "unknown_ids": [],
+      "marker_id": "T1087.002",
+      "marker_tactics": [
+        "Discovery"
+      ],
+      "marker_score": 0.7528,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU33",
+      "question": "Attackers scanned the internal network for open ports after getting in.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1200",
+          0.651
+        ],
+        [
+          "T1200",
+          0.65
+        ],
+        [
+          "T1190",
+          0.649
+        ],
+        [
+          "T1190",
+          0.645
+        ],
+        [
+          "T1669",
+          0.643
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6513,
+      "top_attack_id": "T1200",
+      "unknown_ids": [],
+      "marker_id": "T1205.001",
+      "marker_tactics": [
+        "Command and Control",
+        "Persistence",
+        "Stealth"
+      ],
+      "marker_score": 0.6976,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU34",
+      "question": "How do attackers use PsExec to run commands on other hosts?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1557.002",
+          0.664
+        ],
+        [
+          "T1557.001",
+          0.659
+        ],
+        [
+          "T1189",
+          0.659
+        ],
+        [
+          "T1189",
+          0.658
+        ],
+        [
+          "T1566.001",
+          0.657
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6643,
+      "top_attack_id": "T1557.002",
+      "unknown_ids": [],
+      "marker_id": "T1569.002",
+      "marker_tactics": [
+        "Execution"
+      ],
+      "marker_score": 0.7569,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU35",
+      "question": "How does pass-the-hash let attackers log in to other machines?",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1110.002",
+          0.739
+        ],
+        [
+          "T1557.001",
+          0.737
+        ],
+        [
+          "T1110.002",
+          0.735
+        ],
+        [
+          "T1040",
+          0.728
+        ],
+        [
+          "T1003.008",
+          0.726
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7387,
+      "top_attack_id": "T1110.002",
+      "unknown_ids": [],
+      "marker_id": "T1550.002",
+      "marker_tactics": [
+        "Lateral Movement"
+      ],
+      "marker_score": 0.7855,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU36",
+      "question": "Malware took screenshots of the user's desktop every few seconds.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1091",
+          0.659
+        ],
+        [
+          "T1539",
+          0.631
+        ],
+        [
+          "T1056.001",
+          0.625
+        ],
+        [
+          "T1078",
+          0.616
+        ],
+        [
+          "T1056.002",
+          0.613
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6587,
+      "top_attack_id": "T1091",
+      "unknown_ids": [],
+      "marker_id": "T1546.002",
+      "marker_tactics": [
+        "Persistence",
+        "Privilege Escalation"
+      ],
+      "marker_score": 0.6571,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU37",
+      "question": "Attackers compressed stolen files into password-protected archives before sending them out.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1110.002",
+          0.695
+        ],
+        [
+          "T1189",
+          0.678
+        ],
+        [
+          "T1110.002",
+          0.675
+        ],
+        [
+          "T1552.001",
+          0.675
+        ],
+        [
+          "T1566.001",
+          0.673
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6953,
+      "top_attack_id": "T1110.002",
+      "unknown_ids": [],
+      "marker_id": "T1027.015",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.806,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU38",
+      "question": "Malware beacons to its command server over normal-looking HTTPS traffic.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.729
+        ],
+        [
+          "T1190",
+          0.71
+        ],
+        [
+          "T1133",
+          0.704
+        ],
+        [
+          "T1190",
+          0.704
+        ],
+        [
+          "T1189",
+          0.701
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.7291,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1102.002",
+      "marker_tactics": [
+        "Command and Control"
+      ],
+      "marker_score": 0.7456,
+      "gated": false,
+      "gate_reason": null
+    },
+    {
+      "id": "HU39",
+      "question": "Attackers uploaded stolen data to a personal Dropbox account.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1078",
+          0.661
+        ],
+        [
+          "T1189",
+          0.651
+        ],
+        [
+          "T1566.002",
+          0.647
+        ],
+        [
+          "T1566.001",
+          0.645
+        ],
+        [
+          "T1566",
+          0.643
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6612,
+      "top_attack_id": "T1078",
+      "unknown_ids": [],
+      "marker_id": "T1537",
+      "marker_tactics": [
+        "Exfiltration"
+      ],
+      "marker_score": 0.6989,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU40",
+      "question": "Attackers wiped the hard drives of hundreds of machines.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1003.001",
+          0.584
+        ],
+        [
+          "T1003.004",
+          0.576
+        ],
+        [
+          "T1110.002",
+          0.575
+        ],
+        [
+          "T1003.002",
+          0.574
+        ],
+        [
+          "T1003.002",
+          0.571
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5839,
+      "top_attack_id": "T1003.001",
+      "unknown_ids": [],
+      "marker_id": "T1561",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.7196,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU41",
+      "question": "Our cloud servers were hijacked to mine cryptocurrency.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1528",
+          0.621
+        ],
+        [
+          "T1557.001",
+          0.612
+        ],
+        [
+          "T1555.006",
+          0.608
+        ],
+        [
+          "T1190",
+          0.603
+        ],
+        [
+          "T1528",
+          0.599
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6215,
+      "top_attack_id": "T1528",
+      "unknown_ids": [],
+      "marker_id": "T1496.001",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.7554,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU42",
+      "question": "Attackers scanned our public IP ranges for weeks before the attack.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1566",
+          0.622
+        ],
+        [
+          "T1557",
+          0.611
+        ],
+        [
+          "T1190",
+          0.608
+        ],
+        [
+          "T1566.002",
+          0.606
+        ],
+        [
+          "T1190",
+          0.605
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6219,
+      "top_attack_id": "T1566",
+      "unknown_ids": [],
+      "marker_id": "T1595.001",
+      "marker_tactics": [
+        "Reconnaissance"
+      ],
+      "marker_score": 0.6991,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU43",
+      "question": "Attackers collected employee names and roles from LinkedIn to plan their targeting.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1566",
+          0.685
+        ],
+        [
+          "T1566.002",
+          0.679
+        ],
+        [
+          "T1566.002",
+          0.668
+        ],
+        [
+          "T1566.002",
+          0.664
+        ],
+        [
+          "T1566",
+          0.662
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6854,
+      "top_attack_id": "T1566",
+      "unknown_ids": [],
+      "marker_id": "T1589.003",
+      "marker_tactics": [
+        "Reconnaissance"
+      ],
+      "marker_score": 0.7635,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU44",
+      "question": "Attackers registered lookalike domains of our company name.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1078.002",
+          0.674
+        ],
+        [
+          "T1566.002",
+          0.664
+        ],
+        [
+          "T1078.002",
+          0.654
+        ],
+        [
+          "T1557.001",
+          0.65
+        ],
+        [
+          "T1557.001",
+          0.647
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6743,
+      "top_attack_id": "T1078.002",
+      "unknown_ids": [],
+      "marker_id": "T1584.001",
+      "marker_tactics": [
+        "Resource Development"
+      ],
+      "marker_score": 0.721,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU45",
+      "question": "Attackers turned off Windows Defender's real-time protection through the registry.",
+      "kind": "out_of_scope",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.652
+        ],
+        [
+          "T1189",
+          0.634
+        ],
+        [
+          "T1091",
+          0.63
+        ],
+        [
+          "T1556.008",
+          0.628
+        ],
+        [
+          "T1552.002",
+          0.616
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6517,
+      "top_attack_id": "T1189",
+      "unknown_ids": [],
+      "marker_id": "T1112",
+      "marker_tactics": [
+        "Defense Impairment",
+        "Persistence"
+      ],
+      "marker_score": 0.676,
+      "gated": true,
+      "gate_reason": "out_of_scope"
+    },
+    {
+      "id": "HU46",
+      "question": "What is T1059.001?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1189",
+          0.562
+        ],
+        [
+          "T1195",
+          0.556
+        ],
+        [
+          "T1557.001",
+          0.554
+        ],
+        [
+          "T1133",
+          0.55
+        ],
+        [
+          "T1659",
+          0.545
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.562,
+      "top_attack_id": "T1189",
+      "unknown_ids": [
+        "T1059.001"
+      ],
+      "marker_id": "T1070.006",
+      "marker_tactics": [
+        "Stealth"
+      ],
+      "marker_score": 0.5485,
+      "gated": true,
+      "gate_reason": "unknown_id"
+    },
+    {
+      "id": "HU47",
+      "question": "Explain T1486.",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1190",
+          0.594
+        ],
+        [
+          "T1189",
+          0.585
+        ],
+        [
+          "T1528",
+          0.583
+        ],
+        [
+          "T1212",
+          0.578
+        ],
+        [
+          "T1190",
+          0.574
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.594,
+      "top_attack_id": "T1190",
+      "unknown_ids": [
+        "T1486"
+      ],
+      "marker_id": "T1499.001",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.5812,
+      "gated": true,
+      "gate_reason": "unknown_id"
+    },
+    {
+      "id": "HU48",
+      "question": "How do I detect T1047?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1621",
+          0.694
+        ],
+        [
+          "T1040",
+          0.689
+        ],
+        [
+          "T1056",
+          0.677
+        ],
+        [
+          "T1539",
+          0.676
+        ],
+        [
+          "T1189",
+          0.676
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6942,
+      "top_attack_id": "T1621",
+      "unknown_ids": [
+        "T1047"
+      ],
+      "marker_id": "T1010",
+      "marker_tactics": [
+        "Discovery"
+      ],
+      "marker_score": 0.6608,
+      "gated": true,
+      "gate_reason": "unknown_id"
+    },
+    {
+      "id": "HU49",
+      "question": "Mitigations for T1547.001?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1557.001",
+          0.678
+        ],
+        [
+          "T1556",
+          0.665
+        ],
+        [
+          "T1557",
+          0.662
+        ],
+        [
+          "T1557.001",
+          0.659
+        ],
+        [
+          "T1195",
+          0.654
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.6783,
+      "top_attack_id": "T1557.001",
+      "unknown_ids": [
+        "T1547.001"
+      ],
+      "marker_id": "T1529",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.6241,
+      "gated": true,
+      "gate_reason": "unknown_id"
+    },
+    {
+      "id": "HU50",
+      "question": "What is T9999?",
+      "kind": "unknown_id",
+      "answerable": false,
+      "expected": [],
+      "retrieved": [
+        [
+          "T1199",
+          0.564
+        ],
+        [
+          "T1189",
+          0.543
+        ],
+        [
+          "T1195",
+          0.533
+        ],
+        [
+          "T1190",
+          0.531
+        ],
+        [
+          "T1558",
+          0.524
+        ]
+      ],
+      "hit": false,
+      "rank": null,
+      "match": "vector",
+      "top_score": 0.5643,
+      "top_attack_id": "T1199",
+      "unknown_ids": [
+        "T9999"
+      ],
+      "marker_id": "T1496.003",
+      "marker_tactics": [
+        "Impact"
+      ],
+      "marker_score": 0.5423,
+      "gated": true,
+      "gate_reason": "unknown_id"
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "version": 1,
+  "approved": "2026-11-18",
+  "scope": "ATT&CK Enterprise 20.1: Initial Access + Credential Access",
+  "provenance": "Drafted by Claude in analyst language (mostly avoiding technique names), reviewed and approved by the project owner.",
+  "questions": [
+    {
+      "id": "A01",
+      "question": "Staff got emails with a link to a fake Microsoft login page. What is this and how do we detect it?",
+      "expected": [
+        "T1566.002"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A02",
+      "question": "A Word document attached to an email ran macros when opened. What technique is this?",
+      "expected": [
+        "T1566.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A03",
+      "question": "Someone called our help desk pretending to be IT and got a user to install remote-access software.",
+      "expected": [
+        "T1566.004"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A04",
+      "question": "Attackers messaged employees on LinkedIn and sent them malware.",
+      "expected": [
+        "T1566.003"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A05",
+      "question": "One common password was tried against hundreds of accounts to avoid lockouts.",
+      "expected": [
+        "T1110.003"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A06",
+      "question": "Username/password pairs from another company's breach are being tried on our login page.",
+      "expected": [
+        "T1110.004"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A07",
+      "question": "Attackers have password hashes and are recovering the plaintext offline with GPUs.",
+      "expected": [
+        "T1110.002"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A08",
+      "question": "How do I detect someone reading the memory of the Windows process that holds logon credentials?",
+      "expected": [
+        "T1003.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A09",
+      "question": "An attacker copied the Active Directory database file off a domain controller.",
+      "expected": [
+        "T1003.003"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A10",
+      "question": "An attacker used replication permissions to pull password hashes from a domain controller.",
+      "expected": [
+        "T1003.006"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A11",
+      "question": "Service tickets were requested for accounts with SPNs so they could be cracked offline.",
+      "expected": [
+        "T1558.003"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A12",
+      "question": "Attackers forged Kerberos tickets with the krbtgt account's hash.",
+      "expected": [
+        "T1558.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A13",
+      "question": "Users are flooded with MFA push prompts until someone taps approve.",
+      "expected": [
+        "T1621"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A14",
+      "question": "Attackers stole browser session cookies to skip the login entirely.",
+      "expected": [
+        "T1539"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A15",
+      "question": "A malicious app tricked users into granting OAuth consent, and its access token was stolen.",
+      "expected": [
+        "T1528"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A16",
+      "question": "A compromised cloud VM queried 169.254.169.254 to get credentials.",
+      "expected": [
+        "T1552.005"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A17",
+      "question": "Plaintext passwords were found in scripts and config files on a file share.",
+      "expected": [
+        "T1552.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A18",
+      "question": "Malware pulled the passwords people had saved in Chrome.",
+      "expected": [
+        "T1555.003"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A19",
+      "question": "The macOS keychain was dumped.",
+      "expected": [
+        "T1555.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A20",
+      "question": "Attackers answered LLMNR/NBT-NS lookups to capture NTLM hashes.",
+      "expected": [
+        "T1557.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A21",
+      "question": "A rogue access point used the same name as our corporate Wi-Fi.",
+      "expected": [
+        "T1557.004",
+        "T1669"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A22",
+      "question": "Software on a workstation recorded every keystroke, including passwords.",
+      "expected": [
+        "T1056.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A23",
+      "question": "Attackers got in through our internet-exposed VPN, which had no MFA.",
+      "expected": [
+        "T1133",
+        "T1078"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A24",
+      "question": "An unpatched bug in our public web server was exploited to get inside.",
+      "expected": [
+        "T1190"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A25",
+      "question": "Visitors to a legitimate but compromised website were infected through their browser.",
+      "expected": [
+        "T1189"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A26",
+      "question": "Malicious code was slipped into an open-source package we depend on.",
+      "expected": [
+        "T1195.001",
+        "T1195"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A27",
+      "question": "Attackers came in through our managed service provider's access to our network.",
+      "expected": [
+        "T1199"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A28",
+      "question": "A device's default admin password was never changed, and attackers used it.",
+      "expected": [
+        "T1078.001"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A29",
+      "question": "A USB drive found in the parking lot infected a computer when it was plugged in.",
+      "expected": [
+        "T1091"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A30",
+      "question": "Attackers forged SAML tokens with a stolen signing certificate.",
+      "expected": [
+        "T1606.002"
+      ],
+      "answerable": true,
+      "kind": "described"
+    },
+    {
+      "id": "A31",
+      "question": "What is T1556.006?",
+      "expected": [
+        "T1556.006"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "A32",
+      "question": "How do I mitigate T1003.008?",
+      "expected": [
+        "T1003.008"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "A33",
+      "question": "What's the difference between T1110.001 and T1110.003?",
+      "expected": [
+        "T1110.001",
+        "T1110.003"
+      ],
+      "answerable": true,
+      "kind": "by_id"
+    },
+    {
+      "id": "U1",
+      "question": "What's the best pizza in NYC?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": "Off-topic"
+    },
+    {
+      "id": "U2",
+      "question": "How do I bake sourdough bread?",
+      "expected": [],
+      "answerable": false,
+      "kind": "off_topic",
+      "note": "Off-topic"
+    },
+    {
+      "id": "U3",
+      "question": "How do attackers move between machines with RDP after they get in?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Lateral movement (not loaded); hard case, T1133 mentions RDP"
+    },
+    {
+      "id": "U4",
+      "question": "How does ransomware encrypt files to extort victims?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Impact (not loaded)"
+    },
+    {
+      "id": "U5",
+      "question": "How do attackers create scheduled tasks so their malware survives reboots?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Persistence (not loaded)"
+    },
+    {
+      "id": "U6",
+      "question": "How do attackers sneak data out over DNS?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Exfiltration (not loaded)"
+    },
+    {
+      "id": "U7",
+      "question": "How do attackers disable EDR before running their payload?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "Defense Impairment (not loaded)"
+    },
+    {
+      "id": "U8",
+      "question": "What's the CVE for the latest Chrome zero-day?",
+      "expected": [],
+      "answerable": false,
+      "kind": "out_of_scope",
+      "note": "No vulnerability data yet; becomes answerable when KEV is added"
+    },
+    {
+      "id": "U9",
+      "question": "What is T1021.001?",
+      "expected": [],
+      "answerable": false,
+      "kind": "unknown_id",
+      "note": "ATT&CK ID that is not loaded"
+    }
+  ]
+}
