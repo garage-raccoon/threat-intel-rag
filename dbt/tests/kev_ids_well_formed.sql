@@ -1,1 +1,4 @@
-select cve_id from {{ ref('stg_kev') }} where not regexp_matches(cve_id, '^CVE-\d{4}-\d{4,}$')
+SELECT
+    cve_id
+FROM {{ ref('stg_kev') }}
+WHERE NOT REGEXP_MATCHES(cve_id, '^CVE-\d{4}-\d{4,}$')

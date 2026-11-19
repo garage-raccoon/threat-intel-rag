@@ -14,3 +14,8 @@ models:
     +materialized: table
     staging:
       +materialized: view   # thin renames/casts over the source files; the marts are the tables people query
+# Data tests warn by default: a bad value in a new KEV or ATT&CK update is reported in the changelog without
+# stopping the run. Only the tests guarding the search passages are severity: error (D61).
+data_tests:
+  attack_rag:
+    +severity: warn

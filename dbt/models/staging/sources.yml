@@ -1,0 +1,68 @@
+version: 2
+
+# The raw inputs are files, not database tables: dbt-duckdb reads each one with the expression in
+# `external_location`, so the read options live here and the staging models just select FROM source(...).
+# formatter: template, because the default formatter treats {...} (the KEV column struct) as a placeholder.
+# Paths are relative to the repo root, where dbt is run from.
+sources:
+  - name: history
+    description: Committed, append-only history files in data/history/ (tracked in git, so every change is reviewable).
+    tables:
+      - name: attack_versions
+        description: One row per ATT&CK Enterprise release (scripts/backfill_attack_history.py). All columns read as text.
+        config:
+          meta:
+            formatter: template
+            external_location: "READ_CSV('data/history/attack_versions.csv', header = TRUE, all_varchar = TRUE)"
+        columns:
+          - name: version
+            tests: [unique, not_null]
+
+      - name: attack_history
+        description: One row per technique per ATT&CK release (scripts/backfill_attack_history.py). All columns read as text.
+        config:
+          meta:
+            formatter: template
+            external_location: "READ_CSV('data/history/attack_history.csv', header = TRUE, all_varchar = TRUE)"
+        columns:
+          - name: version
+            description: stg_attack_history inner-joins on this, so a release missing from attack_versions would drop rows.
+            tests:
+              - not_null
+              - relationships:
+                    to: source('history', 'attack_versions')
+                    field: version
+          - name: is_subtechnique
+            tests:
+              - accepted_values:
+                  arguments:
+                    values: ["true", "false"]
+
+      - name: kev_state
+        description: Current CISA KEV catalog, one row per CVE (scripts/fetch_kev.py). All columns read as text.
+        config:
+          meta:
+            formatter: template
+            external_location: "READ_CSV('data/history/kev_state.csv', header = TRUE, all_varchar = TRUE)"
+
+      - name: kev_history
+        description: >
+          Append-only log of KEV changes, one line per added / changed / removed CVE per run (plus one baseline
+          line). Columns are declared explicitly: until a run records a change, the log holds only the baseline line,
+          which has no cveID, and schema auto-detection would fail on it.
+        config:
+          meta:
+            formatter: template
+            external_location: >-
+              READ_JSON('data/history/kev_history.jsonl', format = 'newline_delimited',
+              columns = {run_at: 'VARCHAR', catalog_version: 'VARCHAR', change: 'VARCHAR', cveID: 'VARCHAR', count: 'BIGINT'})
+
+  - name: generated
+    description: Files the pipeline regenerates each run (data/processed/, not committed).
+    tables:
+      - name: passages
+        description: Retrieval passages as built by scripts/build_passages.py, as one JSON document.
+        config:
+          meta:
+            formatter: template
+            external_location: "READ_JSON('data/processed/passages.json', maximum_object_size = 268435456)"

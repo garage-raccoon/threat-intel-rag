@@ -1,0 +1,184 @@
+version: 2
+
+# Data types are DuckDB's, as built (checked against information_schema.columns).
+models:
+  - name: attack_release_summary
+    description: >
+      One row per Enterprise ATT&CK release since 2018 (all tactics, not only the two this project answers from):
+      how many techniques the release added, brought back, changed, revoked, deprecated, reactivated or dropped
+      compared with the previous release. Newest release first. The first release has no previous one, so its counts are all 0.
+    columns:
+      - name: version
+        data_type: varchar
+        description: ATT&CK release number, e.g. "20.1".
+        tests: [unique, not_null]
+      - name: version_order
+        data_type: bigint
+        description: Release position, 1 = oldest. Use it to sort; version strings sort wrong as text ("10.0" < "9.0").
+        tests: [unique, not_null]
+      - name: approx_release_date
+        data_type: date
+        description: Approximate release date, the newest STIX "modified" date of any technique in the release.
+      - name: techniques_active
+        data_type: integer
+        description: Active (not revoked or deprecated) techniques and sub-techniques in this release.
+      - name: added
+        data_type: bigint
+        description: Techniques present in this release that appear in no earlier release.
+      - name: returned
+        data_type: bigint
+        description: Techniques back in this release after being missing from at least one release in between.
+      - name: changed
+        data_type: bigint
+        description: Active techniques whose name, tactics, platforms or description differ from the previous release.
+      - name: tactics_changed
+        data_type: bigint
+        description: The subset of `changed` whose tactics differ, e.g. a technique moved to another tactic.
+      - name: revoked
+        data_type: bigint
+        description: Techniques that went from active to revoked (usually merged into or replaced by another technique).
+      - name: deprecated
+        data_type: bigint
+        description: Techniques that went from active to deprecated (retired with no replacement).
+      - name: reactivated
+        data_type: bigint
+        description: Techniques that went from revoked or deprecated back to active.
+      - name: status_changed
+        data_type: bigint
+        description: Techniques that moved between inactive statuses, e.g. deprecated to revoked.
+      - name: dropped
+        data_type: bigint
+        description: Techniques in the previous release that are missing from this release entirely.
+
+  - name: attack_technique_changes
+    description: >
+      One row per technique per release in which something happened to it, compared with the previous release.
+      Unchanged techniques have no row. Feeds attack_release_summary. Grain and active-count reconciliation are
+      checked by the singular tests in dbt/tests/.
+    columns:
+      - name: version
+        data_type: varchar
+        description: ATT&CK release in which the change happened.
+        tests: [not_null]
+      - name: version_order
+        data_type: bigint
+        description: Release position, 1 = oldest.
+        tests: [not_null]
+      - name: attack_id
+        data_type: varchar
+        description: Technique ID, e.g. T1566 or T1566.002.
+        tests: [not_null]
+      - name: name
+        data_type: varchar
+        description: Technique name in this release (for `dropped`, its name in the last release that had it).
+      - name: change_type
+        data_type: varchar
+        description: >
+          initial = in the first release; added = first appearance; returned = back after missing from at least one
+          release; changed = active in both releases and its name, tactics, platforms or description differ;
+          revoked / deprecated = went from active to that status; reactivated = inactive to active;
+          status_changed = between inactive statuses (e.g. deprecated to revoked); dropped = in the previous
+          release but missing from this one.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["initial", "added", "returned", "changed", "revoked", "deprecated", "reactivated",
+                         "status_changed", "dropped"]
+      - name: name_changed
+        data_type: boolean
+        description: True when the name differs from the technique's previous appearance. Never null.
+        tests: [not_null]
+      - name: tactics_changed
+        data_type: boolean
+        description: >
+          True when the technique was active in both releases and its tactics differ. Never null. (Revoked and
+          deprecated techniques lose their tactics, so comparing them would flag every revocation.)
+        tests: [not_null]
+      - name: status_before
+        data_type: varchar
+        description: Status (active / revoked / deprecated) in the previous release. Null when it wasn't in that release.
+      - name: status_after
+        data_type: varchar
+        description: Status in this release. Null when dropped.
+      - name: tactics_before
+        data_type: varchar
+        description: >
+          Tactics at the previous appearance, sorted and joined with ";" (e.g. "credential-access;initial-access").
+          Null when added.
+      - name: tactics_after
+        data_type: varchar
+        description: Tactics in this release, in the same format. Null when dropped.
+
+  - name: kev_runs
+    description: >
+      One row per pipeline run that recorded a change to the CISA KEV catalog (or the first baseline load). Runs in
+      which CISA's feed was not modified, or changed nothing, have no row.
+    columns:
+      - name: run_at
+        data_type: timestamp
+        description: When the pipeline run fetched KEV (UTC).
+        tests: [unique, not_null]
+      - name: catalog_version
+        data_type: varchar
+        description: CISA's catalog version string for that fetch, e.g. "2026.11.17".
+      - name: added
+        data_type: bigint
+        description: CVEs new to the catalog in this run.
+      - name: changed
+        data_type: bigint
+        description: CVEs already in the catalog whose recorded fields (vendor, product, name, dates, description, required action, ransomware use, notes, CWEs) changed.
+      - name: removed
+        data_type: bigint
+        description: CVEs no longer in the catalog.
+      - name: baseline_count
+        data_type: bigint
+        description: Catalog size at the first (baseline) load. Null for every later run.
+
+unit_tests:
+  # Made-up releases covering cases the 43 real releases never hit (0 dropped, 0 returned, 0 status_changed).
+  # Unlike the data tests, this checks the SQL itself, so it always stops the build when it fails.
+  - name: technique_changes_cover_gaps_and_status_moves
+    description: >
+      T1 disappears in release 2 and returns in 3; T2 changes then is revoked; T3 goes deprecated to revoked;
+      T4 changes tactics; T5 is reactivated; T6 is new in release 2.
+    model: attack_technique_changes
+    given:
+      - input: ref('stg_attack_versions')
+        rows:
+          - {version: "1", version_order: 1}
+          - {version: "2", version_order: 2}
+          - {version: "3", version_order: 3}
+      - input: ref('stg_attack_history')
+        rows:
+          - {version: "1", version_order: 1, attack_id: T1, name: one, status: active, content_hash: a, tactics: x}
+          - {version: "3", version_order: 3, attack_id: T1, name: one, status: active, content_hash: a, tactics: x}
+          - {version: "1", version_order: 1, attack_id: T2, name: two, status: active, content_hash: a, tactics: x}
+          - {version: "2", version_order: 2, attack_id: T2, name: two, status: active, content_hash: b, tactics: x}
+          - {version: "3", version_order: 3, attack_id: T2, name: two, status: revoked, content_hash: c, tactics: null}
+          - {version: "1", version_order: 1, attack_id: T3, name: three, status: deprecated, content_hash: a, tactics: null}
+          - {version: "2", version_order: 2, attack_id: T3, name: three, status: revoked, content_hash: a, tactics: null}
+          - {version: "3", version_order: 3, attack_id: T3, name: three, status: revoked, content_hash: a, tactics: null}
+          - {version: "1", version_order: 1, attack_id: T4, name: four, status: active, content_hash: a, tactics: x}
+          - {version: "2", version_order: 2, attack_id: T4, name: four, status: active, content_hash: b, tactics: y}
+          - {version: "3", version_order: 3, attack_id: T4, name: four, status: active, content_hash: b, tactics: y}
+          - {version: "1", version_order: 1, attack_id: T5, name: five, status: deprecated, content_hash: a, tactics: null}
+          - {version: "2", version_order: 2, attack_id: T5, name: five, status: active, content_hash: b, tactics: x}
+          - {version: "3", version_order: 3, attack_id: T5, name: five, status: active, content_hash: b, tactics: x}
+          - {version: "2", version_order: 2, attack_id: T6, name: six, status: active, content_hash: a, tactics: x}
+          - {version: "3", version_order: 3, attack_id: T6, name: six, status: active, content_hash: a, tactics: x}
+    expect:
+      rows:
+        - {version: "1", attack_id: T1, change_type: initial, tactics_changed: false, status_before: null, status_after: active}
+        - {version: "1", attack_id: T2, change_type: initial, tactics_changed: false, status_before: null, status_after: active}
+        - {version: "1", attack_id: T3, change_type: initial, tactics_changed: false, status_before: null, status_after: deprecated}
+        - {version: "1", attack_id: T4, change_type: initial, tactics_changed: false, status_before: null, status_after: active}
+        - {version: "1", attack_id: T5, change_type: initial, tactics_changed: false, status_before: null, status_after: deprecated}
+        - {version: "2", attack_id: T1, change_type: dropped, tactics_changed: false, status_before: active, status_after: null}
+        - {version: "2", attack_id: T2, change_type: changed, tactics_changed: false, status_before: active, status_after: active}
+        - {version: "2", attack_id: T3, change_type: status_changed, tactics_changed: false, status_before: deprecated, status_after: revoked}
+        - {version: "2", attack_id: T4, change_type: changed, tactics_changed: true, status_before: active, status_after: active}
+        - {version: "2", attack_id: T5, change_type: reactivated, tactics_changed: false, status_before: deprecated, status_after: active}
+        - {version: "2", attack_id: T6, change_type: added, tactics_changed: false, status_before: null, status_after: active}
+        - {version: "3", attack_id: T1, change_type: returned, tactics_changed: false, status_before: null, status_after: active}
+        - {version: "3", attack_id: T2, change_type: revoked, tactics_changed: false, status_before: active, status_after: revoked}

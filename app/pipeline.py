@@ -54,7 +54,7 @@ if not WAREHOUSE_PATH.exists() or not DBT_RESULTS_PATH.exists():
     st.error("The warehouse hasn't been built yet. Run `.venv/bin/python -I scripts/run_pipeline.py --offline`.")
     st.stop()
 
-releases = query("select * from attack_release_summary order by version_order")
+releases = query("SELECT * FROM attack_release_summary ORDER BY version_order")
 kev_meta = json.loads(KEV_META_PATH.read_text())
 tests = dbt_tests()
 passed = sum(status == "pass" for _, status in tests)
@@ -111,10 +111,10 @@ st.subheader("CISA Known Exploited Vulnerabilities")
 st.caption(f"Each run sends the feed's last ETag; CISA answers *not modified* unless the catalog changed. "
            f"Last result: **{kev_meta['last_result'].replace('_', ' ')}** (catalog {kev_meta['catalog_version']}).")
 monthly = query(f"""
-    select date_trunc('month', date_added) as month, count(*) as added
-    from stg_kev
-    where date_added >= date_trunc('month', current_date) - interval {KEV_MONTHS_SHOWN - 1} month
-    group by 1 order by 1""")
+    SELECT DATE_TRUNC('month', date_added) AS month, COUNT(*) AS added
+    FROM stg_kev
+    WHERE date_added >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL {KEV_MONTHS_SHOWN - 1} MONTH
+    GROUP BY 1 ORDER BY 1""")
 kev_bars = alt.Chart(monthly).mark_bar(color=colors[0], cornerRadiusTopLeft=4, cornerRadiusTopRight=4).encode(
     x=alt.X("month:T", title=None, timeUnit="yearmonth"),
     y=alt.Y("added:Q", title="Entries added"),
@@ -125,16 +125,18 @@ with left:
     st.altair_chart(kev_bars.properties(height=260), width="stretch")
 with right:
     st.markdown("**Most recently added**")
-    recent = query(f"""select cve_id as "CVE", vulnerability_name as "Vulnerability", date_added as "Added"
-                       from stg_kev order by date_added desc, cve_id limit {RECENT_KEV_SHOWN}""")
+    recent = query(f"""SELECT cve_id AS "CVE", vulnerability_name AS "Vulnerability", date_added AS "Added"
+                       FROM stg_kev ORDER BY date_added DESC, cve_id LIMIT {RECENT_KEV_SHOWN}""")
     st.dataframe(recent, hide_index=True, width="stretch")
 st.markdown("**Pipeline runs that changed KEV** (`kev_runs` dbt model)")
-st.dataframe(query("select * from kev_runs order by run_at desc"), hide_index=True, width="stretch")
+st.dataframe(query("SELECT * FROM kev_runs ORDER BY run_at DESC"), hide_index=True, width="stretch")
 
 st.subheader("Data tests")
-st.caption("dbt tests run on every pipeline run; a failure marks the run FAILED in the changelog.")
+st.caption("dbt tests run on every pipeline run. Tests guarding the search passages stop the run if they fail; "
+           "the rest warn, and the warning is listed in the changelog.")
+STATUS_LABELS = {"pass": "✓ pass", "warn": "⚠ warning"}
 with st.expander(f"{passed}/{len(tests)} dbt tests passed on the last run"):
-    st.dataframe([{"Test": name, "Status": "✓ pass" if status == "pass" else f"✗ {status}"} for name, status in tests],
+    st.dataframe([{"Test": name, "Status": STATUS_LABELS.get(status, f"✗ {status}")} for name, status in tests],
                  hide_index=True, width="stretch")
 
 st.subheader("Changelog")

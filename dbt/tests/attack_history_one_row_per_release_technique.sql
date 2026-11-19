@@ -1,4 +1,7 @@
-select version, attack_id, count(*) as n
-from {{ ref('stg_attack_history') }}
-group by all
-having count(*) > 1
+SELECT
+    version,
+    attack_id,
+    COUNT(*) AS n
+FROM {{ ref('stg_attack_history') }}
+GROUP BY ALL
+HAVING COUNT(*) > 1

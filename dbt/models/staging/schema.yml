@@ -2,18 +2,26 @@ version: 2
 
 models:
   - name: stg_passages
-    description: Retrieval passages (ATT&CK in-scope techniques + CISA KEV), one row per passage.
+    description: >
+      Retrieval passages (ATT&CK in-scope techniques + CISA KEV), one row per passage. These tests are severity
+      error: a passage without an ID, URL or unique hash can't be cited, so a failure stops the run before embedding.
     columns:
       - name: passage_id
-        tests: [unique, not_null]
+        tests:
+          - unique: {config: {severity: error}}
+          - not_null: {config: {severity: error}}
       - name: doc_id
-        tests: [not_null]
+        tests:
+          - not_null: {config: {severity: error}}
       - name: url
         description: Every passage must link back to its source (roadmap Stage 2 test).
-        tests: [not_null]
+        tests:
+          - not_null: {config: {severity: error}}
       - name: passage_hash
         description: Content fingerprint used for incremental embedding; duplicates would mean duplicate passages.
-        tests: [unique, not_null]
+        tests:
+          - unique: {config: {severity: error}}
+          - not_null: {config: {severity: error}}
       - name: source
         tests:
           - accepted_values:
@@ -49,10 +57,3 @@ models:
       - name: date_added
         tests: [not_null]
 
-  - name: attack_technique_changes
-    columns:
-      - name: change_type
-        tests:
-          - accepted_values:
-              arguments:
-                values: ["initial", "added", "changed", "revoked", "deprecated", "reactivated", "dropped"]

@@ -1,11 +1,11 @@
 -- One row per pipeline run that fetched KEV: what changed in that run.
-select
+SELECT
     run_at,
-    any_value(catalog_version) as catalog_version,
-    count(*) filter (where change = 'added') as added,
-    count(*) filter (where change = 'changed') as changed,
-    count(*) filter (where change = 'removed') as removed,
-    max(baseline_count) as baseline_count
-from {{ ref('stg_kev_history') }}
-group by run_at
-order by run_at
+    ANY_VALUE(catalog_version) AS catalog_version,
+    COUNT(*) FILTER (WHERE change = 'added') AS added,
+    COUNT(*) FILTER (WHERE change = 'changed') AS changed,
+    COUNT(*) FILTER (WHERE change = 'removed') AS removed,
+    MAX(baseline_count) AS baseline_count
+FROM {{ ref('stg_kev_history') }}
+GROUP BY run_at
+ORDER BY run_at

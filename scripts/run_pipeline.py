@@ -109,8 +109,8 @@ def attack_section(new_versions: list[str]) -> str:
         return f"- **ATT&CK:** no new release (latest {latest}; {len(known_versions())} releases in history)"
     import duckdb  # only needed when there is something to summarize
     con = duckdb.connect(str(WAREHOUSE_PATH), read_only=True)
-    rows = con.execute("select version, added, changed, revoked, deprecated, dropped from attack_release_summary "
-                       f"where version in ({','.join('?' * len(new_versions))})", new_versions).fetchall()
+    rows = con.execute("SELECT version, added, changed, revoked, deprecated, dropped FROM attack_release_summary "
+                       f"WHERE version IN ({','.join('?' * len(new_versions))})", new_versions).fetchall()
     return "\n".join(f"- **ATT&CK {v}** (new release): {a} added, {c} changed, {r} revoked, {d} deprecated, {x} dropped"
                      for v, a, c, r, d, x in rows)
 
@@ -121,10 +121,13 @@ def dbt_section(proc: subprocess.CompletedProcess) -> str:
         return f"- **dbt FAILED** before building anything (e.g. a SQL compile error): {detail}"
     results = json.loads(DBT_RESULTS_PATH.read_text())["results"]
     tests = [r for r in results if r["unique_id"].startswith("test.")]
-    failed = [r["unique_id"].split(".")[2] for r in results if r["status"] not in ("pass", "success")]
+    name = lambda r: r["unique_id"].split(".")[2]
+    warned = [name(r) for r in results if r["status"] == "warn"]  # data problems that don't stop the run (D61)
+    failed = [name(r) for r in results if r["status"] not in ("pass", "success", "warn")]
     models = sum(r["unique_id"].startswith("model.") and r["status"] == "success" for r in results)
     return (f"- **dbt:** {models} models built, {sum(r['status'] == 'pass' for r in tests)}/{len(tests)} data tests "
-            "passed" + (f"; FAILED or skipped: {', '.join(failed)}" if failed else ""))
+            "passed" + (f"; WARNING: {', '.join(warned)}" if warned else "")
+            + (f"; FAILED or skipped: {', '.join(failed)}" if failed else ""))
 
 
 def eval_summaries() -> dict[str, dict]:
