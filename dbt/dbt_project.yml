@@ -12,3 +12,5 @@ clean-targets: ["target", "logs"]
 models:
   attack_rag:
     +materialized: table
+    staging:
+      +materialized: view   # thin renames/casts over the source files; the marts are the tables people query

@@ -30,6 +30,10 @@ NO_INFO = "I don't have information on that."
 # Embeddings can't tell IDs apart ("T1110.003" retrieves the wrong technique), so IDs are matched exactly (D25):
 # ATT&CK technique IDs and, since KEV was added (Stage 2), CVE IDs.
 DOC_ID = re.compile(r"\b(?:T\d{4}(?:\.\d{3})?|CVE-\d{4}-\d{4,})\b", re.IGNORECASE)
+# Anything shaped like an attempt at one of those IDs (T12345, Tx6753.123, CVE-24-1). A malformed ID is reported as
+# unknown instead of falling through to vector search, where digit-heavy text scores above the threshold (D56).
+# Tactic IDs (TA0001) are left to vector search, as before.
+ID_LIKE = re.compile(r"\b(?:T(?!A\d{4}\b)[A-Z]?\d{3,}(?:\.\d+)*|CVE[-_]?\d[\d-]*)\b", re.IGNORECASE)
 SYSTEM_PROMPT = (
     "You answer security analysts' questions about MITRE ATT&CK techniques and CISA Known Exploited "
     "Vulnerabilities (KEV).\n"
@@ -100,11 +104,14 @@ class Retriever:
                 {**self.index["markers"][j], "score": float(marker_scores[j])})
 
     def exact(self, question: str) -> tuple[list[dict], list[str]]:
-        """Passages for ATT&CK / CVE IDs named in the question, plus any named IDs that aren't in the index."""
-        ids = list(dict.fromkeys(m.upper() for m in DOC_ID.findall(question)))
-        rows = [r for i in ids for r in self.by_doc_id.get(i, [])]
+        """Passages for ATT&CK / CVE IDs named in the question, plus any named IDs that aren't in the index.
+
+        Only whole tokens count: "T1110.0031" is unknown, not a match for T1110.
+        """
+        tokens = list(dict.fromkeys(m.upper() for m in ID_LIKE.findall(question)))
+        rows = [r for t in tokens if DOC_ID.fullmatch(t) for r in self.by_doc_id.get(t, [])]
         return ([{**self.index["passages"][r], "score": 1.0, "match": "exact"} for r in rows],
-                [i for i in ids if i not in self.by_doc_id])
+                [t for t in tokens if t not in self.by_doc_id])
 
     def retrieve(self, question: str) -> Retrieval:
         """Passages of every known ATT&CK / CVE ID named in the question; vector search only when none is named.

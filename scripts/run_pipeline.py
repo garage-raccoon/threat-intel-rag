@@ -5,8 +5,8 @@ Usage: .venv/bin/python -I scripts/run_pipeline.py              # what the GitHu
 
 Steps: KEV (ETag check, record changes) -> ATT&CK (new release? download + append to history) -> parse latest
 release -> build passages -> dbt build (models + data tests) -> embed only changed passages -> free retrieval eval
-on both test sets -> prepend a CHANGELOG.md section. Exits non-zero if any step or dbt test fails; the changelog
-entry is written either way, so a failed run is visible too.
+on both test sets -> prepend a CHANGELOG.md section. Exits non-zero if any step or dbt test fails; a dbt failure stops
+the run before embedding (D59). The changelog entry is written either way, so a failed run is visible too.
 """
 import argparse
 import csv
@@ -115,13 +115,16 @@ def attack_section(new_versions: list[str]) -> str:
                      for v, a, c, r, d, x in rows)
 
 
-def dbt_section() -> str:
+def dbt_section(proc: subprocess.CompletedProcess) -> str:
+    if not DBT_RESULTS_PATH.exists():  # deleted before the run, so a missing file means dbt never got to run nodes
+        detail = (proc.stderr or proc.stdout).strip().splitlines()[-1:]
+        return f"- **dbt FAILED** before building anything (e.g. a SQL compile error): {detail}"
     results = json.loads(DBT_RESULTS_PATH.read_text())["results"]
     tests = [r for r in results if r["unique_id"].startswith("test.")]
-    failed = [r["unique_id"].split(".")[2] for r in tests if r["status"] not in ("pass", "success")]
-    models = sum(r["unique_id"].startswith("model.") for r in results)
-    return (f"- **dbt:** {models} models built, {len(tests) - len(failed)}/{len(tests)} data tests passed"
-            + (f"; FAILED: {', '.join(failed)}" if failed else ""))
+    failed = [r["unique_id"].split(".")[2] for r in results if r["status"] not in ("pass", "success")]
+    models = sum(r["unique_id"].startswith("model.") and r["status"] == "success" for r in results)
+    return (f"- **dbt:** {models} models built, {sum(r['status'] == 'pass' for r in tests)}/{len(tests)} data tests "
+            "passed" + (f"; FAILED or skipped: {', '.join(failed)}" if failed else ""))
 
 
 def eval_summaries() -> dict[str, dict]:
@@ -163,12 +166,14 @@ def main() -> None:
         new_versions = check_attack_releases(args.offline, items)
         run([PY, "-I", "scripts/parse_stix.py", str(latest_release_file(args.offline))], "parse ATT&CK", items)
         run([PY, "-I", "scripts/build_passages.py"], "build passages", items)
+        DBT_RESULTS_PATH.unlink(missing_ok=True)  # so a stale file from an earlier run is never reported
         proc = subprocess.run([str(Path(PY).with_name("dbt")), "build", "--project-dir", "dbt", "--profiles-dir", "dbt",
                                "--quiet"], cwd=ROOT, capture_output=True, text=True)
-        items.append(attack_section(new_versions))
-        items.append(dbt_section())
-        if proc.returncode != 0:
-            ok = False  # keep going: embeddings + eval still show the state, but the run is marked failed
+        items.append(dbt_section(proc))
+        if proc.returncode != 0:  # a failed data test means bad data: don't embed or evaluate it (D59)
+            items.append("- **Stopped:** embedding and search eval skipped because dbt failed")
+            raise RuntimeError("dbt build")
+        items.insert(-1, attack_section(new_versions))
         emb = run([PY, "-I", "scripts/embed_passages.py"], "embed", items)
         items.append(f"- **Embeddings:** {emb.splitlines()[-1].split(' -> ')[0]}")
         for set_name in ("main", "holdout"):

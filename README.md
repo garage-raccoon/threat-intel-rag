@@ -43,7 +43,7 @@ Step 5 needs `ANTHROPIC_API_KEY` in `.env` (copy `.env.example`). Credentials ca
 - **The system answers "I don't have information on that." without calling Claude when:**
   - the best in-scope score is below **0.555** (off-topic, D29)
   - an out-of-scope marker beats the best in-scope passage by more than **0.02** (D32–D33)
-  - the question names an ATT&CK ID that isn't loaded
+  - the question names an ATT&CK or CVE ID that isn't loaded, or one that isn't a valid ID at all (ATT&CK: `T1234` or `T1234.567`, any case; D56)
 
 ## Stage 2: self-updating pipeline
 
@@ -55,7 +55,7 @@ Step 5 needs `ANTHROPIC_API_KEY` in `.env` (copy `.env.example`). Credentials ca
 One run does the following:
 1. **KEV:** fetches the CISA KEV catalog with an ETag check ("not modified" → nothing to do) and records only added / changed / removed CVEs.
 2. **ATT&CK:** checks for a new ATT&CK release and appends it to the history.
-3. **Rebuild:** rebuilds passages, then runs **dbt** (DuckDB models + 22 data tests).
+3. **Rebuild:** rebuilds passages, then runs **dbt** (DuckDB models + 22 data tests). A failed test stops the run here, so bad data is never embedded (D59).
 4. **Embed:** re-embeds only passages whose content fingerprint changed.
 5. **Evaluate:** re-runs the free retrieval evaluation.
 6. **Changelog:** adds an entry to `CHANGELOG.md`.
@@ -75,7 +75,20 @@ History lives in small committed text files, so git stores only changed lines. E
 
 The dbt project (`dbt/`) builds `attack_release_summary` (per-release counts of techniques added, changed, revoked, deprecated) and `attack_technique_changes` (what happened to each technique in each release). For example, v19.0 (April 2026) moved 198 techniques to new tactics when Defense Evasion was split into Stealth and Defense Impairment.
 
+**Why a full rebuild instead of incremental models:** history is already append-only where the data comes in (ETag for KEV, `--append` for ATT&CK), and dbt rebuilds every table from those files in under a second. A rebuild keeps no hidden state between runs, so anyone who clones the repo gets the same warehouse. Incremental models would need the database to persist between scheduled runs; that's worth it only at a much larger size (`research.md` D42, D58). Staging models are views; the marts are tables.
+
 **Search over two sources:** every question gets the top 5 **ATT&CK techniques** and, separately, up to 3 **known exploited vulnerabilities**. Mixing them in one ranking let CVEs crowd techniques out of the top 5 (`research.md` D45, D47). Exact IDs work for both, e.g. `T1110.003` or `CVE-2024-3400`.
+
+## Stage 3: demo app
+
+```bash
+.venv/bin/streamlit run app/streamlit_app.py   # http://localhost:8501
+```
+
+Three pages:
+- **Search:** live retrieval with the same "I don't know" checks as the evaluation. Example questions show AI answers pre-generated in the live run (`scripts/build_demo_examples.py`), so the public demo holds no API key.
+- **Data pipeline:** ATT&CK release history, KEV updates, dbt test results and the changelog, read from the dbt marts.
+- **Evaluation:** every metric below, read from `data/eval/` when the page loads.
 
 ## Evaluation (step 6)
 

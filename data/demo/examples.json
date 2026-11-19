@@ -1,0 +1,261 @@
+{
+  "source": "live API eval run (research.md D52)",
+  "examples": [
+    {
+      "id": "A01",
+      "label": "Fake Microsoft login link",
+      "question": "Staff got emails with a link to a fake Microsoft login page. What is this and how do we detect it?",
+      "coverage": "covered",
+      "answer": "The passages don't use the term \"fake login page,\" but the closest match is Spearphishing Link (T1566.002) [1], which covers emails with embedded links that lead users to suspicious domains. The passages don't describe a credential-harvesting page specifically, so the mapping is my inference from the closest technique.\n\n**Detection**\n\nThe passages give platform-specific detection chains:\n\n- **Windows:** Detection chain includes malicious URL in email \u2192 user click recorded in Office logs \u2192 browser process spawning unusual child processes (e.g., PowerShell, cmd) or download activity. [1]\n- **Linux:** Behavior includes email with suspicious URLs \u2192 user click recorded in mail/web proxy logs \u2192 shell or interpreter launched from browser process. [1]\n- **macOS:** Suspicious behavior includes email links \u2192 Safari/Chrome accessing newly registered or lookalike domains \u2192 osascript or Terminal spawned unexpectedly. [1]\n- **Identity Provider:** Detection of OAuth consent phishing or malicious login attempts initiated through spearphishing links. [1] The general phishing guidance also notes that phishing attempts targeting IdPs often manifest as anomalous login attempts from suspicious email invitations or fake SSO prompts. [2] Detection correlates login flows, MFA bypass attempts, and anomalous geographic patterns following phishing email delivery. [2]\n\nFor your situation, the practical starting points from these passages are to correlate the inbound email with user clicks in mail or proxy logs, check for browser-spawned processes on endpoints, and review IdP sign-in logs for anomalous logins after delivery.\n\n**Mitigation**\n\nThe passages don't include mitigation guidance for this technique, so I can't advise on prevention or response steps from them.\n\n**Related guidance (not a direct answer)**\n\nIf staff entered credentials, the forged-credential guidance may be relevant. It says that correlated patterns include simultaneous valid sessions from multiple geographies, unusual API calls with new tokens, or bypass of expected MFA enforcement. [3] This falls under T1606 Forge Web Credentials, which the passages do not directly link to this phishing campaign.",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "T1566.002",
+          "url": "https://attack.mitre.org/techniques/T1566/002"
+        },
+        {
+          "doc_id": "T1566",
+          "url": "https://attack.mitre.org/techniques/T1566"
+        },
+        {
+          "doc_id": "T1606",
+          "url": "https://attack.mitre.org/techniques/T1606"
+        }
+      ]
+    },
+    {
+      "id": "A20",
+      "label": "LLMNR poisoning \u2192 NTLM hashes",
+      "question": "Attackers answered LLMNR/NBT-NS lookups to capture NTLM hashes.",
+      "coverage": "covered",
+      "answer": "This behavior matches MITRE ATT&CK technique T1557.001, Adversary-in-the-Middle: Name Resolution Poisoning and SMB Relay. Adversaries can spoof an authoritative source for name resolution on a victim network by responding to LLMNR (UDP 5355)/NBT-NS (UDP 137)/mDNS (UDP 5353) traffic as if they know the identity of the requested host, effectively poisoning the service so that the victims will communicate with the adversary controlled system. [1] If the requested host belongs to a resource that requires identification/authentication, the username and NTLMv2 hash will then be sent to the adversary controlled system. [1] The adversary can then collect the hash information sent over the wire through tools that monitor the ports for traffic or through Network Sniffing and crack the hashes offline through Brute Force to obtain the plaintext passwords. [1]\n\n**Related techniques and tools**\n- The captured hashes can also be relayed. The NTLMv1/v2 hashes can be intercepted and relayed to access and execute code against a target system. [2] The relay step can happen in conjunction with poisoning but may also be independent of it. [2]\n- Several tools may be used to poison name services within local networks such as NBNSpoof, Metasploit, and Responder. [2]\n\n**Detection**\nDetects anomalous network traffic on UDP 5355 (LLMNR) and UDP 137 (NBT-NS) combined with unauthorized SMB relay attempts, registry modifications re-enabling multicast name resolution, or suspicious service creation indicative of adversary-in-the-middle credential interception. [3]\n\n**Mitigation**\n- Use host-based security software to block LLMNR/NetBIOS/mDNS traffic. [4]\n- Enabling SMB Signing can stop NTLMv2 relay attacks. [4]\n- Disable LLMNR, mDNS, and NetBIOS in local computer security settings or by group policy if they are not needed within an environment. [4]\n- Network segmentation can be used to isolate infrastructure components that do not require broad network access. [4]\n\n**Related KEV entries (NTLM hash disclosure)**\n- CVE-2024-43451: Microsoft Windows contains an NTLMv2 hash spoofing vulnerability that could result in disclosing a user's NTLMv2 hash to an attacker via a file open operation. [5] The attacker could then leverage this hash to impersonate that user. [5] It was added to CISA KEV on 2024-11-12.\n- CVE-2025-24054: Microsoft Windows NTLM contains an external control of file name or path vulnerability that allows an unauthorized attacker to perform spoofing over a network. [6] It was added to CISA KEV on 2025-04-17, and its required action: Apply mitigations per vendor instructions, follow applicable BOD 22-01 guidance for cloud services, or discontinue use of the product if mitigations are unavailable. [6]\n\n**Closely related technique (T1187, Forced Authentication):** The passages also describe a different way to trigger hash exposure. Adversary stages a lure that references a remote resource (e.g., LNK/SCF/Office template). [7] When the user opens/renders the file or a shell enumerates icons, the host automatically attempts SMB or WebDAV authentication to the attacker host. [7]",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "T1557.001",
+          "url": "https://attack.mitre.org/techniques/T1557/001"
+        },
+        {
+          "doc_id": "T1557.001",
+          "url": "https://attack.mitre.org/techniques/T1557/001"
+        },
+        {
+          "doc_id": "T1557.001",
+          "url": "https://attack.mitre.org/techniques/T1557/001"
+        },
+        {
+          "doc_id": "T1557.001",
+          "url": "https://attack.mitre.org/techniques/T1557/001"
+        },
+        {
+          "doc_id": "CVE-2024-43451",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-43451"
+        },
+        {
+          "doc_id": "CVE-2025-24054",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-24054"
+        },
+        {
+          "doc_id": "T1187",
+          "url": "https://attack.mitre.org/techniques/T1187"
+        }
+      ]
+    },
+    {
+      "id": "A30",
+      "label": "Forged SAML tokens",
+      "question": "Attackers forged SAML tokens with a stolen signing certificate.",
+      "coverage": "covered",
+      "answer": "The passages support this. The technique is MITRE ATT&CK T1606.002 (Forge Web Credentials: SAML Tokens), and an adversary may forge SAML tokens with any permissions claims and lifetimes if they possess a valid SAML token-signing certificate. [1] An adversary may utilize Private Keys to compromise an organization's token-signing certificate to create forged SAML tokens. [1] The passages also note that the tokens are new and forged by the adversary, rather than stolen or intercepted from legitimate users. [1] So the stolen element is the signing certificate, and the forged tokens are new.\n\nThe passages don't describe a specific incident, so I can't confirm details of the campaign you're referring to.\n\n**Impact**\n- The default lifetime of a SAML token is one hour, but the validity period can be specified in the NotOnOrAfter value of the conditions ... element in a token. [1]\n- An adversary may gain administrative Entra ID privileges if a SAML token is forged which claims to represent a highly privileged account. This may lead to Use Alternate Authentication Material, which may bypass multi-factor and other authentication protection mechanisms. [1]\n\n**Detection**\n- Forged SAML tokens can be observed as authentication attempts with valid signatures but missing expected preceding Kerberos or authentication events. [2] Defenders may correlate SAML assertions with absent Event IDs 4769, 1200, or 1202, or tokens issued with abnormal lifetimes, issuers, or claims compared to baseline. [2]\n- For SaaS, look for concurrent sessions across different geographies with the same SAML assertion ID. [2]\n- For Office suite access, defenders should monitor for token replay across multiple clients or access attempts to privileged mailboxes without prior interactive login. [2]\n\n**Mitigation**\n- To contain a previously forged token, rotate the token-signing AD FS certificate in rapid succession twice, which will invalidate any tokens generated using the previous certificate. [3]\n- Restrict permissions and access to the AD FS server to only originate from privileged access workstations. [3]\n- Ensure that user accounts with administrative rights follow best practices, including use of privileged access workstations, Just in Time/Just Enough Administration (JIT/JEA), and strong authentication. [3]\n- For visibility, enable advanced auditing on AD FS. [3] Enable Audit Application Generated events on the AD FS farm via Group Policy Object. [3]\n\n**Related guidance (certificate theft)**\nCertificate theft is covered under T1649 (Steal or Forge Authentication Certificates). Authentication certificates can be both stolen and forged. [4] These abuses may also enable Persistence via stealing or forging certificates that can be used as Valid Accounts for the duration of the certificate's validity, despite user password resets. [4]\n\n**Related KEV entries (SAML-related, not confirmed as the activity you describe)**\n- CVE-2024-21893: Ivanti Connect Secure, Policy Secure, and Neurons contain a server-side request forgery (SSRF) vulnerability in the SAML component that allows an attacker to access certain restricted resources without authentication. [5]\n- CVE-2025-59718: Fortinet FortiOS, FortiSwitchMaster, FortiProxy, and FortiWeb contain an improper verification of cryptographic signature vulnerability that may allow an unauthenticated attacker to bypass the FortiCloud SSO login authentication via a crafted SAML message. [6] Please be aware that CVE-2025-59719 pertains to the same problem and is mentioned in the same vendor advisory. [6]",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "T1606.002",
+          "url": "https://attack.mitre.org/techniques/T1606/002"
+        },
+        {
+          "doc_id": "T1606.002",
+          "url": "https://attack.mitre.org/techniques/T1606/002"
+        },
+        {
+          "doc_id": "T1606.002",
+          "url": "https://attack.mitre.org/techniques/T1606/002"
+        },
+        {
+          "doc_id": "T1649",
+          "url": "https://attack.mitre.org/techniques/T1649"
+        },
+        {
+          "doc_id": "CVE-2024-21893",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-21893"
+        },
+        {
+          "doc_id": "CVE-2025-59718",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-59718"
+        }
+      ]
+    },
+    {
+      "id": "A14",
+      "label": "Stolen session cookies",
+      "question": "Attackers stole browser session cookies to skip the login entirely.",
+      "coverage": "covered",
+      "answer": "Your statement matches MITRE ATT&CK technique T1539, Steal Web Session Cookie (Credential Access). An adversary may steal web application or service session cookies and use them to gain access to web applications or Internet services as an authenticated user without needing credentials. [1] Web applications and services often use session cookies as an authentication token after a user has authenticated to a website. [1]\n\n**Why it works:** Cookies are often valid for an extended period of time, even if the web application is not actively used. [1] Cookies can be found on disk, in the process memory of the browser, and in network traffic to remote systems. [1] Session cookies can be used to bypasses some multi-factor authentication protocols. [1]\n\n**Common methods:** There are several examples of malware targeting cookies from web browsers on the local system. [1] Adversaries may also use injecting malicious JavaScript content into websites or relying on User Execution by tricking victims into running malicious JavaScript in their browser. [1] There are also open source frameworks such as `Evilginx2` and `Muraena` that can gather session cookies through a malicious proxy (e.g., Adversary-in-the-Middle) that can be set up by an adversary and used in phishing campaigns. [1]\n\n**Detection:**\n- Windows: Detects suspicious access to browser session cookie storage (e.g., Chrome's `Cookies` SQLite DB) or memory reads of browser processes. [2]\n- Linux: Detects access to known browser cookie files (e.g., `~/.mozilla/firefox/*.default/cookies.sqlite`, `~/.config/google-chrome/`) and suspicious reads of browser memory via `/proc/[pid]/mem` or ptrace. [2]\n- macOS: Detects unauthorized access to browser cookie paths (e.g., `~/Library/Application Support/Google/Chrome/Default/Cookies`) or `task_for_pid`/`vm_read` calls to Safari/Chrome memory space. [2]\n- SaaS: Detects use of session cookies or authentication tokens from unusual user agents or locations. Identifies token reuse without reauthentication or attempts to bypass MFA using previously stolen cookies. [2]\n\n**Mitigation:**\n- User training (M1017): Train users to identify aspects of phishing attempts where they're asked to enter credentials into a site that has the incorrect domain for the application they are logging into. [3]\n- Browser restrictions (M1021): Use browser security settings, such as disabling third-party cookies and restricting browser extensions, to limit the attack surface. [3]\n- Hardware MFA (M1032): Deploy hardware-based token (e.g., YubiKey or FIDO key), which incorporates the target login domain as part of the negotiation protocol, will prevent session cookie theft through proxy methods. [3]\n- Conditional Access (M1032): Implement Conditional Access policies to only allow logins from trusted devices, such as those enrolled in Intune or joined via Hybrid/Entra. This mitigates the risk of session cookie replay attacks by ensuring that stolen tokens cannot be reused on unauthorized devices. [3]\n- Auditing (M1047): Monitor for impossible travel scenarios and anomalous behavior that could indicate the use of compromised session tokens or cookies. [3]\n- Limiting cookie lifetime (M1054): Configure browsers or tasks to regularly delete persistent cookies. Additionally, minimize the length of time a web cookie is viable to potentially reduce the impact of stolen cookies while also increasing the needed frequency of cookie theft attempts \u2013 providing defenders with additional chances at detection. [3]\n\nThe passages do not link this technique to any specific CVE in the KEV entries provided, so I have not associated any CVEs with it.",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "T1539",
+          "url": "https://attack.mitre.org/techniques/T1539"
+        },
+        {
+          "doc_id": "T1539",
+          "url": "https://attack.mitre.org/techniques/T1539"
+        },
+        {
+          "doc_id": "T1539",
+          "url": "https://attack.mitre.org/techniques/T1539"
+        }
+      ]
+    },
+    {
+      "id": "H27",
+      "label": "Kubernetes secrets read",
+      "question": "An attacker queried the Kubernetes API to read secrets stored in the cluster.",
+      "coverage": "covered",
+      "answer": "This activity matches MITRE ATT&CK technique **T1552.007 (Unsecured Credentials: Container API)** under Credential Access. An adversary with sufficient permissions, such as via a pod's service account, may also use the Kubernetes API to retrieve credentials from the Kubernetes API server. [1] These credentials may include those needed for Docker API authentication or secrets from Kubernetes cluster components. [1]\n\n**Detection**\n\nDetection correlates anomalous Docker or Kubernetes API requests with access to logs, secrets, or service accounts. [2] Specifically, it observes unauthorized use of `docker logs`, `kubectl get secrets`, or direct API calls to Kubernetes API server endpoints. [2] The passages also note that detection should look for behavioral patterns where adversaries escalate from basic pod/container interaction to privileged API calls exposing sensitive credential material. [2]\n\n**Mitigation**\n\n- **Restrict access (M1018 User Account Management):** Enforce authentication and role-based access control on the container API to restrict users to the least privileges required. [3] In Kubernetes, avoid giving users wildcard permissions or adding users to the `system:masters` group, and use `RoleBindings` rather than `ClusterRoleBindings` to limit user privileges to specific namespaces. [3]\n- **Service accounts (M1026 Privileged Account Management):** If a pod is not required to access the Kubernetes API, consider disabling the service account altogether. [3]\n- **Secure the API channel (M1035 Limit Access to Resource Over Network):** Require secure port access to communicate with the APIs over TLS by disabling unauthenticated access to the Docker API and Kubernetes API Server. [3] In Kubernetes clusters deployed in cloud environments, use native cloud platform features to restrict the IP ranges that are permitted to access to API server. [3]\n- **Just-in-time access:** Where possible, consider enabling just-in-time (JIT) access to the Kubernetes API to place additional restrictions on access. [3]\n- **Network segmentation (M1030):** Deny direct remote access to internal systems through the use of network proxies, gateways, and firewalls. [3]\n\n**Related guidance**\n\nIf the attacker used a stolen pod token rather than a pod's own service account, the passages describe a related technique, **T1528 (Steal Application Access Token)**. If a container is compromised, an adversary may be able to steal the container's token and thereby gain access to Kubernetes API commands. [4] For that technique, the passages suggest watching for access and retrieval of container service account tokens followed by unauthorized API requests using those tokens to interact with the Kubernetes API server or internal services. [5]",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "T1552.007",
+          "url": "https://attack.mitre.org/techniques/T1552/007"
+        },
+        {
+          "doc_id": "T1552.007",
+          "url": "https://attack.mitre.org/techniques/T1552/007"
+        },
+        {
+          "doc_id": "T1552.007",
+          "url": "https://attack.mitre.org/techniques/T1552/007"
+        },
+        {
+          "doc_id": "T1528",
+          "url": "https://attack.mitre.org/techniques/T1528"
+        },
+        {
+          "doc_id": "T1528",
+          "url": "https://attack.mitre.org/techniques/T1528"
+        }
+      ]
+    },
+    {
+      "id": "H14",
+      "label": "One-time codes intercepted",
+      "question": "Malware intercepted one-time codes from a user's token to get past two-factor authentication.",
+      "coverage": "covered",
+      "answer": "This matches **T1111 Multi-Factor Authentication Interception (Credential Access)**. Adversaries may target multi-factor authentication (MFA) mechanisms, (i.e., smart cards, token generators, etc.) to gain access to credentials that can be used to access systems, services, and network resources. [1]\n\n**What the attack is**\n\nThe passages describe malware in the keylogger role. Adversaries may also employ a keylogger to similarly target other hardware tokens, such as RSA SecurID. [1] Capturing token input (including a user's personal identification code) may provide temporary access (i.e. replay the one-time passcode until the next value rollover) as well as possibly enabling adversaries to reliably predict future authentication values (given access to both the algorithm and any seed values used to generate appended temporary codes). [1]\n\n**How to detect it**\n\nThe passages give detection strategies by platform for T1111:\n- **Windows:** Behavior chain involving unexpected API calls to capture keyboard input, driver loads for keyloggers, or remote use of smart card authentication via logon sessions not initiated by local user interaction [2]\n- **Linux:** Detection of unauthorized keylogger behavior through access to `/dev/input`, loading kernel modules (e.g., via insmod), or polling user input devices from non-user shells [2]\n- **macOS:** Processes accessing TCC-protected input APIs or polling HID services without user interaction, or dynamically loaded keylogging frameworks using accessibility privileges [2]\n\n**Mitigation**\n\nThe passages do not include a mitigation section for T1111, so I can't give you its specific mitigations. The closest related guidance is for T1621, which covers a different MFA abuse. It recommends that organizations implement more secure 2FA/MFA mechanisms in replacement of simple push or one-click 2FA/MFA options. [3] It also suggests that utilizing other out-of-band 2FA/MFA mechanisms (such as rotating code-based hardware tokens providing rotating codes that need an accompanying user pin) may be more secure. [3] This is related guidance, not guidance for T1111 itself.",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "T1111",
+          "url": "https://attack.mitre.org/techniques/T1111"
+        },
+        {
+          "doc_id": "T1111",
+          "url": "https://attack.mitre.org/techniques/T1111"
+        },
+        {
+          "doc_id": "T1621",
+          "url": "https://attack.mitre.org/techniques/T1621"
+        }
+      ]
+    },
+    {
+      "id": "K03",
+      "label": "Kerberos KDC flaw \u2192 domain admin",
+      "question": "A regular domain user was able to make themselves a domain admin through a flaw in the Kerberos KDC. What vulnerability is this?",
+      "coverage": "covered",
+      "answer": "The vulnerability is **CVE-2014-6324**, the Microsoft Kerberos Key Distribution Center (KDC) Privilege Escalation Vulnerability. The Kerberos Key Distribution Center (KDC) in Microsoft allows remote authenticated domain users to obtain domain administrator privileges. [1] It is listed as a Known Exploited Vulnerability, added to CISA KEV 2022-03-25 [1].\n\n**Remediation:** Apply updates per vendor instructions. (due 2022-04-15) [1] The entry lists the weakness as CWE-264 [1].\n\n**Related ATT&CK guidance:** The passages do not map CVE-2014-6324 to an ATT&CK technique. However, the T1212 passage describes a closely related Kerberos attack. One example of this is `MS14-068`, which targets Kerberos and can be used to forge Kerberos tickets using domain user permissions. [2] This falls under T1212 (Exploitation for Credential Access), which notes that exploitation for credential access may also result in Privilege Escalation depending on the process targeted or credentials obtained. [2] The passages do not explicitly state that MS14-068 is the same issue as CVE-2014-6324, so I can't confirm that link from these documents alone.",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "CVE-2014-6324",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2014-6324"
+        },
+        {
+          "doc_id": "T1212",
+          "url": "https://attack.mitre.org/techniques/T1212"
+        }
+      ]
+    },
+    {
+      "id": "A31",
+      "label": "T1556.006",
+      "question": "What is T1556.006?",
+      "coverage": "covered",
+      "answer": "T1556.006 is Modify Authentication Process: Multi-Factor Authentication, a technique under Credential Access, Defense Impairment, and Persistence. Adversaries may disable or modify multi-factor authentication (MFA) mechanisms to enable persistent access to compromised accounts. [1]\n\n**What the attack involves**\n\nOnce adversaries have gained access to a network by either compromising an account lacking MFA or by employing an MFA bypass method such as Multi-Factor Authentication Request Generation, adversaries may leverage their access to modify or completely disable MFA defenses. [1] This can be accomplished by abusing legitimate features, such as excluding users from Azure AD Conditional Access Policies, registering a new yet vulnerable/adversary-controlled MFA method, or by manually patching MFA programs and configuration files to bypass expected functionality. [1] As an example, modifying the Windows hosts file (`C:\\windows\\system32\\drivers\\etc\\hosts`) to redirect MFA calls to localhost instead of an MFA server may cause the MFA process to fail. [1] If a \"fail open\" policy is in place, any otherwise successful authentication attempt may be granted access without enforcing MFA. [1] Depending on the scope, goals, and privileges of the adversary, MFA defenses may be disabled for individual accounts or for all accounts tied to a larger group, such as all domain accounts in a victim's network environment. [1]\n\n**Detection**\n\nThe passages list detection guidance by platform. For Windows, detects registry and Group Policy modifications that disable or weaken MFA, suspicious PowerShell usage modifying MFA-related attributes, and anomalous login sessions succeeding without expected MFA challenge. [2] For identity providers, detects conditional access policy changes, exclusion of accounts from MFA enforcement, or registration of new MFA factors by non-admin or anomalous users. [2] For Linux, detects PAM module modifications or removal of MFA hooks in /etc/pam.d/ configurations, correlated with successful authentications lacking MFA prompts. [2] For SaaS, detects suspicious MFA method changes, such as registration of weaker factors (e.g., SMS), or removal of MFA requirements for specific accounts or groups. [2]\n\n**Mitigation**\n\n- **M1018 User Account Management:** Ensure that proper policies are implemented to dictate the secure enrollment and deactivation of MFA for user accounts. [3]\n- **M1032 Multi-factor Authentication:** Ensure that MFA and MFA policies and requirements are properly implemented for existing and deactivated or dormant accounts and devices. [3] Also, consider configuring MFA solutions to \"fail closed\" rather than grant access in case of serious errors. [3]\n- **M1047 Audit:** Review MFA actions alongside authentication logs to ensure that MFA-based logins are functioning as intended. [3] Review user accounts to ensure that all accounts have MFA enabled. [3]",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "T1556.006",
+          "url": "https://attack.mitre.org/techniques/T1556/006"
+        },
+        {
+          "doc_id": "T1556.006",
+          "url": "https://attack.mitre.org/techniques/T1556/006"
+        },
+        {
+          "doc_id": "T1556.006",
+          "url": "https://attack.mitre.org/techniques/T1556/006"
+        }
+      ]
+    },
+    {
+      "id": "K15",
+      "label": "CVE-2024-3400",
+      "question": "What is CVE-2024-3400?",
+      "coverage": "covered",
+      "answer": "CVE-2024-3400 is a Palo Alto Networks PAN-OS vulnerability. Palo Alto Networks PAN-OS GlobalProtect feature contains a command injection vulnerability that allows an unauthenticated attacker to execute commands with root privileges on the firewall. [1] It was added to CISA KEV 2024-04-12 [1], meaning it is a Known Exploited Vulnerability.\n\nThe passage lists these weaknesses: CWE-20, CWE-77 [1]. It also notes a Known ransomware campaign use [1].\n\nFor mitigation, the passage says to apply mitigations per vendor instructions as they become available. [1] Otherwise, users with vulnerable versions of affected devices should enable Threat Prevention IDs available from the vendor. [1] See the vendor bulletin for more details and a patch release schedule. [1] The stated due date for action is 2024-04-19.\n\nThe passages do not describe detection methods or indicators of compromise for this vulnerability, so consult the vendor bulletin for those details.",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "CVE-2024-3400",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-3400"
+        }
+      ]
+    },
+    {
+      "id": "K16",
+      "label": "Log4Shell (CVE-2021-44228)",
+      "question": "Tell me about CVE-2021-44228.",
+      "coverage": "covered",
+      "answer": "CVE-2021-44228 is an Apache Log4j2 remote code execution vulnerability. Apache Log4j2 contains a vulnerability where JNDI features do not protect against attacker-controlled JNDI-related endpoints, allowing for remote code execution. [1] It is a Known Exploited Vulnerability, added to CISA KEV 2021-12-10 [1].\n\n**Known exploitation:** The entry notes a known ransomware campaign use [1].\n\n**Weaknesses:** The listed CWEs are CWE-20, CWE-400, CWE-502 [1].\n\n**Required remediation:** For all affected software assets for which updates exist, the only acceptable remediation actions are: 1) Apply updates; OR 2) remove affected assets from agency networks. [1] The remediation due date was 2021-12-24 [1].\n\n**Temporary mitigations:** Temporary mitigations using one of the measures provided at https://www.cisa.gov/uscert/ed-22-02-apache-log4j-recommended-mitigation-measures are only acceptable until updates are available. [1]\n\nThe passages do not include detection guidance or a related ATT&CK technique ID for this vulnerability, so I can't cover those aspects from this source.",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": [
+        {
+          "doc_id": "CVE-2021-44228",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-44228"
+        }
+      ]
+    },
+    {
+      "id": "HU13",
+      "label": "SOC 2 requirements (not covered)",
+      "question": "What does SOC 2 compliance require?",
+      "coverage": "not_covered",
+      "answer": "The provided passages don't answer this question. They cover MITRE ATT&CK mitigations (such as for T1078, T1195, T1649, and T1606.002) and CISA Known Exploited Vulnerabilities entries (such as CVE-2026-20079, CVE-2026-20131, and CVE-2026-20230). None of them mention SOC 2 or describe its requirements.\n\nIf you can share a document that covers SOC 2, or ask about a specific ATT&CK technique or KEV entry, I can answer from those passages.",
+      "model": "claude-haiku-5-5",
+      "generated": "2026-11-18",
+      "citations": []
+    }
+  ]
+}
