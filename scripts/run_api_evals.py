@@ -1,4 +1,4 @@
-"""The one live-API session (research.md D50-D51): --claude evals on all three test sets, then faithfulness, then
+"""The one live-API session: --claude evals on all three test sets, then faithfulness, then
 prompt injection. Stops before spending anything if the credentials don't work.
 
 Usage: .venv/bin/python -I scripts/run_api_evals.py

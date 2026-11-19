@@ -1,12 +1,12 @@
-"""Stage 2: one scheduled pipeline run, end to end, then a CHANGELOG.md entry.
+"""One scheduled pipeline run, end to end, then a CHANGELOG.md entry.
 
-Usage: .venv/bin/python -I scripts/run_pipeline.py              # what the GitHub Actions job runs (research.md D41)
+Usage: .venv/bin/python -I scripts/run_pipeline.py              # what the GitHub Actions job runs
        .venv/bin/python -I scripts/run_pipeline.py --offline    # skip network checks (KEV + new ATT&CK release)
 
 Steps: KEV (ETag check, record changes) -> ATT&CK (new release? download + append to history) -> parse latest
 release -> build passages -> dbt build (models + data tests) -> embed only changed passages -> free retrieval eval
 on both test sets -> prepend a CHANGELOG.md section. Exits non-zero if any step or dbt test fails; a dbt failure stops
-the run before embedding (D59). The changelog entry is written either way, so a failed run is visible too.
+the run before embedding; other test failures are reported as warnings. The changelog entry is written either way, so a failed run is visible too.
 """
 import argparse
 import csv
@@ -122,7 +122,7 @@ def dbt_section(proc: subprocess.CompletedProcess) -> str:
     results = json.loads(DBT_RESULTS_PATH.read_text())["results"]
     tests = [r for r in results if r["unique_id"].startswith("test.")]
     name = lambda r: r["unique_id"].split(".")[2]
-    warned = [name(r) for r in results if r["status"] == "warn"]  # data problems that don't stop the run (D61)
+    warned = [name(r) for r in results if r["status"] == "warn"]  # data problems that don't stop the run
     failed = [name(r) for r in results if r["status"] not in ("pass", "success", "warn")]
     models = sum(r["unique_id"].startswith("model.") and r["status"] == "success" for r in results)
     return (f"- **dbt:** {models} models built, {sum(r['status'] == 'pass' for r in tests)}/{len(tests)} data tests "
@@ -173,7 +173,7 @@ def main() -> None:
         proc = subprocess.run([str(Path(PY).with_name("dbt")), "build", "--project-dir", "dbt", "--profiles-dir", "dbt",
                                "--quiet"], cwd=ROOT, capture_output=True, text=True)
         items.append(dbt_section(proc))
-        if proc.returncode != 0:  # a failed data test means bad data: don't embed or evaluate it (D59)
+        if proc.returncode != 0:  # a failed data test means bad data: don't embed or evaluate it
             items.append("- **Stopped:** embedding and search eval skipped because dbt failed")
             raise RuntimeError("dbt build")
         items.insert(-1, attack_section(new_versions))

@@ -1,10 +1,10 @@
-"""Stage 2, step 1: reduce every ATT&CK Enterprise release to a technique-by-version table.
+"""Reduce every ATT&CK Enterprise release to a technique-by-version table.
 
 Usage: .venv/bin/python -I scripts/backfill_attack_history.py            # full rebuild from every raw release
        .venv/bin/python -I scripts/backfill_attack_history.py --append   # add only releases not in the CSV yet
 (--append is what scheduled runs use: they only download the new release, not all 1.36 GB.)
 Reads  data/raw/stix/history/enterprise-attack-<version>.json (all releases, downloaded once, not committed)
-Writes data/history/attack_history.csv  (one row per technique per release: committed, research.md D41-D42)
+Writes data/history/attack_history.csv  (one row per technique per release; committed, as the history the warehouse is rebuilt from)
        data/history/attack_versions.csv (one row per release)
 Re-running is safe: output is rebuilt from the raw files and sorted, so unchanged input gives identical files.
 """

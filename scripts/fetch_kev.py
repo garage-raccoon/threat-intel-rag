@@ -1,8 +1,8 @@
-"""Stage 2, step 2: fetch the CISA KEV catalog and record only what changed since the last run.
+"""Fetch the CISA KEV catalog and record only what changed since the last run.
 
 Usage: .venv/bin/python -I scripts/fetch_kev.py              # live feed, with an ETag check
        .venv/bin/python -I scripts/fetch_kev.py --input F    # use a local copy of the feed (testing)
-State (committed, research.md D42):
+State (committed, so every change is reviewable in git):
   data/history/kev_state.csv     current catalog, one row per CVE, sorted (git stores only changed lines)
   data/history/kev_meta.json     ETag / Last-Modified / catalog version from the last fetch
   data/history/kev_history.jsonl append-only log: one line per added / changed / removed CVE per run

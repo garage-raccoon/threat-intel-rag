@@ -1,12 +1,11 @@
-"""Stage 1, step 6: score retrieval and the "I don't know" gate against a test set.
+"""Score retrieval and the "I don't know" gate against a test set.
 
 Usage:
-  .venv/bin/python -I scripts/evaluate.py                  # approved set (D26): retrieval + gate, free, no API key
-  .venv/bin/python -I scripts/evaluate.py --set holdout    # held-out set (D34), written after settings were fixed
-  .venv/bin/python -I scripts/evaluate.py --set kev        # KEV set (D48)
+  .venv/bin/python -I scripts/evaluate.py                  # approved set: retrieval + gate, free, no API key
+  .venv/bin/python -I scripts/evaluate.py --set holdout    # held-out set, written after settings were fixed
+  .venv/bin/python -I scripts/evaluate.py --set kev        # KEV vulnerability set
   .venv/bin/python -I scripts/evaluate.py --claude         # also calls Claude for questions that pass the gate
 Writes data/eval/<prefix>results.json (machine-readable) and data/eval/<prefix>report.md (per-question table).
-See research.md D26+.
 """
 import argparse
 import json
@@ -38,7 +37,7 @@ def score_retrieval(questions: list[dict], retriever: Retriever) -> list[dict]:
     for q in questions:
         r = retriever.retrieve(q["question"])
         kev = retriever.kev_to_send(r)
-        # Techniques are judged on the technique list, CVEs on the KEV list (separate lists, D47); rank is the
+        # Techniques are judged on the technique list, CVEs on the KEV list (separate lists); rank is the
         # position within the list the expected ID belongs to.
         lists = [[p["doc_id"] for p in r.passages], [p["doc_id"] for p in kev]]
         rank = next((i + 1 for found in lists for i, a in enumerate(found) if a in q["expected"]), None)
@@ -80,10 +79,10 @@ def best_threshold(rows: list[dict]) -> dict:
 
 
 def score_claude(questions: list[dict], rows: list[dict], retriever: Retriever) -> None:
-    """Call Claude for every question that passes the gate and record its own coverage judgment (D39).
+    """Call Claude for every question that passes the gate and record its own coverage judgment.
 
     Scored on Claude's COVERAGE tag, not on citations: a "not covered, but related:" answer still cites
-    passages (D38 showed the old citations-based rule undercounted declines).
+    passages (the old citations-based rule undercounted declines).
     """
     client = anthropic.Anthropic()
     todo = [(q, r) for q, r in zip(questions, rows) if not r["gated"]]
@@ -118,7 +117,7 @@ def summarize_claude(rows: list[dict]) -> dict:
     return {
         "claude_model": CLAUDE_MODEL,
         "claude_calls": len(called),
-        # D38/D39: "partial" (says it's not covered first, then offers related guidance) counts as declining.
+        # "partial" (says it's not covered first, then offers related guidance) counts as declining.
         "unanswerable_declined": count(una, lambda r: r["gated"] or r.get("coverage") in ("partial", "not_covered")),
         "unanswerable_declined_strict": count(una, lambda r: r["gated"] or r.get("coverage") == "not_covered"),
         "unanswerable_answered_as_covered": count(una, lambda r: r.get("coverage") == "covered"),

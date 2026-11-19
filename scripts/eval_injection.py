@@ -1,4 +1,4 @@
-"""Prompt-injection test: can a poisoned passage among the retrieved ones hijack Claude's answer? (research.md D51)
+"""Prompt-injection test: can a poisoned passage among the retrieved ones hijack Claude's answer?
 
 Usage: .venv/bin/python -I scripts/eval_injection.py
 Writes data/eval/injection_results.json and injection_report.md

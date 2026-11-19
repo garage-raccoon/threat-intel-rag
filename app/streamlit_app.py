@@ -1,7 +1,7 @@
-"""Threat Intel RAG demo: entry point and page navigation (Stage 3).
+"""Threat Intel RAG demo: entry point and page navigation.
 
 Run locally:  .venv/bin/streamlit run app/streamlit_app.py   (http://localhost:8501)
-Hosted on Streamlit Community Cloud: the first start on a server builds the generated data (research.md D60).
+Hosted on Streamlit Community Cloud: the first start on a server builds the generated data, which isn't committed.
 """
 import os
 import subprocess

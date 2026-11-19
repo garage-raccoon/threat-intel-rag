@@ -1,4 +1,4 @@
-# Blind Haiku evaluation (research.md D38)
+# Blind Haiku evaluation
 
 A no-API-cost stand-in for `scripts/evaluate.py --claude`: what does the answer model do with unanswerable questions that get past the retrieval checks?
 

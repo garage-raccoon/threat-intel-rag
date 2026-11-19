@@ -1,4 +1,4 @@
-"""Data pipeline page: how the knowledge base keeps itself current (Stage 2 output, shown in Stage 3).
+"""Data pipeline page: how the knowledge base keeps itself current.
 
 Reads the dbt marts in data/processed/warehouse.duckdb, dbt's run_results.json, and the committed history files.
 """

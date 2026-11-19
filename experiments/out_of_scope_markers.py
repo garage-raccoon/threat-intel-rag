@@ -1,8 +1,8 @@
-"""Experiment X1 (research.md D31): two retrieval changes measured on the approved test set. Not part of the pipeline.
+"""Experiment: two retrieval changes measured on the approved test set. Not part of the pipeline.
 
 E1 "one passage per technique": rank techniques by their best passage, so one technique's 3 passages
    can't fill the top 5.
-E2 "out-of-scope markers": also embed every ATT&CK technique OUTSIDE Stage 1 scope (description only).
+E2 "out-of-scope markers": also embed every ATT&CK technique OUTSIDE the two loaded tactics (description only).
    If the best match is one of those, the question is about a topic we don't cover -> answer "I don't know".
 Usage: .venv/bin/python -I experiments/out_of_scope_markers.py
 Writes experiments/out_of_scope_markers_rows.json; console output saved in experiments/out_of_scope_markers_output.txt.
@@ -19,7 +19,7 @@ import ask  # noqa: E402
 from parse_stix import attack_ref, clean, is_active  # noqa: E402
 
 r = ask.Retriever()
-# Recorded with the ATT&CK-only index (before KEV was added in Stage 2): restrict to ATT&CK passages so the
+# Recorded with the ATT&CK-only index (before KEV was added): restrict to ATT&CK passages so the
 # experiment still reproduces its recorded numbers on a later index.
 ATT = [i for i, p in enumerate(r.index["passages"]) if p.get("source", "attack") == "attack"]
 P = [r.index["passages"][i] for i in ATT]
@@ -70,7 +70,7 @@ for q in questions:
     dedup_ids = base_ids if exact else [t for t, _ in tech]
     best_in, j = float(s_in.max()), int(s_out.argmax())
     out_wins = (not exact) and float(s_out[j]) > best_in
-    # Baseline = the gate before markers existed (D29): unknown ID, or best ATT&CK score below the threshold.
+    # Baseline = the gate before markers existed: unknown ID, or best ATT&CK score below the threshold.
     base_gate = (not exact_hit) and (bool(unknown) or float(s_in.max()) < ask.THRESHOLD)
     rows.append({
         "id": q["id"], "answerable": q["answerable"], "expected": q["expected"],

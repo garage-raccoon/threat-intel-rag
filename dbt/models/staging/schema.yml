@@ -14,7 +14,7 @@ models:
         tests:
           - not_null: {config: {severity: error}}
       - name: url
-        description: Every passage must link back to its source (roadmap Stage 2 test).
+        description: Every passage must link back to its source, so every answer can cite it.
         tests:
           - not_null: {config: {severity: error}}
       - name: passage_hash

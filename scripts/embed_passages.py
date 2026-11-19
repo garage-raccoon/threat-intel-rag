@@ -1,10 +1,10 @@
-"""Embed passages and markers, reusing cached vectors for text that hasn't changed (Stage 2, step 4).
+"""Embed passages and markers, reusing cached vectors for text that hasn't changed.
 
 Usage: .venv/bin/python -I scripts/embed_passages.py [--no-cache]
 Writes data/processed/vectors.npy (row N = passage N), marker_vectors.npy and index.json.
 Cache: data/processed/embedding_cache.npz, keyed by passage_hash and tied to the exact model + revision, so a
 changed passage gets a new hash and is re-embedded, and a model change invalidates everything.
-Not committed (research.md D42): a fresh checkout simply re-embeds all. See research.md D14.
+Not committed: a fresh checkout simply re-embeds all. Plain .npy files, no vector database: ~2.7k vectors fit in memory.
 """
 import argparse
 import json

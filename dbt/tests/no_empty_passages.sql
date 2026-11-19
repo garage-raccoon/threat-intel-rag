@@ -1,5 +1,5 @@
--- A passage must have content beyond its one-line header (roadmap Stage 2: "no empty passages").
-{{ config(severity='error') }}  -- guards the search data: stops the run (D61)
+-- A passage must have content beyond its one-line header.
+{{ config(severity='error') }}  -- guards the search data: stops the run
 SELECT
     passage_id
 FROM {{ ref('stg_passages') }}

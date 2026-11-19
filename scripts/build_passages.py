@@ -1,10 +1,10 @@
-"""Turn ATT&CK techniques (Stage 1, step 3) and CISA KEV entries (Stage 2, step 4) into retrieval passages.
+"""Turn ATT&CK techniques and CISA KEV entries into retrieval passages.
 
 Usage: .venv/bin/python -I scripts/build_passages.py
 Reads  data/processed/techniques.json (parse_stix.py) and data/history/kev_state.csv (fetch_kev.py)
 Writes data/processed/passages.json
 Every passage and marker gets a content fingerprint (passage_hash) so embed_passages.py re-embeds only
-what changed (research.md D42). See research.md D9 / D12 for the ATT&CK passage format.
+what changed. Each ATT&CK section is its own passage, split if it exceeds the model's 512-token limit.
 """
 import csv
 import hashlib
@@ -123,7 +123,7 @@ def main() -> None:
         sys.exit(f"Passages still over {packer.max_tokens} tokens: {over}")
 
     # One description-only passage per out-of-scope technique. Never sent to Claude; the model truncates
-    # anything past its limit, which is fine for a marker that only needs the gist (research.md D33).
+    # anything past its limit, which is fine for a marker that only needs the gist.
     markers = []
     for m in source["out_of_scope_markers"]:
         text = f"{m['attack_id']} {m['name']} ({', '.join(m['tactics'])}): Description\n{m['description']}"

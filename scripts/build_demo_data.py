@@ -1,10 +1,10 @@
-"""Stage 3 hosting: rebuild the generated data the demo needs on a fresh server (research.md D60).
+"""Hosting: rebuild the generated data the demo needs on a fresh server.
 
 Usage: .venv/bin/python -I scripts/build_demo_data.py
 Reads  data/history/ (committed) + the latest ATT&CK release (downloaded if missing)
 Writes data/processed/ (passages, vectors, warehouse.duckdb), dbt/target/run_results.json, data/processed/build_stamp.txt
 
-data/processed/ and dbt/target/ aren't committed (D42), so the hosted app builds them on first start. Unlike
+data/processed/ and dbt/target/ aren't committed, so the hosted app builds them on first start. Unlike
 run_pipeline.py there is no KEV fetch, changelog entry or eval: it only rebuilds from what is committed. Each step
 is its own process, so peak memory is one step's (680 MB measured for embedding), not the sum.
 """

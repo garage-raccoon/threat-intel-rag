@@ -2,7 +2,7 @@
   "version": 1,
   "written": "2026-11-18",
   "scope": "ATT&CK Enterprise 20.1: Initial Access + Credential Access",
-  "purpose": "Held-out check of the settings fixed in D29 (threshold 0.555) and D33 (marker margin 0.02). Written before running it; settings must not be tuned on this set.",
+  "purpose": "Held-out check of the fixed settings (threshold 0.555, out-of-scope margin 0.02). Written before running it; settings must not be tuned on this set.",
   "provenance": "Written by Claude at the user's request, in analyst language. NOT reviewed by the project owner before running.",
   "questions": [
     {
@@ -568,7 +568,7 @@
       "expected": [],
       "answerable": false,
       "kind": "non_attack_security",
-      "note": "CVE data not loaded (KEV is Stage 2)"
+      "note": "CVE data was not loaded when this set was written"
     },
     {
       "id": "HU12",

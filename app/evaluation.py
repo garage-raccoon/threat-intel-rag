@@ -114,5 +114,4 @@ st.markdown(f"""
 - **Tactic IDs** such as `TA0001` are declined as off-topic, because tactics aren't stored as search entries.
 - **Small test sets:** a few dozen questions per set, so each number has a wide margin of error.
 """)
-st.caption("Per-question reports: `data/eval/*_report.md`. How every number was produced, with the problems and "
-           "decisions along the way: `research.md`.")
+st.caption("Per-question reports: `data/eval/*_report.md`.")

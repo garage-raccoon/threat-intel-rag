@@ -1,4 +1,4 @@
-"""Stage 1, step 2: parse the pinned ATT&CK STIX bundle into one clean record per technique.
+"""Parse the pinned ATT&CK STIX bundle into one clean record per technique.
 
 Usage: .venv/bin/python -I scripts/parse_stix.py [stix_path] [out_path]
 Data (c) The MITRE Corporation, used under the ATT&CK terms of use.
@@ -77,7 +77,7 @@ def parse(objects: list[dict]) -> dict:
         ref = attack_ref(obj)
         parent = parents.get(obj["id"])
         if not phases & TACTICS_IN_SCOPE:
-            # Out of scope: kept only as a marker, so retrieval can tell "not covered" apart (research.md D33).
+            # Out of scope: kept only as a marker, so retrieval can tell "not covered" apart.
             markers.append({
                 "attack_id": ref["external_id"],
                 "name": f"{parent['name']}: {obj['name']}" if parent else obj["name"],

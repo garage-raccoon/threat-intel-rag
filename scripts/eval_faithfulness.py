@@ -1,4 +1,4 @@
-"""Answer faithfulness: does each claim in Claude's answer follow from the passages it was given? (research.md D51)
+"""Answer faithfulness: does each claim in Claude's answer follow from the passages it was given?
 
 Usage: .venv/bin/python -I scripts/eval_faithfulness.py
 Reads  data/eval/{,holdout_,kev_}claude_results.json   (written by: evaluate.py --set <set> --claude)
@@ -28,7 +28,7 @@ EVAL_DIR = ROOT / "data/eval"
 INPUTS = ["claude_results.json", "holdout_claude_results.json", "kev_claude_results.json"]
 RESULTS_PATH = EVAL_DIR / "faithfulness_results.json"
 REPORT_PATH = EVAL_DIR / "faithfulness_report.md"
-JUDGE_MODEL = CLAUDE_MODEL  # owner's choice (D51): Haiku for answering and judging
+JUDGE_MODEL = CLAUDE_MODEL  # owner's choice: Haiku for answering and judging (cheap; likely lenient)
 HAIKU_USD_PER_MTOK = (0.10, 0.50)  # Claude API reference, cached 2026-11-03
 SAMPLE_FOR_HUMAN_CHECK = 10
 JUDGE_SYSTEM = (

@@ -1,4 +1,4 @@
-# Scheduled pipeline run (research.md D41-D42): fetch KEV (ETag check) -> check for a new ATT&CK release ->
+# Scheduled pipeline run, twice a month: fetch KEV (ETag check) -> check for a new ATT&CK release ->
 # rebuild passages -> dbt build + data tests -> embed changed passages -> free retrieval eval -> CHANGELOG.md.
 # Commits only the small text files that carry history (data/history/, CHANGELOG.md, eval results).
 name: scheduled-pipeline

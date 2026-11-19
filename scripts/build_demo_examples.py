@@ -1,10 +1,10 @@
-"""Copy owner-approved answers from the live API run into the demo's example file (Stage 3, research.md D54).
+"""Copy owner-approved answers from the live API run into the demo's example file.
 
 Usage: .venv/bin/python -I scripts/build_demo_examples.py
 Reads  data/eval/{,holdout_,kev_}claude_results.json   (written by: evaluate.py --set <set> --claude)
 Writes data/demo/examples.json
 
-Answers are copied verbatim, never edited. Selection rule (D54): tagged covered, cited an expected ID, and every
+Answers are copied verbatim, never edited. Selection rule: tagged covered, cited an expected ID, and every
 claim judged supported (faithfulness_results.json); plus one declined answer to show the app saying "not covered".
 """
 import json
@@ -49,7 +49,7 @@ def main() -> None:
                  "citations": [{"doc_id": c["doc_id"], "url": c["url"]} for c in rows[i]["citations"]]}
                 for i, label in APPROVED.items()]
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUT_PATH.write_text(json.dumps({"source": "live API eval run (research.md D52)", "examples": examples}, indent=2),
+    OUT_PATH.write_text(json.dumps({"source": "live API eval run (the answers are copied, never edited)", "examples": examples}, indent=2),
                         encoding="utf-8")
     print(f"Wrote {len(examples)} examples to {OUT_PATH.relative_to(ROOT)}")
 

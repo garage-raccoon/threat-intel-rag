@@ -1,8 +1,7 @@
-"""Stage 1, step 5: answer a question from the top-5 ATT&CK passages, with citations.
+"""Answer a question from the top-5 ATT&CK passages (plus KEV), with citations, or say "I don't know".
 
 Usage: .venv/bin/python -I scripts/ask.py "How do attackers use spearphishing links?"
 Needs ANTHROPIC_API_KEY in .env, except when the question is gated out (no API call is made).
-See research.md D16-D18.
 """
 import json
 import re
@@ -21,17 +20,17 @@ VECTORS_PATH = ROOT / "data/processed/vectors.npy"
 MARKER_VECTORS_PATH = ROOT / "data/processed/marker_vectors.npy"
 INDEX_PATH = ROOT / "data/processed/index.json"
 TOP_K = 5  # ATT&CK techniques per question
-KEV_TOP_K = 3  # known exploited vulnerabilities, ranked separately so they never crowd out techniques (D47)
-THRESHOLD = 0.555  # Set from step 6 scores (D29): mid-gap between 0.512 (off-topic) and 0.599 (lowest answerable)
-# Out-of-scope marker must beat the best in-scope passage by more than this to answer NO_INFO (D32, D33).
+KEV_TOP_K = 3  # known exploited vulnerabilities, ranked separately so they never crowd out techniques
+THRESHOLD = 0.555  # Set from the approved test set: mid-gap between 0.512 (off-topic) and 0.599 (lowest answerable)
+# Out-of-scope marker must beat the best in-scope passage by more than this to answer NO_INFO.
 MARKER_MARGIN = 0.02
 CLAUDE_MODEL = "claude-haiku-5-5"
 NO_INFO = "I don't have information on that."
-# Embeddings can't tell IDs apart ("T1110.003" retrieves the wrong technique), so IDs are matched exactly (D25):
-# ATT&CK technique IDs and, since KEV was added (Stage 2), CVE IDs.
+# Embeddings can't tell IDs apart ("T1110.003" retrieves the wrong technique), so IDs are matched exactly:
+# ATT&CK technique IDs and CVE IDs.
 DOC_ID = re.compile(r"\b(?:T\d{4}(?:\.\d{3})?|CVE-\d{4}-\d{4,})\b", re.IGNORECASE)
 # Anything shaped like an attempt at one of those IDs (T12345, Tx6753.123, CVE-24-1). A malformed ID is reported as
-# unknown instead of falling through to vector search, where digit-heavy text scores above the threshold (D56).
+# unknown instead of falling through to vector search, where digit-heavy text scores above the threshold.
 # Tactic IDs (TA0001) are left to vector search, as before.
 ID_LIKE = re.compile(r"\b(?:T(?!A\d{4}\b)[A-Z]?\d{3,}(?:\.\d+)*|CVE[-_]?\d[\d-]*)\b", re.IGNORECASE)
 SYSTEM_PROMPT = (
@@ -49,7 +48,7 @@ SYSTEM_PROMPT = (
     "  COVERAGE: not_covered   (they don't answer it and nothing related is useful)"
 )
 # Citations can't be combined with structured outputs (output_config.format returns a 400), so the coverage
-# judgment comes as a tagged first line that is parsed and removed from the shown answer (research.md D39).
+# judgment comes as a tagged first line that is parsed and removed from the shown answer.
 COVERAGE_LINE = re.compile(r"^\s*COVERAGE:\s*(covered|partial|not_covered)\b[^\n]*\n?", re.IGNORECASE)
 
 
@@ -61,7 +60,7 @@ def split_coverage(text: str) -> tuple[str, str]:
 
 @dataclass
 class Retrieval:
-    passages: list[dict]  # ATT&CK technique passages (the list the Stage 1 checks and metrics are based on)
+    passages: list[dict]  # ATT&CK technique passages (the list the retrieval metrics are based on)
     kev: list[dict] = field(default_factory=list)  # KEV passages: a separate list, never mixed into `passages`
     unknown_ids: list[str] = field(default_factory=list)  # ATT&CK / CVE IDs named in the question but not loaded
     marker: dict | None = None  # nearest out-of-scope technique: {attack_id, name, tactics, score}
@@ -128,7 +127,7 @@ class Retriever:
     def kev_to_send(self, r: Retrieval, threshold: float = THRESHOLD) -> list[dict]:
         """KEV passages worth showing / sending: exact CVE hits, or vector hits above the same off-topic threshold.
 
-        The threshold here is provisional (reused from D29, not measured on KEV questions yet: D47).
+        The threshold is reused from the ATT&CK test set; it was never tuned on KEV questions.
         """
         return [p for p in r.kev if p["match"] == "exact" or p["score"] >= threshold]
 
@@ -150,7 +149,7 @@ def ask_claude(client: anthropic.Anthropic, question: str, passages: list[dict],
             f"\n\n(Not in the knowledge base: {', '.join(unknown_ids)}.)" if unknown_ids else "")}]}],
     )
 
-    # Haiku 5.5 has no server-side refusal fallback (D17): check before reading content.
+    # Haiku 5.5 has no server-side refusal fallback: check before reading content.
     if response.stop_reason == "refusal":
         details = response.stop_details
         return {"status": "refused", "refusal_category": details.category if details else None,
@@ -180,20 +179,20 @@ def gate_reason(r: Retrieval, threshold: float = THRESHOLD, margin: float = MARK
     """Why we answer NO_INFO without calling Claude, or None to go ahead."""
     if r.exact_hit:
         return None
-    if r.unknown_ids:  # an ID we don't hold must not fall back to similar-looking IDs (D25)
+    if r.unknown_ids:  # an ID we don't hold must not fall back to similar-looking IDs
         return "unknown_id"
-    if r.passages[0]["score"] < threshold:  # off-topic (D29)
+    if r.passages[0]["score"] < threshold:  # off-topic
         return "below_threshold"
     # Out of scope only if a topic we didn't load beats BOTH lists: otherwise a vulnerability question that KEV
-    # answers would be stopped because no technique fits it (D48, D49).
+    # answers would be stopped because no technique fits it.
     best_in_scope = max(r.passages[0]["score"], r.kev[0]["score"] if r.kev else 0.0)
-    if r.marker and r.marker["score"] - best_in_scope > margin:  # covered by a topic we didn't load (D33)
+    if r.marker and r.marker["score"] - best_in_scope > margin:  # covered by a topic we didn't load
         return "out_of_scope"
     return None
 
 
 def answer(question: str, retriever: Retriever, client: anthropic.Anthropic | None = None) -> dict:
-    """Full step 5 for one question. Step 6 imports this to run the test set."""
+    """Answer one question end to end. evaluate.py imports this to run the test sets."""
     r = retriever.retrieve(question)
     kev = retriever.kev_to_send(r)
     brief = lambda ps: [{"passage_id": p["passage_id"], "doc_id": p["doc_id"], "score": p["score"], "match": p["match"]}

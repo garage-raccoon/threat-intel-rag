@@ -1,4 +1,4 @@
-# DuckDB warehouse for the ATT&CK + KEV pipeline (research.md D23, D42).
+# DuckDB warehouse for the ATT&CK + KEV pipeline.
 # Run from the repo root:  .venv/bin/dbt build --project-dir dbt --profiles-dir dbt
 # Every model reads committed text files (data/history/) or generated passages (data/processed/), so the
 # warehouse is rebuilt from scratch on each run and never committed.
@@ -15,7 +15,7 @@ models:
     staging:
       +materialized: view   # thin renames/casts over the source files; the marts are the tables people query
 # Data tests warn by default: a bad value in a new KEV or ATT&CK update is reported in the changelog without
-# stopping the run. Only the tests guarding the search passages are severity: error (D61).
+# stopping the run. Only the tests guarding the search passages are severity: error.
 data_tests:
   attack_rag:
     +severity: warn

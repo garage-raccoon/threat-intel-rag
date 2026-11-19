@@ -1,4 +1,4 @@
-"""Search page: semantic search over MITRE ATT&CK + CISA KEV, with abstention (Stage 3).
+"""Search page: semantic search over MITRE ATT&CK + CISA KEV, with abstention.
 
 Uses the exact retrieval + abstention logic that was evaluated (scripts/ask.py), so the demo behaves like the numbers
 in the README. No API key: live search is free; AI-written answers appear only for pre-generated examples.
@@ -30,7 +30,7 @@ ID_FORMATS = "ATT&CK IDs look like T1234 or T1234.567; CVE IDs look like CVE-202
 
 
 def unknown_id_detail(ids: list[str]) -> str:
-    """A badly formatted ID and a well-formed ID that doesn't exist get different explanations (D56)."""
+    """A badly formatted ID and a well-formed ID that doesn't exist get different explanations."""
     invalid = [i for i in ids if not DOC_ID.fullmatch(i)]
     missing = [i for i in ids if DOC_ID.fullmatch(i)]
     parts = []
