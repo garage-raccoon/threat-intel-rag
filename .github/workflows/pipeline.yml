@@ -26,10 +26,9 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Install dependencies (CPU-only PyTorch: the runner has no GPU, and the CUDA build is a much larger download)
+      - name: Install dependencies (requirements.txt pins the CPU-only PyTorch wheel on Linux)
         run: |
           python -m venv .venv
-          .venv/bin/pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
           .venv/bin/pip install --quiet -r requirements.txt
 
       - name: Restore model + embedding cache (a miss just means a full re-embed)
