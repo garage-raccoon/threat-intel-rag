@@ -2,6 +2,8 @@
 
 A question-answering system for security analysts. Ask "how do attackers use spearphishing links, and how do I detect it?" and get an answer built only from **MITRE ATT&CK** (Initial Access and Credential Access) and the **CISA Known Exploited Vulnerabilities (KEV)** catalog, citing every source. When the sources don't cover a question, it says "I don't know" instead of guessing.
 
+**Live demo:** [open the app](https://threat-intel-rag-65q4zfjbutp2a5fons9lgs.streamlit.app) (no sign-in; the first visit after a quiet period may take a minute to wake the app)
+
 **Results, design decisions and open issues:** [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md)
 
 | Held-out test set (written after the settings were fixed) | Result |
